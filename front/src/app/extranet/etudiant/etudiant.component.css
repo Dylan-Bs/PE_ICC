@@ -1,0 +1,11 @@
+.card>span{
+    margin: 25px;
+}
+table {
+    width: 70vw;
+  }
+  
+  .mat-form-field {
+    font-size: 14px;
+    width: 100%;
+  }

@@ -1,0 +1,21 @@
+footer {
+    margin-top: 8px;
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+
+    text-align:center;
+    width: 100%;
+
+    justify-content: center;
+  }
+
+  footer>div{
+    display: flex;
+    align-items: center;
+  }
+
+  footer a {
+    display: flex;
+    align-items: center;
+  }

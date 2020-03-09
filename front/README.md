@@ -1,27 +1,46 @@
-# PeFront
+# Site Angular pour afficher les anciens élèves
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.13.
+Site créé par Vincent Darcemont.
 
-## Development server
+## Lancer le site
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+(`npm install`)
 
-## Code scaffolding
+Lancer `ng serve -o`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Inscription
 
-## Build
+Lors de l'inscription, vous devez au minimum renseigner un pseudo, un mot de passe, un nom et un prénom.
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
+Vous devez également accepter la règle RGPD qui est également accessible dans le footer.
 
-## Running unit tests
+En tant qu'étudiant, vous pouvez ou non indiquer votre promotion et votre entreprise. 
+Vous pouvez aussi choisir si elles sont visibles au public.
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+## Connexion
 
-## Running end-to-end tests
+Certains comptes sont présents dans la bdd firebase.
 
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
+Vous pouvez par exemple vous connecter avec : pseudo : test, mdp : test
 
-## Further help
+Une fois connecté, vous avez acces à l'onglet étudiants et à votre profil.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## Onglet étudiants
+
+Vous pouvez voir la liste des étudiants, un icône remplace les champs non-visibles au public.
+Si cet étudiant est vous-même un texte (vous) sera visible à coté de votre nom.
+
+Vous pouvez cliquer sur la flèche dans détail pour accéder à leur profil.
+Si le profil est le vôtre, l'entreprise et la promotion sera visible. Vous pouvez également modifier ou supprimer votre compte.
+
+## Administrateur
+
+Pour vous connecter en admin : pseudo : admin, mdp: admin
+
+Dans la bdd, un admin possède le champs admin:true.
+
+Un admin a le détail complet pour chaque étudiant (entreprise et promotion visibles) et peut modifier ou supprimer chaque compte.
+
+## Onglet statistiques
+
+Si vous êtes admin, vous avez accès à un onglet statistiques qui met en graphique les données des étudiants.

@@ -1,0 +1,32 @@
+<div class="card highlight-card card-small">
+
+    <mat-icon aria-hidden="false" aria-label="connexion">exit_to_app</mat-icon>
+    <span>Connexion</span>
+
+    
+
+    
+
+  </div>
+  <form #fi="ngForm">
+    <div>
+      <input name="id" [(ngModel)]="identification.id" type="text" required placeholder="Identifiant" class="form-control"/>
+      <input name="pwd" [(ngModel)]="identification.pwd" type="password" required minlength="8" placeholder="Mot de passe" class="form-control"/>
+      <div class="cadre danger" *ngIf="this.error"><mat-icon aria-hidden="false" aria-label="error">error</mat-icon> 
+        <span> L'identifiant et/ou le mot de passe ne correspondent pas</span></div>
+        <div class="cadre success" *ngIf="this.created"><mat-icon aria-hidden="false" aria-label="check_circle">check_circle</mat-icon> 
+          <span> Le compte a bien été créé</span></div>
+    </div>
+    
+    <div>
+      <button (click)="envoie()"  class="button primary">Se connecter</button>
+      <button (click)="inscription()" class="button primary">Creer un compte</button>
+
+      <!--<input name="annuler" type="reset" class="button"/>-->
+    </div>
+    </form>
+
+    
+    
+
+    
