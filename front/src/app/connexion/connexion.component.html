@@ -1,32 +1,30 @@
-<div class="card highlight-card card-small">
+<section>
+  <mat-card class="col col-md-4 ">
+    <h3>Connexion</h3>
+  <form *ngIf="!conne.connecte" class="create-form" [formGroup]="connexionForm" novalidate
+    (ngSubmit)="onSubmit(connexionForm.value)">
 
-    <mat-icon aria-hidden="false" aria-label="connexion">exit_to_app</mat-icon>
-    <span>Connexion</span>
+    <div class="form-group">
+      <mat-form-field class="input-style">
+        <input matInput type="email" placeholder="Email" formControlName="email">
+      </mat-form-field>
+    </div>
 
-    
+    <div class="form-group">
+      <mat-form-field class="input-style">
+        <input matInput type="password" placeholder="Password" formControlName="password">
+      </mat-form-field>
+    </div>
 
-    
+    <button mat-raised-button class="submit-button" color="primary" type="submit"
+      [disabled]="!connexionForm.valid">Connexion</button>
+  </form>
 
+  <div *ngIf="conne.connecte">
+    <p>Bonjour {{surname | titlecase }} {{name | uppercase }}, vous êtes bien connecté avec le role: {{role}}
+      <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
+    </p>
+    <button mat-raised-button color="primary" (click)="conne.connecte = false">Déconnexion</button>
   </div>
-  <form #fi="ngForm">
-    <div>
-      <input name="id" [(ngModel)]="identification.id" type="text" required placeholder="Identifiant" class="form-control"/>
-      <input name="pwd" [(ngModel)]="identification.pwd" type="password" required minlength="8" placeholder="Mot de passe" class="form-control"/>
-      <div class="cadre danger" *ngIf="this.error"><mat-icon aria-hidden="false" aria-label="error">error</mat-icon> 
-        <span> L'identifiant et/ou le mot de passe ne correspondent pas</span></div>
-        <div class="cadre success" *ngIf="this.created"><mat-icon aria-hidden="false" aria-label="check_circle">check_circle</mat-icon> 
-          <span> Le compte a bien été créé</span></div>
-    </div>
-    
-    <div>
-      <button (click)="envoie()"  class="button primary">Se connecter</button>
-      <button (click)="inscription()" class="button primary">Creer un compte</button>
-
-      <!--<input name="annuler" type="reset" class="button"/>-->
-    </div>
-    </form>
-
-    
-    
-
-    
+</mat-card>
+</section>

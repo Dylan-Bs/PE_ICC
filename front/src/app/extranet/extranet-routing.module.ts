@@ -1,16 +1,13 @@
-
-import { AuthGuard } from '../services/auth.guard';
-import { EtudiantComponent } from './etudiant/etudiant.component';
-import { StatsComponent } from './stats/stats.component';
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { paths } from '../app-paths';
+
 
 const extranetRoutes: Routes = [
-    {path:'etudiant/:id',component:EtudiantComponent, canActivate:[AuthGuard]},
-  {path:'etudiant',component:EtudiantComponent, canActivate:[AuthGuard]},
-  {path:'statistiques',component:StatsComponent, canActivate:[AuthGuard]}
-
-]
+  { path: paths.admin, loadChildren: () => import('./admin/admin.module').then(mod => mod.AdminModule) },
+  { path: paths.etudiant, loadChildren: () => import('./etudiant/etudiant.module').then(mod => mod.EtudiantModule) },
+  { path: paths.prof, loadChildren: () => import('./prof/prof.module').then(mod => mod.ProfModule) },
+];
 
 @NgModule({
   imports: [

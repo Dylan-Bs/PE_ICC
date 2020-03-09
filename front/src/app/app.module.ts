@@ -1,74 +1,66 @@
 import { BrowserModule } from '@angular/platform-browser';
-import { NgModule } from '@angular/core';
-import {FormsModule} from '@angular/forms';
-import {NgbModule} from '@ng-bootstrap/ng-bootstrap';
-import { AppRoutingModule } from './app-routing.module';
-import { AppComponent } from './app.component';
-import { AccueilComponent } from './accueil/accueil.component';
-import { ConnexionComponent } from './connexion/connexion.component';
-import { FooterComponent } from './footer/footer.component';
-import { TopbarComponent } from './topbar/topbar.component';
-
-import {HttpClientModule} from '@angular/common/http';
-import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatIconModule} from '@angular/material/icon';
-import {MatTableModule} from '@angular/material/table';
-import {MatFormFieldModule} from '@angular/material/form-field';
-import { AngularFireModule, FirebaseOptionsToken } from '@angular/fire';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+//Formulaire
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatSidenavModule,MatCardModule,MatButtonModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatDialogModule, MatSliderModule } from '@angular/material';
+//Firebase
+import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
-
-import { ConnexionService } from './services/connexion.service';
-
-import { MatDialogModule } from '@angular/material/dialog';
-import {MatInputModule, MatRadioModule, MatCheckboxModule, MatCardModule, MatSliderModule} from '@angular/material';
+import { environment } from '../environments/environment';
+//Lecture de fichiers dans les assets
+import { HttpClientModule } from '@angular/common/http';
+//Composants
+import { AppComponent } from './app.component';
+import { MenuComponent } from './menu/menu.component';
+import { AccueilComponent } from './accueil/accueil.component';
+import { CollecteComponent } from './collecte/collecte.component';
 import { RgpdComponent } from './rgpd/rgpd.component';
-import { NotfoundComponent } from './notfound/notfound.component';
+import { ConnexionComponent } from './connexion/connexion.component';
+import { Erreur404Component } from './erreur404/erreur404.component';
+//Modules
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { ExtranetfRoutingModule } from './extranet/extranet-routing.module';
+import { AppRoutingModule } from './app-routing.module';
+import { PathResolveService } from './path-resolve.service';
+import { FooterComponent } from './footer/footer.component';
 
-
-import { EtudiantsPipe } from './services/etudiants.pipe';
-import { environment } from 'src/environments/environment';
-import { CreateEtudiantComponent } from './create-etudiant/create-etudiant.component';
 
 @NgModule({
   declarations: [
     AppComponent,
+    MenuComponent,
     AccueilComponent,
-    ConnexionComponent,
-    FooterComponent,
-    TopbarComponent,
-    
+    CollecteComponent,
     RgpdComponent,
-    NotfoundComponent,
-    CreateEtudiantComponent,
-    EtudiantsPipe
-    
+    ConnexionComponent,
+    Erreur404Component,
+    FooterComponent
   ],
-  entryComponents: [
-    CreateEtudiantComponent
-  ],
-  
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     FormsModule,
-    NgbModule,
+    AngularFireModule.initializeApp(environment.firebase),
+    AngularFirestoreModule,
     BrowserAnimationsModule,
-    MatIconModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatDialogModule,
+    ReactiveFormsModule,
+    MatButtonModule,
     MatInputModule,
-    MatRadioModule,
     MatCheckboxModule,
-    MatCardModule,
+    MatSelectModule,
+    MatToolbarModule,
+    MatIconModule,
+    MatDialogModule,
     MatSliderModule,
-    
-    AngularFireModule,
-    AngularFirestoreModule
+    HttpClientModule,
+    ExtranetfRoutingModule,
+    MatCardModule,
+    MatSidenavModule
   ],
-  providers: [ConnexionService,
-    { provide: FirebaseOptionsToken, useValue: environment.firebase }],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
+  providers: [PathResolveService]
 })
 export class AppModule { }

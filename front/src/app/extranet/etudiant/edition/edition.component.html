@@ -1,0 +1,87 @@
+<div class="edit-page">
+        <nav aria-label="breadcrumb">
+          <ol class="breadcrumb">
+            <li class="breadcrumb-item active" aria-current="page">Edition du profil</li>
+          </ol>
+        </nav>
+        <div class="page-content">
+          <div class="row">
+            <div class="col col-md-8 form-container">
+      
+              <form class="edit-form" [formGroup]="exampleForm" novalidate (ngSubmit)="onSubmit(exampleForm.value)">
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput type="email" placeholder="Adresse électronique" class="form-control"
+                      formControlName="email">
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput type="password" placeholder="Mot de passe" class="form-control"
+                      formControlName="password">
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput placeholder="Nom" class="form-control" formControlName="name">
+                  </mat-form-field>
+                </div>
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput placeholder="Prénom" class="form-control" formControlName="surname">
+                  </mat-form-field>
+                </div>
+      
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput type="number" placeholder="Promotion" class="form-control" formControlName="promo">
+                  </mat-form-field>
+                </div>
+      
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <mat-label>Option ING3</mat-label>
+                    <mat-select formControlName="optionsIng3Control">
+                      <mat-option>-- Aucun --</mat-option>
+                      <mat-optgroup *ngFor="let group of optionsIng3Groups" [label]="group.name" [disabled]="group.disabled">
+                        <mat-option *ngFor="let option of group.option" [value]="option.value">
+                          {{option.viewValue}}
+                        </mat-option>
+                      </mat-optgroup>
+                    </mat-select>
+                  </mat-form-field>
+                </div>
+      
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput placeholder="Entreprise" class="form-control" formControlName="entreprise">
+                  </mat-form-field>
+                </div>
+      
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput placeholder="Ville travail" class="form-control" formControlName="ville">
+                  </mat-form-field>
+                </div>
+      
+                <div class="form-group">
+                  <mat-form-field class="input-style">
+                    <input matInput type="number" placeholder="Salaire" class="form-control" formControlName="salaire">
+                  </mat-form-field>
+                </div>
+     
+                <div class="row submit-button-container">
+                  <div class="col-md-4">
+                    <button mat-raised-button class="submit-button" color="primary" type="submit"
+                      [disabled]="!exampleForm.valid">Enregistrer</button>
+                  </div>
+                  <div class="col-md-3">
+                    <button mat-raised-button class="delete-button" color="warn" type="button"
+                      (click)="anonymisation(exampleForm.value)">Supprimer mon compte</button>
+                  </div>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>

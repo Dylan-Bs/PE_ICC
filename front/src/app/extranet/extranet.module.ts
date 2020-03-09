@@ -1,31 +1,20 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { EtudiantComponent } from './etudiant/etudiant.component';
+import { AdminModule } from './admin/admin.module';
+import { ProfModule } from './prof/prof.module';
+import { EtudiantModule } from './etudiant/etudiant.module';
 import { ExtranetfRoutingModule } from './extranet-routing.module';
-import { StatsComponent } from './stats/stats.component';
-import { MatIconModule, MatTableModule, MatFormFieldModule, MatDialogModule, MatInputModule, MatRadioModule, MatCheckboxModule, MatCardModule, MatSliderModule } from '@angular/material';
-import {  HighchartsChartModule } from 'highcharts-angular';
+
 
 
 @NgModule({
-  declarations: [
-    EtudiantComponent,
-    StatsComponent
-  ],
-  
+  declarations: [],
   imports: [
+    CommonModule,
     ExtranetfRoutingModule,
-    MatIconModule,
-    MatTableModule,
-    MatFormFieldModule,
-    MatDialogModule,
-    MatInputModule,
-    MatRadioModule,
-    MatCheckboxModule,
-    MatCardModule,
-    MatSliderModule,
-    HighchartsChartModule,
-    CommonModule
-  ]
+    AdminModule, 
+    ProfModule, 
+    EtudiantModule 
+  ],
 })
 export class ExtranetModule { }

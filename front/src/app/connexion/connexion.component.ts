@@ -1,16 +1,9 @@
-import { Component, OnInit, Inject } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Identification } from '../interfaces/identification';
+import { MatDialog } from '@angular/material';
 import { ConnexionService } from '../services/connexion.service';
-import {Router} from "@angular/router"
-import { MatDialog } from '@angular/material/dialog';
 import { FirebaseService } from '../services/firebase.service';
-import { CreateEtudiantComponent } from '../create-etudiant/create-etudiant.component';
-
-
-
-export interface User {
-  id: string;
-  pwd: string;
-}
 
 @Component({
   selector: 'app-connexion',
@@ -18,63 +11,76 @@ export interface User {
   styleUrls: ['./connexion.component.css']
 })
 export class ConnexionComponent implements OnInit {
-  identification:User;
-  error:boolean=false;
-  created:boolean=false;
-  waiting:boolean=false
-  constructor(public connexion:ConnexionService,private router: Router,public dialog:MatDialog,private firebaseService:FirebaseService) {
-   }
+
+  connexionForm: FormGroup;
+  user: Array<any>;
+  name: string;
+  surname: string;
+  role: string;
+
+  constructor(
+    private fb: FormBuilder,
+    public dialog: MatDialog,
+    public firebaseService: FirebaseService,
+    public conne: ConnexionService
+  ) { }
 
   ngOnInit() {
-    this.identification={
-      id:"",
-      pwd:""
+    this.createForm();
+    if (this.conne.connecte) {
+      this.getUserInfo();
     }
   }
 
-  envoie(){
-    if (!this.waiting){
-      this.waiting=true;
-      this.firebaseService.connect(this.identification.id,this.identification.pwd).subscribe(
-        res=>{
-          this.waiting=false;
-          let r=res.pop()
-          if (typeof r=="object"){
-            this.connexion.connect( r.payload.doc)
-          }
-          
-          if (this.connexion.isconnected()){
-            this.router.navigate(['extranet/etudiant']);
-          }else{
-            this.error=true;
-            this.created=false;
-          }
-          
+  createForm() {
+    this.connexionForm = this.fb.group({
+      email: ['', Validators.required],
+      password: ['', Validators.required]
+    });
+  }
+
+  resetFields() {
+    this.connexionForm = this.fb.group({
+      email: new FormControl('', Validators.required),
+      password: new FormControl('', Validators.required)
+    });
+  }
+
+  onSubmit(value) {
+    this.firebaseService.connect(value).subscribe(
+      result => {
+        this.user = result;
+        console.log("tentative d'authentification");
+        if (this.user.length > 0) {
+          this.conne.user = this.user;
+          this.conne.connecte = true;
+          this.conne.role = this.user[0].payload.doc.data().role;
+          this.conne.userId = this.user[0].payload.doc.id;
+          this.conne.userOption = this.user[0].payload.doc.data().optionsIng3Control;
+          console.log("utilisateur authentifié, role:" + this.conne.role + " userID:" + this.conne.userId + " option:" + this.conne.userOption);
+          this.getUserInfo();
         }
-      );
-    }
-    
-    
-   
-  }
-
-  inscription(): void {
-    const dialogRef = this.dialog.open(CreateEtudiantComponent, {
-      width: '600px',
-      data: {pseudo: this.identification.id, mdp: this.identification.pwd,nom:"",prenom:"",promo:2000,entreprise:"",showpromo:false,showentreprise:false,admin:false}
-    
-    });
-
-    dialogRef.afterClosed().subscribe(result => {
-      if (typeof result === 'object'){
-        
-        this.created=true
-        this.error=false
       }
-      
-    });
+    )
   }
 
-
-  
+  getUserInfo() {
+    //ajout des infos utilisateurs dans des variables
+    this.user = this.conne.user;
+    this.name = this.user[0].payload.doc.data().name;
+    this.surname = this.user[0].payload.doc.data().surname;
+    switch (this.conne.role) {
+      case 0:
+        this.role = "Ancien étudiant"
+        break;
+      case 1:
+        this.role = "Professseur"
+        break;
+      case 2:
+        this.role = "Administrateur"
+        break;
+      default:
+        break;
+    }
+  }
 }

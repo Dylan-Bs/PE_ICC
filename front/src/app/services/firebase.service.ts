@@ -6,33 +6,14 @@ import { AngularFirestore } from '@angular/fire/firestore';
 })
 export class FirebaseService {
 
-
-  constructor(public db: AngularFirestore) { 
-
-    /*this.createUser({
-      pseudo: 'admin',
-      mdp: 'admin',
-      nom:'admin',
-      prenom:'admin',
-      promo:'admin',
-      entreprise:'admin',
-      showpromo:false,
-      showentreprise:false,
-      admin:true
-
-    }) */
-  }
+  constructor(public db: AngularFirestore) { }
 
   getUser(userKey) {
     return this.db.collection('users').doc(userKey).snapshotChanges();
   }
 
-  getUserByPseudo(pseudo) {
-    return this.db.collection('users', ref => ref.where('pseudo', '==', pseudo))
-      .snapshotChanges()
-  }
-
   updateUser(userKey, value) {
+    value.nameToSearch = value.name.toLowerCase();
     return this.db.collection('users').doc(userKey).set(value);
   }
 
@@ -40,42 +21,59 @@ export class FirebaseService {
     return this.db.collection('users').doc(userKey).delete();
   }
 
-  deleteUserByPseudo(pseudo) {
-    return this.db.collection('users', ref => ref.where('pseudo', '==', pseudo))
-  }
-
   getUsers() {
     return this.db.collection('users').snapshotChanges();
   }
 
+  searchUsers(searchValue) {
+    return this.db.collection('users', ref => ref.where('nameToSearch', '>=', searchValue)
+      .where('nameToSearch', '<=', searchValue + '\uf8ff'))
+      .snapshotChanges()
+  }
 
-
+  searchUsersByPromo(value) {
+    return this.db.collection('users', ref => ref.orderBy('promo').startAt(value)).snapshotChanges();
+  }
 
   createUser(value) {
     return this.db.collection('users').add({
-      pseudo: value.pseudo,
-      mdp: value.mdp,
-      nom:value.nom,
-      prenom:value.prenom,
-      promo:value.promo,
-      entreprise:value.entreprise,
-      showpromo:value.showpromo,
-      showentreprise:value.showentreprise,
-      admin:value.admin
-
+      email: value.email,
+      password: value.password,
+      name: value.name,
+      nameToSearch: value.name.toLowerCase(),
+      surname: value.surname,
+      promo: parseInt(value.promo),
+      optionsIng3Control: value.optionsIng3Control,
+      entreprise: value.entreprise,
+      ville: value.ville,
+      salaire: parseInt(value.salaire),
+      role: parseInt('0')
     });
   }
 
-  connect(pseudo,mdp) {
-    return this.db.collection('users', ref => ref.where('pseudo', '==', pseudo)
-      .where('mdp', '==', mdp))
+  connect(value) {
+    return this.db.collection('users', ref => ref.where('email', '==', value.email)
+      .where('password', '==', value.password))
       .snapshotChanges();
   }
 
   getEtudiants() {
     return this.db.collection('users', etudiant => etudiant
-      .where('admin', '==', false))
+      .where('role', '==', 0))
       .snapshotChanges();
   }
 
+  getEtudByOption(optioning3) {
+    return this.db.collection('users', ref => ref.where('optionsIng3Control', '==', optioning3))
+      .snapshotChanges()
+  }
+
+  anonymiser(userKey, value) {
+    value.email = 'anonymous';
+    value.password = '';//un mot de passe vide, empeche les gens de valider un formulaire de connexion 
+    value.name = 'anonymous';
+    value.nameToSearch = 'anonymous';
+    value.surname = 'anonymous';
+    return this.db.collection('users').doc(userKey).set(value);
+  }
 }

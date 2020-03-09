@@ -1,0 +1,31 @@
+.edit-page {
+  padding: 20px 60px;
+
+  .create-form {
+    padding: 20px;
+    text-align: center;
+
+    .submit-button-container {
+      justify-content: center;
+
+      .submit-button {
+        width: 100%;
+      }
+    }
+
+    .input-style {
+      width: 50%;
+    }
+
+    .slider {
+      width: 52%;
+    }
+
+    .mat-error {
+      font-size: 12px;
+    }
+  }
+}
+.form-container {
+  margin: auto;
+}

@@ -3,24 +3,24 @@ import { CanActivate, CanLoad, Route, UrlSegment, ActivatedRouteSnapshot, Router
 import { Observable } from 'rxjs';
 import { ConnexionService } from './connexion.service';
 
-
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanLoad {
-  constructor(public connexion:ConnexionService,private router: Router){}
+  
+  constructor(private conne:ConnexionService, private router: Router){
+
+  }
+  
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
-    let haveaccess=this.connexion.isconnected() && state.url!="extranet/statistiques" || this.connexion.isadmin();
-    if (haveaccess){
-      return true;
-    }else{
-      this.router.navigate(['/404']);
-      return false;
-    }
-    
-    
+      if (!this.conne.connecte) {
+        // Si pas d'utilisateur connecté : redirection vers la page de connexion
+        console.log('Vous n\'êtes pas connectés');
+        this.router.navigate(['/connexion']);
+      }
+      return this.conne.connecte;
   }
   canLoad(
     route: Route,
