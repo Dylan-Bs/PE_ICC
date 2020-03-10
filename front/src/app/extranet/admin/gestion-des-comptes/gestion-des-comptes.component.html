@@ -12,11 +12,11 @@
                 <span>Filtre par promo (older than):</span>
             </div>
             <div class="col">
-                <span>0 </span>
-                <mat-slider class="promo-slider" max="2100" min="0" step="1" thumbLabel="true" (ngModel)="promoValue"
+                <span>1970 </span>
+                <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" (ngModel)="promoValue"
                     (change)="rangeChange($event)">
                 </mat-slider>
-                <span>2100</span>
+                <span>{{max}}</span>
             </div>
         </div>
     </div>

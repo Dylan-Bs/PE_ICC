@@ -9,6 +9,7 @@ import { Router, Params } from '@angular/router';
 })
 export class GestionDesComptesComponent implements OnInit {
 
+  max:number=(new Date()).getFullYear();
   promoValue: number = 0;
   searchValue: string = "";
   items: Array<any>;

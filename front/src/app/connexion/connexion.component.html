@@ -17,11 +17,13 @@
     </div>
 
     <button mat-raised-button class="submit-button" color="primary" type="submit"
-      [disabled]="!connexionForm.valid">Connexion</button>
+      [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
+      <div><mat-spinner *ngIf="loading"></mat-spinner></div>
+      
   </form>
 
   <div *ngIf="conne.connecte">
-    <p>Bonjour {{surname | titlecase }} {{name | uppercase }}, vous êtes bien connecté avec le role: {{role}}
+    <p>Bonjour {{surname | titlecase }} {{name | uppercase }}<br>vous êtes bien connecté avec le role: {{role}}
       <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
     </p>
     <button mat-raised-button color="primary" (click)="conne.connecte = false">Déconnexion</button>

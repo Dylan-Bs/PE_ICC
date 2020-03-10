@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ConnexionService } from '../services/connexion.service';
+import { AppComponent } from '../app.component';
 
 @Component({
   selector: 'app-menu',
@@ -7,7 +8,7 @@ import { ConnexionService } from '../services/connexion.service';
   styleUrls: ['./menu.component.css']
 })
 export class MenuComponent implements OnInit {
-  constructor(public conne:ConnexionService) { }
+  constructor(public conne:ConnexionService, public  parent:AppComponent) { }
 
   ngOnInit() {
   }

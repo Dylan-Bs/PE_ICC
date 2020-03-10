@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 //Formulaire
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { MatSidenavModule,MatCardModule,MatButtonModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatDialogModule, MatSliderModule } from '@angular/material';
+import { MatProgressSpinnerModule,MatListModule,MatSidenavModule,MatCardModule,MatButtonModule, MatInputModule, MatSelectModule, MatCheckboxModule, MatToolbarModule, MatIconModule, MatDialogModule, MatSliderModule } from '@angular/material';
 //Firebase
 import { AngularFireModule } from '@angular/fire';
 import { AngularFirestoreModule } from '@angular/fire/firestore';
@@ -55,7 +55,9 @@ import { FooterComponent } from './footer/footer.component';
     HttpClientModule,
     ExtranetfRoutingModule,
     MatCardModule,
-    MatSidenavModule
+    MatSidenavModule,
+    MatListModule,
+    MatProgressSpinnerModule
   ],
   bootstrap: [AppComponent],
   schemas: [

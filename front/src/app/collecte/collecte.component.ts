@@ -22,6 +22,9 @@ export interface optionsIng3Group {
 export class CollecteComponent implements OnInit {
 
   exampleForm: FormGroup;
+  
+  
+  max:number=(new Date()).getFullYear();
 
   optionsIng3Groups: optionsIng3Group[] = [
     {
@@ -43,9 +46,9 @@ export class CollecteComponent implements OnInit {
     },
   ];
 
-  indeterminate = false;
-  labelPosition = 'after';
-  disabled = false;
+  indeterminate:boolean = false;
+  labelPosition:string = 'after';
+  disabled:boolean = false;
 
   validation_messages = {
     'email': [

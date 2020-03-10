@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ViewChild,ElementRef } from '@angular/core';
 import { FirebaseApp } from '@angular/fire';
+import { MatSidenav } from '@angular/material';
+import { ConnexionService } from './services/connexion.service';
 
 @Component({
   selector: 'app-root',
@@ -8,8 +10,9 @@ import { FirebaseApp } from '@angular/fire';
 })
 export class AppComponent {
   title = 'projet-angular-app';
+  @ViewChild('snav', { static: false }) snav: ElementRef;
 
-  constructor(public app: FirebaseApp) {
-    
+  constructor(public conne:ConnexionService,public app: FirebaseApp) {
   }
+
 }

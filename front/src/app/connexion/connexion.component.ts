@@ -18,6 +18,8 @@ export class ConnexionComponent implements OnInit {
   surname: string;
   role: string;
 
+  loading:boolean=false
+
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
@@ -47,8 +49,10 @@ export class ConnexionComponent implements OnInit {
   }
 
   onSubmit(value) {
+    this.loading=true
     this.firebaseService.connect(value).subscribe(
       result => {
+        this.loading=false
         this.user = result;
         console.log("tentative d'authentification");
         if (this.user.length > 0) {

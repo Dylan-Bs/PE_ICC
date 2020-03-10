@@ -11,6 +11,7 @@ import { ConnexionService } from '../../../services/connexion.service';
 })
 export class ListeEtudComponent implements OnInit {
 
+  max:number=(new Date()).getFullYear();
   promoValue: number = 0;
   searchValue: string = "";
   items: Array<any>;

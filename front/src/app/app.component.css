@@ -1,3 +1,18 @@
 .content{
-    min-height:80vh;
+    min-height:87.7vh;
+}
+
+.flex-spacer{
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+    flex-direction: column;
+}
+
+a:not(.raisebutton) {
+    color: inherit;
+   
+}
+
+a:hover{
+    text-decoration: none;
 }
