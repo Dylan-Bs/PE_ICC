@@ -81,7 +81,7 @@ DATABASES = {
             'ENGINE': 'djongo',
             'NAME': os.environ['DATABASE_NAME'],
             'USER': os.environ['DATABASE_USER'],
-            'PASSWORD': os.environ['DATABASE_NAME']
+            'PASSWORD': os.environ['DATABASE_NAME'],
             'HOST': os.environ['DATABASE_PASSWORD'], 
             # Or an IP Address that your DB is hosted on
             'PORT': os.environ['DATABASE_PORT'],
