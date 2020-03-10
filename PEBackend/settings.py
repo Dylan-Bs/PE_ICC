@@ -21,10 +21,10 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 # See https://docs.djangoproject.com/en/1.9/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = os.environ['SECRET_KEY']
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.environ['DEBUG']
+DEBUG = os.getenv('DEBUG')
 ALLOWED_HOSTS = ['*']
 
 
@@ -79,12 +79,12 @@ WSGI_APPLICATION = 'PEBackend.wsgi.application'
 DATABASES = {
             'default': {
             'ENGINE': 'djongo',
-            'NAME': os.environ['DATABASE_NAME'],
-            'USER': os.environ['DATABASE_USER'],
-            'PASSWORD': os.environ['DATABASE_NAME'],
-            'HOST': os.environ['DATABASE_PASSWORD'], 
+            'NAME': os.getenv('DATABASE_NAME'),
+            'USER': os.getenv('DATABASE_USER'),
+            'PASSWORD': os.getenv('DATABASE_NAME'),
+            'HOST': os.getenv('DATABASE_PASSWORD'), 
             # Or an IP Address that your DB is hosted on
-            'PORT': os.environ['DATABASE_PORT'],
+            'PORT': os.getenv('DATABASE_PORT'),
         }
     }
 

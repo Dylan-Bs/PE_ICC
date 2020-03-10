@@ -1,20 +1,5 @@
 version: '3.3'
 services:
-    mongo:
-        restart: always
-        image: mongo:4.2
-        container_name: mongo
-        environment:
-            - MONGODB_ROOT_PASSWORD=dockerpswd
-            - MONGODB_NAME=dockerProjectDB          
-            - MONGODB_USER=root
-            - MONGODB_PASSWORD=dockerpswd
-            - MONGODB_PORT=27017
-            - MONGODB_SERVICE=localhost
-        ports:
-            - "27017:27017"
-        volumes:
-            - data-volume:/data/db
     api:
         restart: always
         build: 
@@ -26,15 +11,7 @@ services:
         volumes:
                 - web-django:/usr/src/app
                 - web-static:/usr/src/app/static
-        environment:
-            - DEBUG='True'
-            - DATABASE_NAME=PEDB
-            - SECRET_KEY=7c6c8696-dd43-469e-a4ee-9a11c6af15d4
-            - DATABASE_USER=root
-            - DATABASE_PASSWORD=dockerpswd
-            - DATABASE_HOST=mongo
-            - DATABASE_PORT=27017
-        entrypoint: /start.sh
+        
         command: python /src/manage.py runserver 0.0.0.0:8000
         ports:
             - "8000:8000"
@@ -42,6 +19,21 @@ services:
             - mongo
         links:
             - mongo:mongo
+    mongo:
+        restart: always
+        image: mongo:4.2
+        container_name: mongo
+        environment:
+            - MONGODB_ROOT_PASSWORD=dockerpswd
+            - MONGODB_NAME=PEDB          
+            - MONGODB_USER=root
+            - MONGODB_PASSWORD=dockerpswd
+            - MONGODB_PORT=27017
+            - MONGODB_SERVICE=localhost
+        ports:
+            - "27017:27017"
+        volumes:
+            - data-volume:/data/db
 volumes:
     web-django:
     web-static:
