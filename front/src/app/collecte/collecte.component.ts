@@ -21,7 +21,11 @@ export interface optionsIng3Group {
 })
 export class CollecteComponent implements OnInit {
 
-  exampleForm: FormGroup;
+  personalForm: FormGroup;
+  professionalForm: FormGroup;
+  validationForm: FormGroup;
+
+  loading:Boolean=false;
   
   
   max:number=(new Date()).getFullYear();
@@ -81,45 +85,57 @@ export class CollecteComponent implements OnInit {
   }
 
   createForm() {
-    this.exampleForm = this.fb.group({
+    this.personalForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(7)]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
       promo: ['', Validators.required],
-      optionsIng3Control: ['', Validators.required],
+      optionsIng3Control: ['', Validators.required]});
+    this.professionalForm = this.fb.group({
       entreprise: [''],
       ville: [''],
-      salaire: [''],
+      salaire: ['']});
+    this.validationForm = this.fb.group({
       autorisationCollecte: ['']
     });
   }
 
 
   resetFields() {
-    this.exampleForm = this.fb.group({
+    this.personalForm = this.fb.group({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(7)]),
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
       promo: new FormControl('', Validators.required),
-      optionsIng3Control: new FormControl('', Validators.required),
+      optionsIng3Control: new FormControl('', Validators.required)});
+    this.professionalForm = this.fb.group({
       entreprise: new FormControl(''),
       ville: new FormControl(''),
-      salaire: new FormControl(''),
+      salaire: new FormControl('')});
+    this.validationForm = this.fb.group({
       autorisationCollecte: new FormControl('')
     });
   }
 
 
-  onSubmit(value) {
+  onSubmit() {
+
+    let a:Object=this.personalForm.value
+    let b:Object=this.professionalForm.value
+
+    let value:Object=Object.assign({}, a, b);
+    this.loading=true
     console.log(value)
     this.firebaseService.createUser(value)
       .then(
         res => {
+          this.loading=false;
           this.resetFields();
           this.conne.form_send = true;
           console.log("formulaire envoyé avec succès");
+          
         }
       )
   }
