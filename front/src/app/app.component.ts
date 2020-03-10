@@ -1,6 +1,5 @@
 import { Component, ViewChild,ElementRef } from '@angular/core';
 import { FirebaseApp } from '@angular/fire';
-import { MatSidenav } from '@angular/material';
 import { ConnexionService } from './services/connexion.service';
 
 @Component({
