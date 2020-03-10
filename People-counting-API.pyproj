@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>
+    <Name>People-counting-API</Name>
+    <RootNamespace>People-counting-API</RootNamespace>
+    <InterpreterId>MSBuild|env|$(MSBuildProjectFullPath)</InterpreterId>
+  </PropertyGroup>
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>75efa4f0-2c09-483f-ad26-b2d5d41c0689</ProjectGuid>
+    <ProjectHome>.</ProjectHome>
+    <ProjectTypeGuids>{5F0BE9CA-D677-4A4D-8806-6076C0FAAD37};{349c5851-65df-11da-9384-00065b846f21};{888888a0-9f3d-457c-b088-3a5042f75d52}</ProjectTypeGuids>
+    <StartupFile>manage.py</StartupFile>
+    <SearchPath>
+    </SearchPath>
+    <WorkingDirectory>.</WorkingDirectory>
+    <WebBrowserUrl>http://localhost</WebBrowserUrl>
+    <LaunchProvider>Django launcher</LaunchProvider>
+    <DjangoSettingsModule>People_counting_API.settings</DjangoSettingsModule>
+    <OutputPath>.</OutputPath>
+    <SuppressCollectPythonCloudServiceFiles>true</SuppressCollectPythonCloudServiceFiles>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+    <DebugSymbols>true</DebugSymbols>
+    <EnableUnmanagedDebugging>false</EnableUnmanagedDebugging>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Authenticate\urls.py" />
+    <Compile Include="Authenticate\views.py" />
+    <Compile Include="Authenticate\__init__.py" />
+    <Compile Include="Clicks\migrations\0001_initial.py" />
+    <Compile Include="Clicks\migrations\__init__.py" />
+    <Compile Include="Clicks\models.py" />
+    <Compile Include="Clicks\urls.py" />
+    <Compile Include="Clicks\views.py" />
+    <Compile Include="Clicks\__init__.py" />
+    <Compile Include="GetClicks\migrations\__init__.py" />
+    <Compile Include="GetClicks\urls.py" />
+    <Compile Include="GetClicks\views.py" />
+    <Compile Include="GetClicks\__init__.py" />
+    <Compile Include="GetProject\migrations\__init__.py" />
+    <Compile Include="GetProject\urls.py" />
+    <Compile Include="GetProject\views.py" />
+    <Compile Include="GetProject\__init__.py" />
+    <Compile Include="manage.py" />
+    <Compile Include="People_counting_API\__init__.py" />
+    <Compile Include="People_counting_API\settings.py" />
+    <Compile Include="People_counting_API\urls.py" />
+    <Compile Include="People_counting_API\wsgi.py" />
+    <Compile Include="Project\migrations\0001_initial.py" />
+    <Compile Include="Project\migrations\__init__.py" />
+    <Compile Include="Project\models.py" />
+    <Compile Include="Project\urls.py" />
+    <Compile Include="Project\views.py" />
+    <Compile Include="Project\__init__.py" />
+    <Compile Include="Register\urls.py" />
+    <Compile Include="Register\views.py" />
+    <Compile Include="Register\__init__.py" />
+    <Compile Include="Test\models.py" />
+    <Compile Include="Test\urls.py" />
+    <Compile Include="Test\views.py" />
+    <Compile Include="Test\__init__.py" />
+    <Compile Include="VerifyAuthentication\urls.py" />
+    <Compile Include="VerifyAuthentication\views.py" />
+    <Compile Include="VerifyAuthentication\__init__.py" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Authenticate\" />
+    <Folder Include="Authenticate\__pycache__\" />
+    <Folder Include="Clicks\" />
+    <Folder Include="Clicks\migrations\" />
+    <Folder Include="Clicks\migrations\__pycache__\" />
+    <Folder Include="Clicks\__pycache__\" />
+    <Folder Include="GetClicks\" />
+    <Folder Include="GetClicks\migrations\" />
+    <Folder Include="GetProject\" />
+    <Folder Include="GetProject\migrations\" />
+    <Folder Include="People_counting_API\" />
+    <Folder Include="Project\" />
+    <Folder Include="Project\migrations\" />
+    <Folder Include="Project\migrations\__pycache__\" />
+    <Folder Include="Project\__pycache__\" />
+    <Folder Include="Register\" />
+    <Folder Include="Register\__pycache__\" />
+    <Folder Include="static\" />
+    <Folder Include="static\admin\" />
+    <Folder Include="static\admin\css\" />
+    <Folder Include="static\admin\fonts\" />
+    <Folder Include="static\admin\img\" />
+    <Folder Include="static\admin\img\gis\" />
+    <Folder Include="static\admin\js\" />
+    <Folder Include="static\admin\js\admin\" />
+    <Folder Include="static\admin\js\vendor\" />
+    <Folder Include="static\admin\js\vendor\jquery\" />
+    <Folder Include="static\admin\js\vendor\xregexp\" />
+    <Folder Include="static\rest_framework\" />
+    <Folder Include="static\rest_framework\css\" />
+    <Folder Include="static\rest_framework\docs\" />
+    <Folder Include="static\rest_framework\docs\css\" />
+    <Folder Include="static\rest_framework\docs\img\" />
+    <Folder Include="static\rest_framework\docs\js\" />
+    <Folder Include="static\rest_framework\fonts\" />
+    <Folder Include="static\rest_framework\img\" />
+    <Folder Include="static\rest_framework\js\" />
+    <Folder Include="Test\" />
+    <Folder Include="Test\__pycache__\" />
+    <Folder Include="VerifyAuthentication\" />
+    <Folder Include="VerifyAuthentication\__pycache__\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Authenticate\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="Authenticate\__pycache__\views.cpython-36.pyc" />
+    <Content Include="Authenticate\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="Clicks\migrations\__pycache__\0001_initial.cpython-36.pyc" />
+    <Content Include="Clicks\migrations\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="Clicks\__pycache__\clickSerializer.cpython-36.pyc" />
+    <Content Include="Clicks\__pycache__\models.cpython-36.pyc" />
+    <Content Include="Clicks\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="Clicks\__pycache__\views.cpython-36.pyc" />
+    <Content Include="Clicks\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="Dockerfile" />
+    <Content Include="Project\migrations\__pycache__\0001_initial.cpython-36.pyc" />
+    <Content Include="Project\migrations\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="Project\__pycache__\models.cpython-36.pyc" />
+    <Content Include="Project\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="Project\__pycache__\views.cpython-36.pyc" />
+    <Content Include="Project\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="Register\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="Register\__pycache__\views.cpython-36.pyc" />
+    <Content Include="Register\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="db.sqlite3" />
+    <Content Include="requirements.txt" />
+    <Content Include="static\admin\css\base.css" />
+    <Content Include="static\admin\css\changelists.css" />
+    <Content Include="static\admin\css\dashboard.css" />
+    <Content Include="static\admin\css\fonts.css" />
+    <Content Include="static\admin\css\forms.css" />
+    <Content Include="static\admin\css\login.css" />
+    <Content Include="static\admin\css\rtl.css" />
+    <Content Include="static\admin\css\widgets.css" />
+    <Content Include="static\admin\fonts\LICENSE.txt" />
+    <Content Include="static\admin\fonts\README.txt" />
+    <Content Include="static\admin\fonts\Roboto-Bold-webfont.woff" />
+    <Content Include="static\admin\fonts\Roboto-Light-webfont.woff" />
+    <Content Include="static\admin\fonts\Roboto-Regular-webfont.woff" />
+    <Content Include="static\admin\img\calendar-icons.svg" />
+    <Content Include="static\admin\img\gis\move_vertex_off.svg" />
+    <Content Include="static\admin\img\gis\move_vertex_on.svg" />
+    <Content Include="static\admin\img\icon-addlink.svg" />
+    <Content Include="static\admin\img\icon-alert.svg" />
+    <Content Include="static\admin\img\icon-calendar.svg" />
+    <Content Include="static\admin\img\icon-changelink.svg" />
+    <Content Include="static\admin\img\icon-clock.svg" />
+    <Content Include="static\admin\img\icon-deletelink.svg" />
+    <Content Include="static\admin\img\icon-no.svg" />
+    <Content Include="static\admin\img\icon-unknown-alt.svg" />
+    <Content Include="static\admin\img\icon-unknown.svg" />
+    <Content Include="static\admin\img\icon-yes.svg" />
+    <Content Include="static\admin\img\inline-delete.svg" />
+    <Content Include="static\admin\img\LICENSE" />
+    <Content Include="static\admin\img\README.txt" />
+    <Content Include="static\admin\img\search.svg" />
+    <Content Include="static\admin\img\selector-icons.svg" />
+    <Content Include="static\admin\img\sorting-icons.svg" />
+    <Content Include="static\admin\img\tooltag-add.svg" />
+    <Content Include="static\admin\img\tooltag-arrowright.svg" />
+    <Content Include="static\admin\js\actions.js" />
+    <Content Include="static\admin\js\actions.min.js" />
+    <Content Include="static\admin\js\admin\DateTimeShortcuts.js" />
+    <Content Include="static\admin\js\admin\RelatedObjectLookups.js" />
+    <Content Include="static\admin\js\calendar.js" />
+    <Content Include="static\admin\js\cancel.js" />
+    <Content Include="static\admin\js\change_form.js" />
+    <Content Include="static\admin\js\collapse.js" />
+    <Content Include="static\admin\js\collapse.min.js" />
+    <Content Include="static\admin\js\core.js" />
+    <Content Include="static\admin\js\inlines.js" />
+    <Content Include="static\admin\js\inlines.min.js" />
+    <Content Include="static\admin\js\jquery.init.js" />
+    <Content Include="static\admin\js\popup_response.js" />
+    <Content Include="static\admin\js\prepopulate.js" />
+    <Content Include="static\admin\js\prepopulate.min.js" />
+    <Content Include="static\admin\js\prepopulate_init.js" />
+    <Content Include="static\admin\js\SelectBox.js" />
+    <Content Include="static\admin\js\SelectFilter2.js" />
+    <Content Include="static\admin\js\timeparse.js" />
+    <Content Include="static\admin\js\urlify.js" />
+    <Content Include="static\admin\js\vendor\jquery\jquery.js" />
+    <Content Include="static\admin\js\vendor\jquery\jquery.min.js" />
+    <Content Include="static\admin\js\vendor\jquery\LICENSE-JQUERY.txt" />
+    <Content Include="static\admin\js\vendor\xregexp\LICENSE-XREGEXP.txt" />
+    <Content Include="static\admin\js\vendor\xregexp\xregexp.js" />
+    <Content Include="static\admin\js\vendor\xregexp\xregexp.min.js" />
+    <Content Include="static\rest_framework\css\bootstrap-theme.min.css" />
+    <Content Include="static\rest_framework\css\bootstrap-tweaks.css" />
+    <Content Include="static\rest_framework\css\bootstrap.min.css" />
+    <Content Include="static\rest_framework\css\default.css" />
+    <Content Include="static\rest_framework\css\font-awesome-4.0.3.css" />
+    <Content Include="static\rest_framework\css\prettify.css" />
+    <Content Include="static\rest_framework\docs\css\base.css" />
+    <Content Include="static\rest_framework\docs\css\highlight.css" />
+    <Content Include="static\rest_framework\docs\css\jquery.json-view.min.css" />
+    <Content Include="static\rest_framework\docs\img\favicon.ico" />
+    <Content Include="static\rest_framework\docs\img\grid.png" />
+    <Content Include="static\rest_framework\docs\js\api.js" />
+    <Content Include="static\rest_framework\docs\js\highlight.pack.js" />
+    <Content Include="static\rest_framework\docs\js\jquery.json-view.min.js" />
+    <Content Include="static\rest_framework\fonts\fontawesome-webfont.eot" />
+    <Content Include="static\rest_framework\fonts\fontawesome-webfont.svg" />
+    <Content Include="static\rest_framework\fonts\fontawesome-webfont.ttf" />
+    <Content Include="static\rest_framework\fonts\fontawesome-webfont.woff" />
+    <Content Include="static\rest_framework\fonts\glyphicons-halflings-regular.eot" />
+    <Content Include="static\rest_framework\fonts\glyphicons-halflings-regular.svg" />
+    <Content Include="static\rest_framework\fonts\glyphicons-halflings-regular.ttf" />
+    <Content Include="static\rest_framework\fonts\glyphicons-halflings-regular.woff" />
+    <Content Include="static\rest_framework\fonts\glyphicons-halflings-regular.woff2" />
+    <Content Include="static\rest_framework\img\glyphicons-halflings-white.png" />
+    <Content Include="static\rest_framework\img\glyphicons-halflings.png" />
+    <Content Include="static\rest_framework\img\grid.png" />
+    <Content Include="static\rest_framework\js\ajax-form.js" />
+    <Content Include="static\rest_framework\js\bootstrap.min.js" />
+    <Content Include="static\rest_framework\js\coreapi-0.1.1.js" />
+    <Content Include="static\rest_framework\js\csrf.js" />
+    <Content Include="static\rest_framework\js\default.js" />
+    <Content Include="static\rest_framework\js\jquery-3.3.1.min.js" />
+    <Content Include="static\rest_framework\js\prettify-min.js" />
+    <Content Include="Test\__pycache__\models.cpython-36.pyc" />
+    <Content Include="Test\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="Test\__pycache__\views.cpython-36.pyc" />
+    <Content Include="Test\__pycache__\__init__.cpython-36.pyc" />
+    <Content Include="VerifyAuthentication\__pycache__\urls.cpython-36.pyc" />
+    <Content Include="VerifyAuthentication\__pycache__\views.cpython-36.pyc" />
+    <Content Include="VerifyAuthentication\__pycache__\__init__.cpython-36.pyc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="readme.html">
+      <SubType>WebBrowser</SubType>
+    </None>
+  </ItemGroup>
+  <ItemGroup>
+    <Interpreter Include="env\">
+      <Id>env</Id>
+      <Version>3.6</Version>
+      <Description>env (Python 3.6 (64-bit))</Description>
+      <InterpreterPath>Scripts\python.exe</InterpreterPath>
+      <WindowsInterpreterPath>Scripts\pythonw.exe</WindowsInterpreterPath>
+      <PathEnvironmentVariable>PYTHONPATH</PathEnvironmentVariable>
+      <Architecture>X64</Architecture>
+    </Interpreter>
+  </ItemGroup>
+  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\VisualStudio\v$(VisualStudioVersion)\Python Tools\Microsoft.PythonTools.Django.targets" />
+  <!-- Specify pre- and post-build commands in the BeforeBuild and 
+       AfterBuild targets below. -->
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  <ProjectExtensions>
+    <VisualStudio>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}">
+        <WebProjectProperties>
+          <AutoAssignPort>True</AutoAssignPort>
+          <UseCustomServer>True</UseCustomServer>
+          <CustomServerUrl>http://localhost</CustomServerUrl>
+          <SaveServerSettingsInUserFile>False</SaveServerSettingsInUserFile>
+        </WebProjectProperties>
+      </FlavorProperties>
+      <FlavorProperties GUID="{349c5851-65df-11da-9384-00065b846f21}" User="">
+        <WebProjectProperties>
+          <StartPageUrl>
+          </StartPageUrl>
+          <StartAction>CurrentPage</StartAction>
+          <AspNetDebugging>True</AspNetDebugging>
+          <SilverlightDebugging>False</SilverlightDebugging>
+          <NativeDebugging>False</NativeDebugging>
+          <SQLDebugging>False</SQLDebugging>
+          <ExternalProgram>
+          </ExternalProgram>
+          <StartExternalURL>
+          </StartExternalURL>
+          <StartCmdLineArguments>
+          </StartCmdLineArguments>
+          <StartWorkingDirectory>
+          </StartWorkingDirectory>
+          <EnableENC>False</EnableENC>
+          <AlwaysStartWebServerOnDebug>False</AlwaysStartWebServerOnDebug>
+        </WebProjectProperties>
+      </FlavorProperties>
+    </VisualStudio>
+  </ProjectExtensions>
+</Project>
