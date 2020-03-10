@@ -23,6 +23,7 @@
     "@angular/platform-browser-dynamic": "^9.0.5",
     "@angular/router": "^9.0.5",
     "chart.js": "^2.9.3",
+    "core-js": "^3.6.4",
     "firebase": "^7.10.0",
     "ionicons": "^4.6.3",
     "ng2-charts": "^2.3.0",
