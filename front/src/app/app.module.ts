@@ -14,6 +14,8 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import {MatListModule} from '@angular/material/list';
 import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
+import {MatStepperModule} from '@angular/material/stepper';
+import {MatSnackBarModule} from '@angular/material/snack-bar';
 
 //Firebase
 import { AngularFireModule } from '@angular/fire';
@@ -69,7 +71,9 @@ import { FooterComponent } from './footer/footer.component';
     MatCardModule,
     MatSidenavModule,
     MatListModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatStepperModule,
+    MatSnackBarModule
   ],
   bootstrap: [AppComponent],
   schemas: [
