@@ -36,7 +36,7 @@ import { FooterComponent } from './footer/footer.component';
     Erreur404Component,
     FooterComponent
   ],
-  imports: [
+  imports:[
     BrowserModule,
     AppRoutingModule,
     FormsModule,
