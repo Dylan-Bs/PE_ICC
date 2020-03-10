@@ -7,18 +7,24 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import TimeoutException
 
+import pickle
+
 class LinkedinCrawler:
     def __init__(self, headless=False):
         opts = webdriver.chrome.options.Options()
+
         if headless:
             opts.add_argument('--headless')
+
+            # no-sandbox is required to run as ROOT in a container
+            opts.add_argument('--no-sandbox')
+
         self.driver = webdriver.Chrome(options=opts)
-        self.wdriver = WebDriverWait(self.driver, 180)
 
     def login(self, username, password):
         self.driver.get('https://www.linkedin.com/')
 
-        login_btn = self.wdriver.until(
+        login_btn = WebDriverWait(self.driver, 10).until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 '.nav > [data-tracking-control-name="guest_homepage-basic_nav-header-signin"]'
@@ -29,13 +35,15 @@ class LinkedinCrawler:
             .click(login_btn)
         ).perform()
 
-        uname_field = self.wdriver.until(
+        uname_field = WebDriverWait(self.driver, 5).until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 'input#username'
             ))
         )
         (ActionChains(self.driver)
+            .pause(0.2)
+            .click(uname_field)
             .pause(0.5)
             .send_keys(username)
             .pause(0.2)
@@ -61,7 +69,7 @@ class LinkedinCrawler:
             print('No phone verification this time')
             pass
 
-        nav_prof = self.wdriver.until(
+        nav_prof = WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
                 By.ID,
                 'launchpad-wormhole'
@@ -71,23 +79,22 @@ class LinkedinCrawler:
     def crawl_page(self, url):
         self.driver.get(url)
 
-        profile_bg = self.wdriver.until(
+        WebDriverWait(self.driver, 10).until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR,
                 '.profile-background-image'
             ))
         )
 
-        top_box = self.driver.find_element_by_css_selector(
-            '.pv-top-card > .ph5.pb5 > .mt2'
+        top_xp = self.driver.find_element_by_css_selector(
+            '.pv-profile-section__list-item .pv-entity__summary-info'
         )
 
-        bg_box = self.driver.find_element_by_id('oc-background-section')
+        title = top_xp.find_element_by_css_selector('h3.t-bold').text
+        company = top_xp.find_element_by_css_selector('p.t-normal').text
+        date_range = top_xp.find_element_by_css_selector('.pv-entity__date-range :not(.visually-hidden)').text
 
-        return {
-            'top': top_box.get_attribute('innerHTML'),
-            'background': bg_box.get_attribute('innerHTML'),
-        }
+        return title, company, date_range
 
 
 if __name__ == '__main__':
