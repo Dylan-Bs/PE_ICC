@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { Identification } from '../interfaces/identification';
-import { MatDialog } from '@angular/material';
+import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { FirebaseService } from '../services/firebase.service';
 
