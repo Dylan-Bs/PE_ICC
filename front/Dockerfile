@@ -3,6 +3,17 @@ FROM node:13.10.1
 
 MAINTAINER Dylan BERSANS "dylan.bersans@eisti.fr"
 
+# Update aptitude with new repo
+RUN apt-get update
+
+# Install software 
+RUN apt-get install -y git
+
+RUN apk add --update git openssh
+
+RUN addgroup -g 1000 -S git && \
+    adduser -u 1000 -S git -G git
+
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
