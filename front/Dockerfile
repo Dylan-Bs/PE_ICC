@@ -10,7 +10,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 RUN git clone git@github.com:Dylan-Bs/PE_ICC.git
 
 # set working directory
-WORKDIR /PE_ICC
+WORKDIR /PE_ICC/front
 
 # install and cache app dependencies
 RUN npm install
