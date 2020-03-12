@@ -6,12 +6,15 @@ MAINTAINER Dylan BERSANS "dylan.bersans@eisti.fr"
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
-#get the code on the git repo
-RUN mkdir ~/.ssh/ 
-RUN ssh-keyscan github.com > ~/.ssh/known_hosts
-RUN apt-get install openssh-client
-RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /etc/ssh/ssh_config
-RUN chmod 600 ~/.ssh/known_hosts && git clone git@github.com:Dylan-Bs/PE_ICC.git
+# 1. Create the SSH directory.
+# 2. Populate the private key file.
+# 3. Set the required permissions.
+# 4. Add github to our list of known hosts for ssh.
+RUN mkdir -p /root/.ssh/ && \
+    echo "$SSH_KEY" > /root/.ssh/id_rsa && \
+    chmod -R 600 /root/.ssh/ && \
+    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
+RUN git clone git@github.com:Dylan-Bs/PE_ICC.git
 
 # set working directory
 WORKDIR /PE_ICC/front
