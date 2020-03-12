@@ -9,7 +9,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 #get the code on the git repo
 RUN mkdir ~/.ssh/ 
 RUN ssh-keyscan github.com > ~/.ssh/known_hosts
-RUN sudo apt-get install openssh-client
+RUN apt-get install openssh-client
 RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
 RUN chmod 600 ~/.ssh/known_hosts && git clone git@github.com:Dylan-Bs/PE_ICC.git
 
