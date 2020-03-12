@@ -2,7 +2,7 @@
 <nav>
     <mat-toolbar color="primary">
         <mat-toolbar-row>
-            <button *ngIf="this.isMobile" mat-icon-button (click)="parent.snav.nativeElement.toggle()"><mat-icon>menu</mat-icon></button>
+            <button *ngIf="this.isMobile" mat-icon-button (click)="parent._toggle()"><mat-icon>menu</mat-icon></button>
 
             <a *ngIf="!this.isMobile" mat-button href routerLink='/'>Accueil</a>
             <a mat-button *ngIf="!this.isMobile && conne.role>1 && conne.connecte == true" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
