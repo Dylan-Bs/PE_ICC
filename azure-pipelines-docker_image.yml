@@ -30,8 +30,7 @@ stages:
     - task: Docker@2
       displayName: Push image
       inputs:
-        containerRegistry: |
-          $(dockerHub)
+        containerRegistry: 'DockerHub'
         repository: 'fenestio/pe_icc_front'
         command: push
         tags: |
