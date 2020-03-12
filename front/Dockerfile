@@ -3,6 +3,9 @@ FROM node:13.10.1
 
 MAINTAINER Dylan BERSANS "dylan.bersans@eisti.fr"
 
+# copy the repository form the previous image
+# COPY --from=intermediate /PE_ICC /PE_ICC
+
 # add `/app/node_modules/.bin` to $PATH
 ENV PATH /app/node_modules/.bin:$PATH
 
@@ -11,11 +14,48 @@ ENV PATH /app/node_modules/.bin:$PATH
 # 3. Set the required permissions.
 # 4. Add github to our list of known hosts for ssh.
 RUN mkdir -p /root/.ssh/ && \
-    echo "-----BEGIN RSA PRIVATE KEY-----MIIEpAIBAAKCAQEA729O8vGVKe34nBbBuMzyTlauwbEWNf0Ekor7+0TYuCtNf+fPgoa2VSL1sJOY9jZDelO/sbYEBE24XPFPKhU7nwXRSJg2EqAjPZYUbvU5i7JBddUk7KoLTjU/CJKWqWza5uMI49T6IankIYnvP4O0noJS/T4xwMIqQhbzsg9H6ZI9EcwNe/Fd7QDjfqs+Azir92LzeE5YUMRurPU/5pm3KNvRe6OgBNs2dNMl72GtoCvKkculj9l+yqVXnkW1yjJXYFbQ/WTl+4mtBdeU+wGp6oNmCTsKPMxwkEd9IImpk9ocnLK9eXyj885XglExaQ1xGUlzz4IW6RiTmWccLfxGFwIDAQABAoIBAQDgXyhWlXi4sB4290RWTwgJzUU6kR5FPXNZeBCl6GBGRZ38bFiS8nZO1dHyxH2kzDjzmyOZ/v1IoyRPRHpw7zDN1n/GTYzua05a2hcP25Evjb22FCTj+n1ZrqABAo1Y+38uujaMefpkLXZwz3d5x4wstefbFLs+7TT4ddWsWJGFGAsqJdRCLSxU2deE6UiNIH8VUJ4i1JzoSptkVbyD6/I91L+HI2CVqGjWxaJH2PUcwG0xpq/2lG+EHFKA3CSaLfQX9njiz1K5UMiaVqldcgXCRzUs5mzjgr6A7xyuBw/FrQyTiGxycMg10ge9sGhQqtahbo0F8/aqWDG5kzrqJ7qBAoGBAP11LRcajE4iKGPvzTU0IkG/+MvJAThshuEIrWVpeYY91LVwuO/xa+y9hE6vdpflKTBvNQWTNxFSjDVaevfoJzHEWKiIDT8M9HCIRJoS+HpmjVyvQ+jwgVbYIDzIy/QVv/4dL2UNMm4HAB4lsnD9zjCV7GemGUZnrNTKOF9AQuW3AoGBAPHWH92C9hqyZrtfNeHVGBTW5msQyhY99rmBoMM2s82JCDzZQjWWIKcROjYGeN/M8dY+WcJWeIjUFFZscrkwH9AXFY5avzbqTMOo4x+jXiIZp1sCsl5XPb6oO0UOgLeh0E/VTbTETir+Lbdf53t+XfWnw/9c0ZkQa2L2i5Vl1KKhAoGAeZNXSZnGa0QfM7C3MioLtJYs9TM5jqMgH5lV8ysgy6+k9FNZol6fcjOF32hy7nFRzJXLTR1McNazwnPgQEHvawPPsydvkyrXpZL3tSAcaDoA3NCFNpsGr22EKSP4EODN80p0jXhDFFvvRoa2jVRxLwT7HMyjmw3n7ToCyE2+yQkCgYEAgKpfwcbPkVyhc8cwL7rkWRIM/aGtIzBMeF4TXklYWF4z18vvgfsh3EE6K0w+OzQa5tW9g7vl3UaYm3KPhx+njVr6yQZW/ayisubEEC0nBBWKCM3igHcCDtIK1q7kpM6euhrOgQKAZDdfs1R/ICEXdH+Rs+d6TGmD+N8bXJ0VCIECgYAv7KK+YxZyJ0lghz4yrVA7ALmskMVYA9mc7T14sO8+DERDN9LaCfdiHBmyC5RuVw9yEdZzfqkzDyhYpgK8RoOMLGaKva7tUTMKxu9cdoH6KJxG9wxB7JkmuEorNw14zn/OaYi2FXPZRDK8/wW4h2HnxDIOyXfVh34peaHZYtXKGg==-----END RSA PRIVATE KEY-----" > /root/.ssh/id_rsa && \
-    echo "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDvb07y8ZUp7ficFsG4zPJOVq7BsRY1/QSSivv7RNi4K01/58+ChrZVIvWwk5j2NkN6U7+xtgQETbhc8U8qFTufBdFImDYSoCM9lhRu9TmLskF11STsqgtONT8IkpapbNrm4wjj1PohqeQhie8/g7SeglL9PjHAwipCFvOyD0fpkj0RzA178V3tAON+qz4DOKv3YvN4TlhQxG6s9T/mmbco29F7o6AE2zZ00yXvYa2gK8qRy6WP2X7KpVeeRbXKMldgVtD9ZOX7ia0F15T7Aanqg2YJOwo8zHCQR30giamT2hycsr15fKPzzleCUTFpDXEZSXPPghbpGJOZZxwt/EYX ec2-user@ip-172-31-31-147.eu-west-3.compute.internal" > /root/.ssh/id_rsa.pub && \
+    echo "-----BEGIN OPENSSH PRIVATE KEY-----" > /root/.ssh/id_rsa && \
+    echo "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\
+    jI0eocsFV60EkrAAAACmR5bGFuQGFyY2g=" >> /root/.ssh/id_rsa && \
+    echo "-----END OPENSSH PRIVATE KEY-----" >> /root/.ssh/id_rsa && \
     chmod -R 600 /root/.ssh/ && \
-    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts
-RUN git clone git@github.com:Dylan-Bs/PE_ICC.git
+    touch /root/.ssh/known_hosts && \
+    ssh-keyscan -t rsa github.com >> ~/.ssh/known_hosts && \
+    git clone git@github.com:Dylan-Bs/PE_ICC.git
 
 # set working directory
 WORKDIR /PE_ICC/front
