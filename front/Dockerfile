@@ -9,6 +9,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 #get the code on the git repo
 RUN mkdir ~/.ssh/ 
 RUN ssh-keyscan github.com > ~/.ssh/known_hosts
+RUN chmod 600 ~/.ssh/known_hosts
 RUN git clone git@github.com:Dylan-Bs/PE_ICC.git
 
 # set working directory
