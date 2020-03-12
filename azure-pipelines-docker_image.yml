@@ -27,3 +27,8 @@ stages:
         dockerfile: '$(Build.SourcesDirectory)/front/Dockerfile'
         tags: |
           $(tag)
+    - task: Docker@2
+      inputs:
+        containerRegistry: 'DockerHub'
+        repository: 'pe_icc_front'
+        command: 'push'
