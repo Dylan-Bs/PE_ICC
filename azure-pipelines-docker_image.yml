@@ -21,8 +21,18 @@ stages:
       vmImage: 'ubuntu-latest'
     steps:
     - task: Docker@2
+      displayName: Build an image
       inputs:
-        containerRegistry: 'DockerHub'
-        repository: 'pe_icc_front'
-        command: 'buildAndPush'
-        Dockerfile: '**/front/Dockerfile'
+        command: build
+        dockerfile: '$(Build.SourcesDirectory)/front/Dockerfile'
+        tags: |
+          $(tag)
+    - task: Docker@2
+      displayName: Push image
+      inputs:
+        containerRegistry: |
+          $(dockerHub)
+        repository: 'fenestio/pe_icc_front'
+        command: push
+        tags: |
+          test1
