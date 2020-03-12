@@ -10,7 +10,7 @@ ENV PATH /app/node_modules/.bin:$PATH
 RUN mkdir ~/.ssh/ 
 RUN ssh-keyscan github.com > ~/.ssh/known_hosts
 RUN apt-get install openssh-client
-RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> ~/.ssh/config
+RUN echo -e "Host github.com\n\tStrictHostKeyChecking no\n" >> /etc/ssh/ssh_config
 RUN chmod 600 ~/.ssh/known_hosts && git clone git@github.com:Dylan-Bs/PE_ICC.git
 
 # set working directory
