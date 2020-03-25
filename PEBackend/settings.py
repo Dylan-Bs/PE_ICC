@@ -80,7 +80,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'), 
         # Or an IP Address that your DB is hosted on
-        'PORT': int(os.getenv('DATABASE_PORT'))
+        'PORT': os.getenv('DATABASE_PORT')
     }
 }
 
