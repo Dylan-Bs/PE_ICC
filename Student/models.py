@@ -5,15 +5,16 @@ import os
 
 class OverwriteStorage(FileSystemStorage):
     def get_available_name(self, name):
-        if self.exists(nom):
+        if self.exists(name):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
 
-class Project(models.Model): 
+class Student(models.Model): 
     class Meta:
        managed = True
        db_table = 'project'
-    id = models.AutoField(primary_key=True)
-    name = models.CharField(max_length=30)
-    imageUrl = models.CharField(max_length=255)
-    algorithmiaCount = models.IntegerField()
+    id = models.CharField(max_length=30, primary_key=True)
+    promotion = models.CharField(max_length=30)
+    enterprise = models.CharField(max_length=255)
+    wage = models.DecimalField()
+    working_city = models.CharField(max_length=100)

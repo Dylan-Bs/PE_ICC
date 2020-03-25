@@ -1,6 +1,6 @@
 import django
 import pathlib
-from .models import Project as ProjectModel
+from .models import Student as StudentModel
 import os
 from django.core import serializers
 from rest_framework import views
@@ -18,15 +18,15 @@ class Project(views.APIView):
             name = request.data['name']
             imageUrl = request.data['imageUrl']
             algorithmiaCount = request.data['algorithmiaCount']
-            if ProjectModel.objects.filter(name=name).exists():
+            if StudentModel.objects.filter(name=name).exists():
                 resp = JsonResponse({'Error': "Project named like this already created"}, status="400")
             else:
-                db_project = ProjectModel()
-                db_project.name = name
-                db_project.imageUrl = imageUrl
-                db_project.algorithmiaCount = algorithmiaCount
-                db_project.save()
-                resp = JsonResponse({"id": db_project.id,"name":db_project.name,"imageUrl":db_project.imageUrl,"algorithmiaCount":db_project.algorithmiaCount}, status = "200")
+                db_student = StudentModel()
+                db_student.name = name
+                db_student.imageUrl = imageUrl
+                db_student.algorithmiaCount = algorithmiaCount
+                db_student.save()
+                resp = JsonResponse({"id": db_student.id,"name":db_student.name,"imageUrl":db_student.imageUrl,"algorithmiaCount":db_student.algorithmiaCount}, status = "200")
             resp["Access-Control-Allow-Origin"] = "*"
             resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
             resp["Access-Control-Max-Age"] = "1000"

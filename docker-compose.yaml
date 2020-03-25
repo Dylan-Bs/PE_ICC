@@ -1,40 +1,73 @@
 version: '3.3'
+volumes:
+    web-django:
+    web-static: 
+    data-volume:
+
 services:
+    mongodb:
+        restart: always
+        image: mongo:latest
+        container_name: mongodb
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: dockerpswd
+            MONGO_INITDB_DATABASE: pe_database
+            MONGODB_USER: admin 
+            MONGODB_PASS: dockerpswd
+            MONGODB_DATABASE: pe_database
+            MONGO_DATA_DIR: /data/db
+            MONGO_LOG_DIR: /dev/null
+        volumes:
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - data-volume:/data/db
+        ports:
+            - 27017:27017
     api:
         restart: always
         build: 
             context: ./ 
-            dockerfile: Dockerfile        
+            dockerfile: Dockerfile   
         container_name: django
         dns:
             - 8.8.8.8
+        environment: 
+            - DEBUG='True'       
+            - DATABASE_NAME=pe_database
+            - SECRET_KEY=7c6c8696-dd43-469e-a4ee-9a11c6af15d4
+            - DATABASE_USER=root
+            - DATABASE_PASSWORD=dockerpswd
+            - DATABASE_HOST=mongodb
+            - DATABASE_PORT=27017
         volumes:
-                - web-django:/usr/src/app
-                - web-static:/usr/src/app/static
-        
+            - web-django:/usr/src/app
+            - web-static:/usr/src/app/static
+    
         command: python /src/manage.py runserver 0.0.0.0:8000
         ports:
             - "8000:8000"
         depends_on:
-            - mongo
+            - migration
         links:
-            - mongo:mongo
-    mongo:
-        restart: always
-        image: mongo:4.2
-        container_name: mongo
-        environment:
-            - MONGODB_ROOT_PASSWORD=dockerpswd
-            - MONGODB_NAME=PEDB          
-            - MONGODB_USER=root
-            - MONGODB_PASSWORD=dockerpswd
-            - MONGODB_PORT=27017
-            - MONGODB_SERVICE=localhost
-        ports:
-            - "27017:27017"
+            - mongodb
+
+    migration:
+        build: .
+        command: python manage.py migrate
         volumes:
-            - data-volume:/data/db
-volumes:
-    web-django:
-    web-static:
-    data-volume:
+            - .:/web-django
+        links:
+            - mongodb
+        depends_on:
+            - make_migrations
+
+    make_migrations:
+        build: .
+        command: python manage.py makemigrations
+        volumes:
+            - .:/web-django
+        links:
+            - mongodb
+        depends_on:
+            - mongodb
+

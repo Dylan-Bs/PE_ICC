@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = os.getenv('DEBUG')
+DEBUG = bool(os.getenv('DEBUG'))
 ALLOWED_HOSTS = ['*']
 
 
@@ -35,10 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    
     "corsheaders",
     'rest_framework',
-
     'Authenticate',
     'Register',
     'Project',
@@ -73,20 +71,18 @@ TEMPLATES = [{
 
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
 
-
-# Database
-# https://docs.djangoproject.com/en/1.9/ref/settings/#databases
 DATABASES = {
-            'default': {
-            'ENGINE': 'djongo',
-            'NAME': os.getenv('DATABASE_NAME'),
-            'USER': os.getenv('DATABASE_USER'),
-            'PASSWORD': os.getenv('DATABASE_NAME'),
-            'HOST': os.getenv('DATABASE_PASSWORD'), 
-            # Or an IP Address that your DB is hosted on
-            'PORT': os.getenv('DATABASE_PORT'),
-        }
+    'default': {
+        'ENGINE': 'djongo',
+        'ENFORCE_SCHEMA': True,
+        'NAME': os.getenv('DATABASE_NAME'),
+        'USER': os.getenv('DATABASE_USER'),
+        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
+        'HOST': os.getenv('DATABASE_HOST'), 
+        # Or an IP Address that your DB is hosted on
+        'PORT': int(os.getenv('DATABASE_PORT'))
     }
+}
 
 #Authentication backends
 AUTHENTICATION_BACKENDS = ('django.contrib.auth.backends.ModelBackend',)
@@ -126,4 +122,4 @@ SESSION_COOKIE_SECURE = False
 
 STATIC_URL = '/static/'
 
-STATIC_ROOT = posixpath.join(*(BASE_DIR.split(os.path.sep) + ['static']))
+STATIC_ROOT = '/usr/src/static/'

@@ -11,10 +11,6 @@ import time
 
 class Authenticate(APIView):
 
-    def converter(obj):
-        if isinstance(obj, datetime.datetime):
-            return obj.__str__()
-
     def post(self, request, *args, **kwargs):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status="400")
