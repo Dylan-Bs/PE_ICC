@@ -2,6 +2,9 @@
 *.log
 back/target/
 
+**/*.pyc
+.metals
+
 # Logs
 logs
 *.log
