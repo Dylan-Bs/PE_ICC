@@ -31,3 +31,6 @@ docker build -t pe_icc:front .
 
 ## Run container on localhost:4201
 docker run -v ${PWD}:/app -v /app/node_modules -p 4201:4200 --rm pe_icc:front
+
+## Use continue integration
+docker run -p 4201:4200 --rm fenestio/pe_icc_front:latest
