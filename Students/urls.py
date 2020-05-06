@@ -5,5 +5,5 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    url(r'(?P<image_Id>[0-9]*)$', views.GetClicks.as_view(), name='getclicks'),
+    url(r'(?P<image_Id>[0-9]*)$', views.Students.as_view(), name='getclicks'),
 ]    

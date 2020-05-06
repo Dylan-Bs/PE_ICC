@@ -1,73 +1,68 @@
-version: '3.3'
-volumes:
-    web-django:
-    web-static: 
-    data-volume:
+version: '3'
 
 services:
-    mongodb:
-        restart: always
-        image: mongo:latest
-        container_name: mongodb
-        environment:
-            MONGO_INITDB_ROOT_USERNAME: admin
-            MONGO_INITDB_ROOT_PASSWORD: dockerpswd
-            MONGO_INITDB_DATABASE: pe_database
-            MONGODB_USER: admin 
-            MONGODB_PASS: dockerpswd
-            MONGODB_DATABASE: pe_database
-            MONGO_DATA_DIR: /data/db
-            MONGO_LOG_DIR: /dev/null
-        volumes:
-            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
-            - data-volume:/data/db
-        ports:
-            - 27017:27017
     api:
         restart: always
         build: 
             context: ./ 
             dockerfile: Dockerfile   
         container_name: django
-        dns:
-            - 8.8.8.8
-        environment: 
-            - DEBUG='True'       
-            - DATABASE_NAME=pe_database
-            - SECRET_KEY=7c6c8696-dd43-469e-a4ee-9a11c6af15d4
-            - DATABASE_USER=root
-            - DATABASE_PASSWORD=dockerpswd
-            - DATABASE_HOST=mongodb
-            - DATABASE_PORT=27017
         volumes:
             - web-django:/usr/src/app
             - web-static:/usr/src/app/static
-    
         command: python /src/manage.py runserver 0.0.0.0:8000
         ports:
             - "8000:8000"
         depends_on:
             - migration
-        links:
-            - mongodb
+        networks: 
+            - api
+
+    mongodb:
+        restart: unless-stopped
+        image: mongo:latest
+        container_name: mongo
+        command: mongod --auth
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: dockerpswd
+            MONGO_INITDB_DATABASE: pe_database
+            MONGODB_DATABASE: pe_database
+            MONGO_DATA_DIR: /data/db
+            MONGO_LOG_DIR: /dev/null
+        volumes:
+            - data-volume:/data/db
+        ports:
+            - 27017:27017
+        networks:
+            - api
 
     migration:
         build: .
         command: python manage.py migrate
         volumes:
             - .:/web-django
-        links:
-            - mongodb
         depends_on:
             - make_migrations
+        networks:
+            - api        
 
     make_migrations:
         build: .
         command: python manage.py makemigrations
         volumes:
             - .:/web-django
-        links:
-            - mongodb
         depends_on:
             - mongodb
+        networks:
+            - api
+
+networks: 
+    api:
+        driver: bridge
+
+volumes:
+    web-django:
+    web-static: 
+    data-volume:
 

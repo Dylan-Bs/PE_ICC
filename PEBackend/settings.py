@@ -39,11 +39,10 @@ INSTALLED_APPS = [
     'rest_framework',
     'Authenticate',
     'Register',
-    'Project',
-    'Clicks',
+    'Student',
+    'Students',
     'VerifyAuthentication',
     "Test",
-    "GetClicks",
     "GetProject"
 ]
 
@@ -70,7 +69,7 @@ TEMPLATES = [{
     },]
 
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
-
+print(os.getenv('DATABASE_HOST')+":"+os.getenv('DATABASE_PORT'))
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
@@ -80,7 +79,7 @@ DATABASES = {
         'PASSWORD': os.getenv('DATABASE_PASSWORD'),
         'HOST': os.getenv('DATABASE_HOST'), 
         # Or an IP Address that your DB is hosted on
-        'PORT': os.getenv('DATABASE_PORT')
+        'PORT': int(os.getenv('DATABASE_PORT'))
     }
 }
 

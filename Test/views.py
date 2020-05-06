@@ -1,15 +1,15 @@
 from django.shortcuts import render
 from rest_framework.views import APIView
-from Project.models import Project
-from .models import Test as TestModel
-from django.contrib.auth.models import User
-from Clicks.models import Click
-from urllib.request import Request
+# from Project.models import Project
+# from .models import Test as TestModel
+# from django.contrib.auth.models import User
+# from Clicks.models import Click
+# from urllib.request import Request
 #import urlopen
 
 class Test(APIView):
     def post(self, Request, *args, **kwargs):
-        test = TestModel()
+        # test = TestModel()
         ##url = ''
         ##if not (User.objects.get(username="test1@test.com")):
         ##r1 = Request.POST(url+'/register',data={'email': "test1@test.com", 'password': "123test1", 'color': "#f4002c"})
@@ -41,3 +41,4 @@ class Test(APIView):
         ##if not (Click.objects.get(imageId=test1_id, top=5,left=5)):
         ##r9 = Request.POST(url+'/clicks', data={'imageId': test1_id, 'Top': 5, 'Left': 5 , 'userId': user2_id})
         ##json9 = urlopen(r9).read()
+        return

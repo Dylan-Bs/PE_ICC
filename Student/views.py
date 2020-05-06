@@ -9,7 +9,7 @@ import json
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 
-class Project(views.APIView):
+class Student(views.APIView):
 
     def post(self, request, *args, **kwargs):
         if not request.data:

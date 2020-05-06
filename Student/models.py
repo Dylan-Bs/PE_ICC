@@ -16,5 +16,5 @@ class Student(models.Model):
     id = models.CharField(max_length=30, primary_key=True)
     promotion = models.CharField(max_length=30)
     enterprise = models.CharField(max_length=255)
-    wage = models.DecimalField()
+    wage = models.DecimalField( max_digits=10, decimal_places=2)
     working_city = models.CharField(max_length=100)
