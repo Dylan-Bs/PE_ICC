@@ -73,7 +73,7 @@ WSGI_APPLICATION = 'PEBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,
+        'ENFORCE_SCHEMA': False,
         'NAME': os.getenv('DATABASE_NAME'),
         'CLIENT': {
             'host': os.getenv('DATABASE_HOST'),
