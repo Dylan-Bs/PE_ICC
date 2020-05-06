@@ -75,11 +75,13 @@ DATABASES = {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': True,
         'NAME': os.getenv('DATABASE_NAME'),
-        'USER': os.getenv('DATABASE_USER'),
-        'PASSWORD': os.getenv('DATABASE_PASSWORD'),
-        'HOST': os.getenv('DATABASE_HOST'), 
-        # Or an IP Address that your DB is hosted on
-        'PORT': int(os.getenv('DATABASE_PORT'))
+        'CLIENT': {
+            'host': os.getenv('DATABASE_HOST'),
+            'port': int(os.getenv('DATABASE_PORT')),
+            'username': os.getenv('DATABASE_USER'),
+            'password': os.getenv('DATABASE_PASSWORD'),
+            # Or an IP Address that your DB is hosted on
+        }
     }
 }
 
