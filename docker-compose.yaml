@@ -39,17 +39,9 @@ services:
 
     migration:
         build: .
-        command: python manage.py migrate
-        volumes:
-            - .:/web-django
-        depends_on:
-            - make_migrations
-        networks:
-            - api        
-
-    make_migrations:
-        build: .
-        command: python manage.py makemigrations
+        command: bash -c "
+            python manage.py makemigrations &&
+            python manage.py migrate"
         volumes:
             - .:/web-django
         depends_on:
