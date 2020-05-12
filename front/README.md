@@ -32,5 +32,8 @@ docker build -t pe_icc:front .
 ## Run container on localhost:4201
 docker run -v ${PWD}:/app -v /app/node_modules -p 4201:4200 --rm pe_icc:front
 
-## Use continue integration
-docker run -p 4201:4200 --rm fenestio/pe_icc_front:latest
+## Use continue integration 
+docker run -d --name docker_pe -p 80:4200 --rm fenestio/pe_icc_front:latest
+
+## Update container when new image on repository
+docker run -d --name watchtower -v /home/<USER>/.docker/config.json:/config.json -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower docker_pe --debug --cleanup -i 300
