@@ -4,6 +4,8 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { MatDialog } from '@angular/material/dialog';
 import { FirebaseService } from '../../../services/firebase.service';
 import { Router } from '@angular/router';
+import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 export interface option {
   value: string;
@@ -85,9 +87,21 @@ export class EditUserComponent implements OnInit {
     this.firebaseService.updateUser(this.item.id, value)
     .then(
       res => {
-        this.router.navigate(['extranet/admin']);
+        
+        this.openDialog()
       }
     )
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      this.router.navigate(['extranet/admin']);
+    });
   }
 
   delete(){

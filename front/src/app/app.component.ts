@@ -17,14 +17,11 @@ export class AppComponent implements OnInit {
 
   enable_overflowy:boolean=true;
 
-  @ViewChild("main", {read: ElementRef}) main: ElementRef;
-
   open:boolean=false;
   constructor(public conne:ConnexionService,public app: FirebaseApp,public router:Router) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd){
         this.close()
-        console.log(this.main.nativeElement.style);
       }
   });
 

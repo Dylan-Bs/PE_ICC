@@ -37,6 +37,7 @@ import { ExtranetfRoutingModule } from './extranet/extranet-routing.module';
 import { AppRoutingModule } from './app-routing.module';
 import { PathResolveService } from './path-resolve.service';
 import { FooterComponent } from './footer/footer.component';
+import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 
 
 @NgModule({
@@ -48,7 +49,8 @@ import { FooterComponent } from './footer/footer.component';
     RgpdComponent,
     ConnexionComponent,
     Erreur404Component,
-    FooterComponent
+    FooterComponent,
+    ConfirmationDialogComponent
   ],
   imports:[
     BrowserModule,
