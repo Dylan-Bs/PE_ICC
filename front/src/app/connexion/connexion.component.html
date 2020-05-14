@@ -1,6 +1,6 @@
-<section>
-  <mat-card class="col col-md-4 ">
-    <h3>Connexion</h3>
+<section style="margin: 10px;">
+  <mat-card class="col col-md-4">
+    <h3 *ngIf="!conne.connecte">Connexion</h3>
   <form *ngIf="!conne.connecte" class="create-form" [formGroup]="connexionForm" novalidate
     (ngSubmit)="onSubmit(connexionForm.value)">
 
@@ -18,12 +18,13 @@
 
     <button mat-raised-button class="submit-button" color="primary" type="submit"
       [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
-      <div><mat-spinner *ngIf="loading"></mat-spinner></div>
+      <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
       
   </form>
 
   <div *ngIf="conne.connecte">
-    <p>Bonjour {{surname | titlecase }} {{name | uppercase }}<br>vous êtes bien connecté avec le role: {{role}}
+    <h3>Bonjour {{surname | titlecase }} {{name | uppercase }}</h3>
+      <p>vous êtes bien connecté avec le role: {{role}}
       <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
     </p>
   </div>

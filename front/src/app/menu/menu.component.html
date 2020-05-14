@@ -1,7 +1,7 @@
 
-<nav>
+<nav style="height: 6vh;">
     <mat-toolbar color="primary">
-        <mat-toolbar-row>
+        <mat-toolbar-row style="height: 6vh;">
             <button *ngIf="this.isMobile" mat-icon-button (click)="parent._toggle()"><mat-icon>menu</mat-icon></button>
 
             <a *ngIf="!this.isMobile" mat-button href routerLink='/'>Accueil</a>
