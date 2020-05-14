@@ -26,7 +26,6 @@
     <p>Bonjour {{surname | titlecase }} {{name | uppercase }}<br>vous êtes bien connecté avec le role: {{role}}
       <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
     </p>
-    <button mat-raised-button color="primary" (click)="conne.connecte = false">Sortir</button>
   </div>
 </mat-card>
 </section>
