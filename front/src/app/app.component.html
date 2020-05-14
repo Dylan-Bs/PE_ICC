@@ -5,8 +5,8 @@
 </header>
 
 
-<mat-sidenav-container class="example-container"> 
-    <mat-sidenav [opened]="open" mode="push">
+<mat-sidenav-container class="example-container" (click)="close()"> 
+    <mat-sidenav [opened]="open"  #sidenav mode="push">
       
       <mat-toolbar color="primary">
         <mat-toolbar-row>
@@ -27,15 +27,18 @@
 
             <div class="flex-spacer"></div>
 
-          <mat-toolbar-row *ngIf="conne.connecte == false">
+          <mat-toolbar-row *ngIf="conne.connecte == false && router.url!='/formulaire'">
             <a mat-raised-button class="raisebutton" href routerLink='/formulaire'>Inscription</a>
           </mat-toolbar-row>
-          <mat-toolbar-row *ngIf="conne.connecte == false">
+          <mat-toolbar-row *ngIf="conne.connecte == false && router.url!='/connexion'">
             <a mat-raised-button  class="raisebutton"  href routerLink='/connexion'>Connexion</a>
           </mat-toolbar-row>
-          <mat-toolbar-row *ngIf="conne.connecte == true">
-            <a mat-raised-button class="raisebutton"   href routerLink='/connexion'>Déconnexion</a>
+          <mat-toolbar-row *ngIf="conne.connecte == true && router.url!='/connexion'">
+            <a mat-raised-button class="raisebutton"   href routerLink='/connexion'>Compte</a>
         </mat-toolbar-row>
+        <mat-toolbar-row *ngIf="conne.connecte == true && router.url!='/connexion'">
+          <a mat-raised-button class="raisebutton"  (click)="conne.connecte=false">Déconnexion</a>
+      </mat-toolbar-row>
     </mat-toolbar>
     </mat-sidenav>
   <mat-sidenav-content>

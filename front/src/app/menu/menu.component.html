@@ -10,10 +10,10 @@
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='/extranet/prof/stats'>Afficher les statistiques</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==0 && conne.connecte == true" href routerLink='/extranet/etudiant/edit/{{conne.userId}}'>Mon Profil</a>
             <div class="flex-spacer"></div>
-            <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/formulaire'>Inscription</a>
-            <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/connexion'>Connexion</a>
-            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true" href routerLink='/connexion'>Compte</a>
-            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true" (click)="conne.connecte = false">Déconnexion</a>
+            <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false && router.url!='/formulaire'" href routerLink='/formulaire'>Inscription</a>
+            <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false && router.url!='/connexion'" href routerLink='/connexion'>Connexion</a>
+            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true && router.url!='/connexion'" href routerLink='/connexion'>Compte</a>
+            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true && router.url!='/connexion'" (click)="conne.connecte = false">Déconnexion</a>
         </mat-toolbar-row>
     </mat-toolbar>
 </nav>
