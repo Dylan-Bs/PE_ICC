@@ -1,5 +1,6 @@
 .content{
-    min-height:87.7vh;
+    min-height:85vh;
+    overflow-x: hidden;
 }
 
 .flex-spacer{

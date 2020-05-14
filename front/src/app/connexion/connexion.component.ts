@@ -4,6 +4,7 @@ import { Identification } from '../interfaces/identification';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { FirebaseService } from '../services/firebase.service';
+import { ApiService } from '../services/api.service';
 
 @Component({
   selector: 'app-connexion',
@@ -24,6 +25,7 @@ export class ConnexionComponent implements OnInit {
     private fb: FormBuilder,
     public dialog: MatDialog,
     public firebaseService: FirebaseService,
+    public api:ApiService,
     public conne: ConnexionService
   ) { }
 
