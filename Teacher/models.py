@@ -10,13 +10,9 @@ class OverwriteStorage(FileSystemStorage):
             os.remove(os.path.join(settings.MEDIA_ROOT, name))
         return name
 
-class Student(models.Model): 
+class Teacher(models.Model): 
     class Meta:
        managed = True
-       db_table = 'student'
+       db_table = 'teacher'
     id = models.CharField(max_length=30, primary_key=True)
-    promotion = models.CharField(max_length=30)
-    company = models.CharField(max_length=255)
-    wage = models.CharField(max_length=20)
-    working_city = models.CharField(max_length=100)
-    linkedin_url = models.CharField(max_length=250)
+    option = models.CharField(max_length=30)

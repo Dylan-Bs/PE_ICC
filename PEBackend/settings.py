@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = bool(os.getenv('DEBUG'))
+DEBUG = os.getenv('DEBUG') == 'True'
 ALLOWED_HOSTS = ['*']
 
 
@@ -41,14 +41,17 @@ INSTALLED_APPS = [
     'Register',
     'Student',
     'Students',
+    'Teacher',
     'VerifyAuthentication',
-    "Test",
-    "GetProject"
+    'Anonymize',
+    'Crawl',
+    'User',
+    'Users'
 ]
 
 MIDDLEWARE_CLASSES = [
-    'corsheaders.middleware.CorsMiddleware',
-    'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMaiddleware',
+    'django.contrib.sessions.middlewre.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -68,13 +71,26 @@ TEMPLATES = [{
         },
     },]
 
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
+
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
-# print(os.getenv('DATABASE_HOST')+':'+os.getenv('DATABASE_PORT'))
+print(os.getenv('DATABASE_HOST')+':'+os.getenv('DATABASE_PORT'))
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
         'ENFORCE_SCHEMA': False,
         'NAME': os.getenv('DATABASE_NAME'),
+        'AUTH_SOURCE': 'admin',
+        'AUTH_MECHANISM': 'SCRAM-SHA-1',
         'CLIENT': {
             'host': os.getenv('DATABASE_HOST'),
             'port': int(os.getenv('DATABASE_PORT')),

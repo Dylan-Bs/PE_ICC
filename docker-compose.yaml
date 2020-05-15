@@ -8,8 +8,8 @@ services:
             dockerfile: Dockerfile   
         container_name: django
         volumes:
-            - web-django:/usr/src/app
-            - web-static:/usr/src/app/static
+            - web-django:/usr/src/PEBackend
+            - web-static:/usr/src/static
         command: python /src/manage.py runserver 0.0.0.0:8000
         ports:
             - "8000:8000"
@@ -19,21 +19,21 @@ services:
             - api
 
     mongodb:
-        restart: unless-stopped
+        restart: always
         image: mongo:latest
+        
         container_name: mongo
         command: mongod --auth
         environment:
             MONGO_INITDB_ROOT_USERNAME: admin
             MONGO_INITDB_ROOT_PASSWORD: dockerpswd
             MONGO_INITDB_DATABASE: pe_database
-            MONGODB_DATABASE: pe_database
-            MONGO_DATA_DIR: /data/db
-            MONGO_LOG_DIR: /dev/null
+        hostname: mongodb-server
         volumes:
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
             - data-volume:/data/db
         ports:
-            - 27017:27017
+            - "27017:27017"
         networks:
             - api
 

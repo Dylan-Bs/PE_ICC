@@ -1,14 +1,17 @@
 import django
-from django.views.generic.edit import CreateView
-from rest_framework import generics
-from rest_framework.views import APIView
+import pathlib
+from .models import Student as StudentModel
+import os
+from django.core import serializers
+from rest_framework import views
 from rest_framework.response import Response
-from Student.models import Student as StudentModel
-from django.contrib.auth.models import User
-from django.shortcuts import render
+import json
+from django.forms.models import model_to_dict
 from django.http import JsonResponse
+from django.contrib.auth import User
+from .models import TeacherModel
 
-class Register(APIView):
+class teacher(views.APIView):
 
     def put(self, request, *args, **kwargs):
         if not request.data:
@@ -18,10 +21,7 @@ class Register(APIView):
             password = request.data['userpassword']
             first_name = request.data['first_name']
             last_name = request.data['last_name']
-            promotion = request.data['promotion']
-            company = request.data['company']
-            wage = request.data['wage']
-            working_city = request.data['working_city']
+            option = request.data['option']
             if User.objects.filter(username=userlogin).exists():
                 resp = JsonResponse({'Error': "Already registered"}, status = "400")
             else:
@@ -33,16 +33,17 @@ class Register(APIView):
                 user.is_superuser = False
                 user.save()
                 res = User.objects.get(username=userlogin)
-                student = StudentModel()
-                student.id = str(res.id)
-                student.promotion = promotion
-                student.company = company
-                student.working_city = working_city
-                student.wage = wage
-                student.save()
+                teacher = TeacherModel()
+                teacher.id = str(res.id)
+                teacher.option = option
+                teacher.save()
                 resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
         resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
+
+
+
+

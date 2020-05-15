@@ -9,28 +9,24 @@ from django.http import JsonResponse
 import datetime
 import time
 
-class Authenticate(APIView):
+class Anonymize(APIView):
 
     def post(self, request, *args, **kwargs):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status="400")
-        email_r = request.data['email']
-        password_r = request.data['password']
-        user = authenticate(username=email_r, password=password_r)
-        if user:
-            expiry = datetime.date.today() + datetime.timedelta(days=7)
-            token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256')    
-            resp = HttpResponse(
-              token,
-              status=200,
-              content_type="application/json",
-             )
-        else:
-            resp = HttpResponse(
-              json.dumps({'Error': "Invalid credentials"}),
-              status=400,
-              content_type="application/json",
-            )
+        try:
+            if('user_token' in request.headers):
+                token = request.header['user_token']
+                payload = jwt.decode(token, "PCSK")
+                email = payload['email']
+                userid = payload['id']
+                user = User.objects.get(username = email)
+                user.IsActive
+                resp = JsonResponse({'Success': "User deleted, anonymization completed"}, status = "200")
+        except User.DoesNotExist:
+            resp = JsonResponse({'NotFound': "User does not exist"}, status = "404")
+        except Exception as e: 
+            resp = JsonResponse({'ExceptionOccured': "An exception occured during anonymization"}, status = "400")
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"

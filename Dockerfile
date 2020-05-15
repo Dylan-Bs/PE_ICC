@@ -9,7 +9,7 @@ RUN pip install --upgrade pip
 
 RUN pip install -r requirements.txt
 
-ENV DEBUG True        
+ENV DEBUG False        
 ENV SECRET_KEY 7c6c8696-dd43-469e-a4ee-9a11c6af15d4
 ENV DATABASE_NAME pe_database
 ENV DATABASE_USER admin
