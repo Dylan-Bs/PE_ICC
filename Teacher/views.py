@@ -8,7 +8,7 @@ from rest_framework.response import Response
 import json
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
-from django.contrib.auth import User
+from django.contrib.auth.models import User
 from .models import TeacherModel
 
 class teacher(views.APIView):
@@ -29,7 +29,7 @@ class teacher(views.APIView):
                 user.first_name = first_name
                 user.last_name = last_name
                 user.is_active = True
-                user.is_staff = False
+                user.is_staff = True
                 user.is_superuser = False
                 user.save()
                 res = User.objects.get(username=userlogin)

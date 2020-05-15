@@ -7,7 +7,7 @@ from django.core import serializers
 from rest_framework import views
 from rest_framework.response import Response
 import json
-from django.contrib.auth import User
+from django.contrib.auth.models import User
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 

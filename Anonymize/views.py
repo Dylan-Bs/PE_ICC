@@ -21,7 +21,7 @@ class Anonymize(APIView):
                 email = payload['email']
                 userid = payload['id']
                 user = User.objects.get(username = email)
-                user.IsActive
+                user.IsActive = False;
                 resp = JsonResponse({'Success': "User deleted, anonymization completed"}, status = "200")
         except User.DoesNotExist:
             resp = JsonResponse({'NotFound': "User does not exist"}, status = "404")

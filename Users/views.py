@@ -18,13 +18,13 @@ class Users(views.APIView):
 
     def get(self, request, *args, **kwargs):
         data = []
-        users = Student.objects.all()
+        users = User.objects.all()
         users = list(users)
         for user in users:
             if(Student.objects.filter(id = user.id).exists()):
                 tmp_student = Student.objects.get(id = user.id)
                 data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "student"})
-            elif (Teacher.object.filter(id = user.id).exists()):
+            elif (Teacher.objects.filter(id = user.id).exists()):
                 tmp_teacher = Teacher.objects.get(id = user.id)
                 data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "teacher"})
         resp = JsonResponse(data, safe = False)
