@@ -1,6 +1,5 @@
 import django
 import pathlib
-from .models import Student as StudentModel
 import os
 from django.core import serializers
 from rest_framework import views
@@ -9,16 +8,16 @@ import json
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
 from django.contrib.auth.models import User
-from .models import TeacherModel
+from .models import Teacher as TeacherModel
 
-class teacher(views.APIView):
+class Teacher(views.APIView):
 
     def put(self, request, *args, **kwargs):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
         else: 
-            userlogin = request.data['id']
-            password = request.data['userpassword']
+            userlogin = request.data['email']
+            password = request.data['password']
             first_name = request.data['first_name']
             last_name = request.data['last_name']
             option = request.data['option']

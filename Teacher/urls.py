@@ -5,5 +5,5 @@ from django.conf.urls.static import static
 from . import views
 
 urlpatterns = [
-    url(r'^$', views.Teacher.as_view(), name='student'),
+    url(r'^$', views.Teacher.as_view(), name='teacher'),
 ]
