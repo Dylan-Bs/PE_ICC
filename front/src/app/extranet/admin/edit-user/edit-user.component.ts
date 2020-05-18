@@ -87,7 +87,6 @@ export class EditUserComponent implements OnInit {
     this.firebaseService.updateUser(this.item.id, value)
     .then(
       res => {
-        
         this.openDialog()
       }
     )
