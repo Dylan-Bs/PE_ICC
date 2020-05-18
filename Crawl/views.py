@@ -11,8 +11,8 @@ import time
 class Crawl(APIView):
 
     def get(self, request, *args, **kwargs):
-        if('user_token' in request.headers):
-            token = request.header['user_token']
+        if('user-token' in request.headers):
+            token = request.header['user-token']
             payload = jwt.decode(token, "PCSK")
             email = payload['email']
             userid = payload['id']

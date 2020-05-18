@@ -24,7 +24,7 @@ class Authenticate(APIView):
                 role = 'teacher'
             if(user.is_superuser):
                 role = 'admin'
-            token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256')    
+            token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
             resp = HttpResponse(
               json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.email), 'role': str(role)}),
               status=200,

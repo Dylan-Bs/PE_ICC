@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/1.9/ref/settings/
 
 import os
 import posixpath
+from corsheaders.defaults import default_headers
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
@@ -35,7 +36,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    "corsheaders",
+    'corsheaders',
     'rest_framework',
     'Authenticate',
     'Register',
@@ -120,6 +121,10 @@ AUTH_PASSWORD_VALIDATORS = [{
     },]
 
 CORS_ORIGIN_ALLOW_ALL = True
+# CORS_ALLOW_CREDENTIALS = True
+CORS_ALLOW_HEADERS = list(default_headers) + [
+    'user-token',
+]
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/

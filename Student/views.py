@@ -17,8 +17,8 @@ class Student(views.APIView):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
         else: 
-            if('user_token' in request.headers):
-                token = request.header['user_token']
+            if('user-token' in request.headers):
+                token = request.header['user-token']
                 payload = jwt.decode(token, "PCSK")
                 email = payload['email']
                 userid = payload['id']

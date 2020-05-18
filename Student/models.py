@@ -16,6 +16,7 @@ class Student(models.Model):
        db_table = 'student'
     id = models.CharField(max_length=30, primary_key=True)
     promotion = models.CharField(max_length=30)
+    option = models.CharField(max_length=30)
     company = models.CharField(max_length=255)
     wage = models.CharField(max_length=20)
     working_city = models.CharField(max_length=100)

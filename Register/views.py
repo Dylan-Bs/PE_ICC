@@ -14,11 +14,12 @@ class Register(APIView):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
         else: 
-            userlogin = request.data['id']
-            password = request.data['userpassword']
+            userlogin = request.data['email']
+            password = request.data['password']
             first_name = request.data['first_name']
             last_name = request.data['last_name']
             promotion = request.data['promotion']
+            option = request.data['option']
             company = request.data['company']
             wage = request.data['wage']
             working_city = request.data['working_city']
@@ -36,13 +37,14 @@ class Register(APIView):
                 student = StudentModel()
                 student.id = str(res.id)
                 student.promotion = promotion
+                student.option = option
                 student.company = company
                 student.working_city = working_city
                 student.wage = wage
                 student.save()
-                resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
+                resp = JsonResponse({'Success': 'Successfully registered', 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
         resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp

@@ -10,26 +10,25 @@ from rest_framework.response import Response
 import json
 from django.forms.models import model_to_dict
 from django.http import JsonResponse
-from django.contrib.auth.models import User
+from django.contrib.auth.models import User as UserModel
 from Student.models import Student 
 
 class User(views.APIView):
 
     def post(self, request, *args, **kwargs):
         if not request.data:
-            resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
+            resp = JsonResponse({'Error': "No data provided"}, status = "400")
         else: 
-            if('user_token' in request.headers):
-                token = request.header['user_token']
-                payload = jwt.decode(token, "PCSK")
-                email = payload['email']
+            if('user-token' in request.headers):
+                token = request.headers['user-token']
+                payload = jwt.decode(token, "PCSK", algorithms=['HS256'])
                 userid = payload['id']
-                user = User.objects.get(username=email, id=userid)
+                user = UserModel.objects.get(id=userid)
                 if(user != None):
                     email = request.data['email']
                     password = request.data['password']
                     user.email = email
-                    user.password = password
+                    user.set_password(password)
                     user.save()
                     resp = JsonResponse({'Modifications accepted': "User " + user.first_name + " " + user.last_name + " updated"}, status = "200")
                 else:
