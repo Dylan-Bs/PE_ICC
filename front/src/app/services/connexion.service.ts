@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
@@ -12,12 +13,18 @@ export class ConnexionService {
   userId:string;
   userOption:string;
 
-  constructor() {
+  constructor(public router:Router) {
     this.connecte=false;
     this.form_send=false;
     this.user=[];
     this.role=0;
     this.userId='';
     this.userOption=''; //pour le dev, bug avec les profs
+   }
+
+   deconnecte(){
+     this.connecte=false;
+     this.router.navigateByUrl("/")
+
    }
 }

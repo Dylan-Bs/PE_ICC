@@ -4,4 +4,12 @@ section {
   align-items: center;
   text-align: center;
   height: 30vh;
+  margin: 10px;
+}
+
+
+@media only screen and (max-width: 600px) {
+  section {
+    margin: 200px 10px;
+  }
 }

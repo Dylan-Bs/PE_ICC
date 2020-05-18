@@ -13,7 +13,7 @@
             <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/formulaire'>Inscription</a>
             <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/connexion'>Connexion</a>
             <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true" href routerLink='/connexion'>Compte</a>
-            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true" (click)="conne.connecte = false">Déconnexion</a>
+            <a mat-raised-button  class="raisebutton" *ngIf="!this.isMobile && conne.connecte == true" (click)="conne.deconnecte()">Déconnexion</a>
         </mat-toolbar-row>
     </mat-toolbar>
 </nav>

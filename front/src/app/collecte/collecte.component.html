@@ -56,7 +56,12 @@
               <div class="form-group">
                 <mat-label>Promotion*:<br></mat-label>
                 <mat-slider formControlName="promo" thumbLabel class="slider"
-                  formControlName="promo" tickInterval="1" min="1990" [max]="max"></mat-slider>
+                  formControlName="promo" tickInterval="1" min="1990" [max]="max" required></mat-slider>
+                  <ng-container *ngFor="let validation of validation_messages.promo">
+                    <mat-error
+                      *ngIf="personalForm.get('promo').hasError(validation.type) && (personalForm.get('promo').dirty || personalForm.get('promo').touched)">
+                      {{validation.message}}</mat-error>
+                  </ng-container>
               </div>
     
               <div class="form-group">

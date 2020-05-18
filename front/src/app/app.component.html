@@ -37,7 +37,7 @@
             <a mat-raised-button class="raisebutton fill-width"   href routerLink='/connexion'>Compte</a>
         </mat-toolbar-row>
         <mat-toolbar-row *ngIf="conne.connecte == true">
-          <a mat-raised-button class="raisebutton fill-width"  (click)="conne.connecte=false">Déconnexion</a>
+          <a mat-raised-button class="raisebutton fill-width"  (click)="conne.deconnecte()">Déconnexion</a>
       </mat-toolbar-row>
     </mat-toolbar>
     </mat-sidenav>
