@@ -6,11 +6,12 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 })
 export class ApiService {
 
-  apiUrl:string="";
+  apiUrl:string="http://e5c0153c.ngrok.io/";
 
   httpOptions =
 {   
-
+  headers: new HttpHeaders({ 
+    'Access-Control-Allow-Origin':'*'}),
     withCredentials: true
 }
 
@@ -62,7 +63,7 @@ export class ApiService {
   //Login
 
   connect(value) {
-    return this.http.post(`${this.apiUrl}/login`,value);
+    return this.http.post(`${this.apiUrl}authenticate`,value);
   }
 
   //Students

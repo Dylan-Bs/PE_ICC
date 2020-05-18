@@ -68,6 +68,11 @@ export class ConnexionComponent implements OnInit {
         }
       }
     )
+
+    this.api.connect(value).subscribe(
+      result => {console.log(result)}
+    )
+    
   }
 
   getUserInfo() {
