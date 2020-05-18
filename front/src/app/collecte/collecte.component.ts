@@ -29,6 +29,7 @@ export class CollecteComponent implements OnInit {
   
   
   max:number=(new Date()).getFullYear();
+  promo_value:number=this.max;
 
   optionsIng3Groups: optionsIng3Group[] = [
     {

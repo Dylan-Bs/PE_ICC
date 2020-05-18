@@ -13,7 +13,7 @@
             </div>
             <div class="col">
                 <span>1970 </span>
-                <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" (ngModel)="promoValue"
+                <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" [(ngModel)]="promoValue"
                     (change)="rangeChange($event)">
                 </mat-slider>
                 <span>{{max}}</span>
