@@ -62,15 +62,42 @@ export class ViewDetailsComponent implements OnInit {
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [this.item.email, Validators.required ],
-      password: [this.item.password, Validators.required ],
-      name: [this.item.name, Validators.required ],
-      surname: [this.item.surname, Validators.required ],
-      promo: [this.item.promo, Validators.required ],
-      optionsIng3Control: [this.item.optionsIng3Control, Validators.required ],
-      entreprise: [this.item.entreprise, Validators.required ],
-      ville: [this.item.ville, Validators.required ],
-      salaire: [this.item.salaire, Validators.required ],
+      email: [{
+        value : this.item.email,
+        disabled: true
+      }, Validators.required ],
+      password: [{
+        value : this.item.password,
+        disabled: true
+      }, Validators.required ],
+      name: [{
+        value : this.item.name,
+        disabled: true
+      }, Validators.required ],
+      surname: [{
+        value : this.item.surname,
+        disabled: true
+      }, Validators.required ],
+      promo: [{
+        value : this.item.promo,
+        disabled: true
+      }, Validators.required ],
+      optionsIng3Control: [{
+        value : this.item.optionsIng3Control,
+        disabled: true
+      }, Validators.required ],
+      entreprise: [{
+        value : this.item.entreprise,
+        disabled: true
+      }, Validators.required ],
+      ville: [{
+        value : this.item.ville,
+        disabled: true
+      }, Validators.required ],
+      salaire: [{
+        value : this.item.salaire,
+        disabled: true
+      }, Validators.required ],
     });
   }
 }

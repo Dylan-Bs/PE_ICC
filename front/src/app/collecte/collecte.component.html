@@ -127,7 +127,8 @@
               <button mat-button (click)="stepper.reset()">Reset</button>
               <button *ngIf="!loading" mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()"
             [disabled]="!validationForm.valid">Inscription</button>
-            <mat-spinner *ngIf="loading"></mat-spinner>
+            <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
+            <br>
             <mat-toolbar *ngIf="conne.form_send" color="accent"><mat-icon aria-hidden="false" aria-label="check_circle">check_circle</mat-icon>  Vos données ont été transmises, merci pour votre coopération</mat-toolbar>
             </div>
           </form>
