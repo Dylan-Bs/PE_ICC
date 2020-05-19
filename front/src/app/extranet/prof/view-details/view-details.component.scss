@@ -1,24 +1,10 @@
-.edit-page {
-  padding: 20px 60px;
-
-  .page-content {
-    .edit-form {
-      padding: 20px;
-      text-align: center;
-
-      .submit-button-container {
-        justify-content: center;
-
-        .return-button {
-          width: 100%;
-        }
-      }
-      .input-style {
-        width: 50%;
-      }
-    }
-  }
+mat-card{
+  margin-top: 10%;
+  margin-left: 30%;
+  margin-right: 30%;
+  text-align: center;
 }
-.form-container {
+
+button {
   margin: auto;
 }
