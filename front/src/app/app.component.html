@@ -22,7 +22,7 @@
             <a mat-button class="fill-width" href routerLink='/extranet/prof/stats'>Afficher les statistiques</a>
           </mat-toolbar-row>
           <mat-toolbar-row *ngIf="conne.role==0 && conne.connecte == true">
-            <a mat-button class="fill-width"  href routerLink='/extranet/etudiant/edit/{{conne.userId}}'>Mon Profil</a>
+            <a mat-button class="fill-width"  href routerLink='/extranet/etudiant/edit/{{conne.route()}}'>Mon Profil</a>
           </mat-toolbar-row>
 
             <mat-toolbar-row class="fill-height"><div class="fill-height"></div></mat-toolbar-row>

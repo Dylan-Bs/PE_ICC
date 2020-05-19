@@ -6,15 +6,25 @@ import { ConnexionService } from '../services/connexion.service';
 import { FirebaseService } from '../services/firebase.service';
 import { ApiService } from '../services/api.service';
 
+export interface Authentification {
+  token :string;
+  expiry : string;
+  first_name: string;
+  last_name: string;
+  email : string;
+  role: number;
+}
+
 @Component({
   selector: 'app-connexion',
   templateUrl: './connexion.component.html',
   styleUrls: ['./connexion.component.css']
 })
+
 export class ConnexionComponent implements OnInit {
 
   connexionForm: FormGroup;
-  user: Array<any>;
+  //user: User;
   name: string;
   surname: string;
   role: string;
@@ -74,7 +84,13 @@ export class ConnexionComponent implements OnInit {
     this.api.connect(value).subscribe(
       result => {
         this.loading=false
-        console.log(result)
+
+        var res:Authentification=result as Authentification
+        
+        this.conne.connection(res);
+
+        this.getUserInfo();
+        
       }
     )
     
@@ -82,9 +98,9 @@ export class ConnexionComponent implements OnInit {
 
   getUserInfo() {
     //ajout des infos utilisateurs dans des variables
-    this.user = this.conne.user;
-    this.name = this.user[0].payload.doc.data().name;
-    this.surname = this.user[0].payload.doc.data().surname;
+    //this.user = this.conne.user;
+    this.name = this.conne.user["first_name"]
+    this.surname = this.conne.user["last_name"]
     switch (this.conne.role) {
       case 0:
         this.role = "Ancien étudiant"
