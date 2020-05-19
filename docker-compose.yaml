@@ -37,6 +37,17 @@ services:
         networks:
             - api
 
+    initialization:
+        build: .
+        command: python manage.py runscript create-Superuser
+        volumes:
+            - .:/web-django
+        depends_on:
+            - mongodb
+            - migration
+        networks:
+            - api
+
     migration:
         build: .
         command: bash -c "
