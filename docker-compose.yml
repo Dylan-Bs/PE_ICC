@@ -55,8 +55,10 @@ services:
         build:
             context: ./front
             dockerfile: Dockerfile
+        volumes:
+            - ./front:/PE_ICC/front
         ports:
-          - "4200:4200"
+          - "80:4200"
 
 networks: 
     api:
