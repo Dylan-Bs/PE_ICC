@@ -39,7 +39,7 @@ services:
 
     initialization:
         build: .
-        command: python manage.py runscript create-Superuser
+        command: python manage.py runscript create-SuperUser
         volumes:
             - .:/web-django
         depends_on:

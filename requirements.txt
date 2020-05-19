@@ -3,7 +3,7 @@ asgiref==3.2.3
 bson==0.5.8
 cffi==1.14.0
 cryptography==2.8
-Django==2.2
+Django==2.2.10
 django-extensions==2.2.9
 django-cors-headers==3.2.1
 djangorestframework==3.11.0
