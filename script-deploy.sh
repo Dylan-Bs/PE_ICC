@@ -5,5 +5,5 @@ if [ -f dockercompose.lock ]; then
   docker-compose stop
   rm dockercompose.lock
 fi
-
+echo "Lancement docker compose"
 docker-compose up -d --build --remove-orphans
