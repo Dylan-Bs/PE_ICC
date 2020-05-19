@@ -1,9 +1,10 @@
 name: Integration_continue
 # This workflow is triggered on pushes to the repository.
-on: 
-  push:
-    branches:    
-      - master         # Push events on master branch
+on: [push]
+# on: 
+#   push:
+#     branches:    
+#       - master         # Push events on master branch
 
 jobs:
   build:
