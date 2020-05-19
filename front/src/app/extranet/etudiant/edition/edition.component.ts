@@ -70,7 +70,7 @@ export class EditionComponent implements OnInit {
   createForm() {
     this.exampleForm = this.fb.group({
       email: [this.item.email, Validators.required ],
-      password: [this.item.password, Validators.required ],
+      password: ["", Validators.required ],
       name: [this.item.name, Validators.required ],
       surname: [this.item.surname, Validators.required ],
       promo: [this.item.promo, Validators.required ],
