@@ -1,0 +1,68 @@
+version: '3'
+
+services:
+    mongodb:
+        restart: always
+        image: mongo:latest        
+        container_name: mongo
+        command: mongod --auth
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: admin
+            MONGO_INITDB_ROOT_PASSWORD: dockerpswd
+            MONGO_INITDB_DATABASE: pe_database
+        hostname: mongodb-server
+        volumes:
+            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - data-volume:/data/db
+        ports:
+            - "27017:27017"
+        networks:
+            - api
+
+    migration:
+        build: ./back
+        command: bash -c "
+            python manage.py makemigrations &&
+            python manage.py migrate"
+        volumes:
+            - .:/web-django
+        depends_on:
+            - mongodb
+        networks:
+            - api
+
+    api:
+        restart: always
+        build: 
+            context: ./back/ 
+            dockerfile: Dockerfile   
+        container_name: django
+        volumes:
+            - web-django:/usr/src/PEBackend
+            - web-static:/usr/src/static
+        ports:
+            - "8000:8000"
+        depends_on:
+            - migration
+        networks: 
+            - api
+
+    front:
+        restart: always
+        depends_on: 
+            - api
+        container_name: pe_front
+        build:
+            context: ./front
+            dockerfile: Dockerfile
+        ports:
+          - "4200:4200"
+
+networks: 
+    api:
+        driver: bridge
+
+volumes:
+    web-django:
+    web-static: 
+    data-volume:
