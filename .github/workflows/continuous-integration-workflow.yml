@@ -1,0 +1,18 @@
+name: Integration_continue
+# This workflow is triggered on pushes to the repository.
+on: 
+  push:
+    branches:    
+      - master         # Push events on master branch
+
+jobs:
+  build:
+    # Job name
+    name: Job docker-compose
+    # This job runs on GCP self-hosted Linux
+    runs-on: self-hosted
+    steps:
+    # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v2
+      - name: Lancement de docker-compose up
+        run: ./script-deploy.sh
