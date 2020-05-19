@@ -11,9 +11,7 @@ export class ApiService {
   httpOptions =
 {   
   headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': 'Basic ' + btoa('xxx:xxx')
+    'Content-Type': 'application/json'
   }),
     withCredentials: true
 }
@@ -66,7 +64,7 @@ export class ApiService {
   //Login
 
   connect(value) {
-    return this.http.post(`${this.apiUrl}/authenticate`,value,this.httpOptions);
+    return this.http.post(`${this.apiUrl}/authenticate`,JSON.stringify(value),this.httpOptions);
   }
 
   //Students

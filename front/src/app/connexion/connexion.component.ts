@@ -52,10 +52,11 @@ export class ConnexionComponent implements OnInit {
 
   onSubmit(value) {
     this.loading=true
-    this.firebaseService.connect(value).subscribe(
+    /*this.firebaseService.connect(value).subscribe(
       result => {
         this.loading=false
         this.user = result;
+        console.log(this.user)
         console.log("tentative d'authentification");
         if (this.user.length > 0) {
           this.conne.user = this.user;
@@ -67,10 +68,14 @@ export class ConnexionComponent implements OnInit {
           this.getUserInfo();
         }
       }
-    )
+    )*/
 
+      
     this.api.connect(value).subscribe(
-      result => {console.log(result)}
+      result => {
+        this.loading=false
+        console.log(result)
+      }
     )
     
   }
