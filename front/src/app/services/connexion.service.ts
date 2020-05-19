@@ -1,14 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-
-export interface Authentification {
-  token :string;
-  expiry : string;
-  first_name: string;
-  last_name: string;
-  email : string;
-  role: number;
-}
+import { ApiService } from './api.service';
+import { Authentification } from '../interfaces/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -23,7 +16,7 @@ export class ConnexionService {
   email:string;
   userOption:string;
 
-  constructor(public router:Router) {
+  constructor(public router:Router, public api:ApiService) {
     this.connecte=false;
     this.form_send=false;
     this.user={};
@@ -37,7 +30,9 @@ export class ConnexionService {
     this.connecte = true;
     this.role =res.role;
     this.token= res.token;
-    this.email=res.email
+    this.email=res.email;
+    this.api.httpOptions.headers=this.api.httpOptions.headers.set("user-token",this.token);
+    console.log(this.api.httpOptions)
    }
 
    route(){

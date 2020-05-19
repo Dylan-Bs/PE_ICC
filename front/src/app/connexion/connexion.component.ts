@@ -1,19 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Identification } from '../interfaces/identification';
+import { Authentification } from '../interfaces/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { FirebaseService } from '../services/firebase.service';
 import { ApiService } from '../services/api.service';
 
-export interface Authentification {
-  token :string;
-  expiry : string;
-  first_name: string;
-  last_name: string;
-  email : string;
-  role: number;
-}
+
 
 @Component({
   selector: 'app-connexion',
@@ -87,10 +80,18 @@ export class ConnexionComponent implements OnInit {
 
         var res:Authentification=result as Authentification
         
+        console.log(res)
+
         this.conne.connection(res);
 
         this.getUserInfo();
+
         
+        
+      },
+      err => {
+        this.loading=false
+        alert("Error");
       }
     )
     
@@ -101,18 +102,16 @@ export class ConnexionComponent implements OnInit {
     //this.user = this.conne.user;
     this.name = this.conne.user["first_name"]
     this.surname = this.conne.user["last_name"]
-    switch (this.conne.role) {
-      case 0:
+    if (this.conne.role==0) {
         this.role = "Ancien étudiant"
-        break;
-      case 1:
-        this.role = "Professseur"
-        break;
-      case 2:
-        this.role = "Administrateur"
-        break;
-      default:
-        break;
+    }else if (this.conne.role==1){
+      this.role = "Professseur"
     }
+        
+    
+  else if (this.conne.role==2){
+    this.role = "Administrateur"
+  }
+        
   }
 }

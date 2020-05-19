@@ -46,19 +46,17 @@ export class ApiService {
 
   createUser(value) {
     var info:object={
-      email: value.email,
-      password: value.password,
-      name: value.name,
-      nameToSearch: value.name.toLowerCase(),
-      surname: value.surname,
-      promo: parseInt(value.promo),
-      optionsIng3Control: value.optionsIng3Control,
-      entreprise: value.entreprise,
-      ville: value.ville,
-      salaire: parseInt(value.salaire),
-      role: parseInt('0')
+      "email": value.email,
+      "password": value.password,
+      "first_name": value.name,
+      "last_name": value.surname,
+      "promotion": parseInt(value.promo),
+      "option": value.optionsIng3Control,
+      "company": value.entreprise,
+      "working_city": value.ville,
+      "wage": parseInt(value.salaire)
     }
-    return this.http.post(`${this.apiUrl}/register`,info);
+    return this.http.put(`${this.apiUrl}/register`,info,this.httpOptions);
   }
 
   //Login
@@ -68,6 +66,14 @@ export class ApiService {
   }
 
   //Students
+
+  getEtudiant() {
+    return this.http.get(`${this.apiUrl}/student`,this.httpOptions);
+  }
+
+  updateEtudiant(value) {
+    return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
+  }
 
   getEtudiants() {
     return this.http.get(`${this.apiUrl}/students`);

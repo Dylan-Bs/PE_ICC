@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { FirebaseService } from '../services/firebase.service';
 import { ConnexionService } from '../services/connexion.service';
+import { ApiService } from '../services/api.service';
 
 export interface option {
   value: string;
@@ -79,6 +80,7 @@ export class CollecteComponent implements OnInit {
     private fb: FormBuilder,
     public firebaseService: FirebaseService,
     public conne: ConnexionService,
+    public api:ApiService
   ) { }
 
   ngOnInit() {
@@ -129,15 +131,17 @@ export class CollecteComponent implements OnInit {
     let value:Object=Object.assign({}, a, b);
     this.loading=true
     console.log(value)
-    this.firebaseService.createUser(value)
-      .then(
-        res => {
-          this.loading=false;
-          this.resetFields();
-          this.conne.form_send = true;
-          console.log("formulaire envoyé avec succès");
-          
-        }
-      )
+
+    this.api.createUser(value).subscribe(
+      result=>{
+        this.loading=false;
+        this.resetFields();
+        this.conne.form_send = true;
+        console.log("formulaire envoyé avec succès");
+      },
+      err=>{
+        alert("Error")
+      }
+    )
   }
 }
