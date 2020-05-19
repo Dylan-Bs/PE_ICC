@@ -1,16 +1,25 @@
-FROM openjdk:8-stretch
+FROM python:3.7.4
+ENV PYTHONUNBUFFERED 1
 
-RUN apt-get update
-RUN apt-get install -y apt-transport-https
+RUN mkdir /src
+WORKDIR /src
+ADD . /src
 
-RUN echo "deb https://dl.bintray.com/sbt/debian /" | tee -a /etc/apt/sources.list.d/sbt.list
-RUN curl -sL "https://keyserver.ubuntu.com/pks/lookup?op=get&search=0x2EE0EA64E40A89B84B2DF73499E82A75642AC823" | apt-key add
+RUN pip install --upgrade pip
 
-RUN apt-get update
-RUN apt-get install -y sbt
+RUN pip install -r requirements.txt
 
-WORKDIR /root
-COPY . .
+ENV DEBUG False        
+ENV SECRET_KEY 7c6c8696-dd43-469e-a4ee-9a11c6af15d4
+ENV DATABASE_NAME pe_database
+ENV DATABASE_USER admin
+ENV DATABASE_PASSWORD dockerpswd
+ENV DATABASE_HOST mongo
+ENV DATABASE_PORT 27017
 
-RUN sbt compile
-CMD sbt run
+
+RUN python ./manage.py collectstatic 
+
+CMD python manage.py runserver 0.0.0.0:8000
+
+EXPOSE 8000
