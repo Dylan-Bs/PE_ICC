@@ -7,6 +7,9 @@ ADD . /src
 
 RUN pip install --upgrade pip
 
+RUN apt update &&\
+    apt install -y chromium chromium-driver
+
 RUN pip install -r requirements.txt
 
 ENV DEBUG False        
