@@ -13,3 +13,7 @@ section {
     margin: 200px 10px;
   }
 }
+
+.error{
+  color: red;
+}

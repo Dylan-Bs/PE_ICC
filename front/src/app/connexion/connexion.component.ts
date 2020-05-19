@@ -18,6 +18,7 @@ export class ConnexionComponent implements OnInit {
   name: string;
   surname: string;
   role: string;
+  try : boolean;
 
   loading:boolean=false
 
@@ -34,6 +35,7 @@ export class ConnexionComponent implements OnInit {
     if (this.conne.connecte) {
       this.getUserInfo();
     }
+    this.try = false
   }
 
   createForm() {
@@ -65,6 +67,8 @@ export class ConnexionComponent implements OnInit {
           this.conne.userOption = this.user[0].payload.doc.data().optionsIng3Control;
           console.log("utilisateur authentifié, role:" + this.conne.role + " userID:" + this.conne.userId + " option:" + this.conne.userOption);
           this.getUserInfo();
+        } else {
+          this.try = true;
         }
       }
     )
