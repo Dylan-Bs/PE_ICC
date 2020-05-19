@@ -82,7 +82,7 @@
                 </mat-slider>
               </div>
 
-              <div>
+              <div class="myButton">
                 <button mat-button matStepperNext>Next</button>
               </div>
             </form>
@@ -108,7 +108,7 @@
                 </mat-form-field>
               </div>
               <div>
-                <button mat-button matStepperPrevious>Back</button>
+                <button class="myButton2" mat-button matStepperPrevious>Back</button>
                 <button mat-button matStepperNext>Next</button>
               </div>
             </form>
@@ -116,14 +116,14 @@
           <mat-step [stepControl]="validationForm">
             <form [formGroup]="validationForm">
             <ng-template matStepLabel>Validation</ng-template>
-            <div class="form-group">
+            <div class="form-group autorisationCollecte">
               <mat-checkbox class="example-margin" [(indeterminate)]="indeterminate" [labelPosition]="labelPosition"
                 formControlName="autorisationCollecte" required>
                 J'autorise la collecte et mise à jour numérique des informations de ce formulaire
               </mat-checkbox>
             </div>
             <div>
-              <button mat-button matStepperPrevious>Back</button>
+              <button class="myButton3" mat-button matStepperPrevious>Back</button>
               <button mat-button (click)="stepper.reset()">Reset</button>
               <button *ngIf="!loading" mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()"
             [disabled]="!validationForm.valid">Inscription</button>

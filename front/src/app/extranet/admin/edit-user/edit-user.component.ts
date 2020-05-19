@@ -68,16 +68,16 @@ export class EditUserComponent implements OnInit {
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [this.item.email, Validators.required ],
-      password: [this.item.password, Validators.required ],
-      name: [this.item.name, Validators.required ],
-      surname: [this.item.surname, Validators.required ],
-      promo: [this.item.promo, Validators.required ],
-      optionsIng3Control: [this.item.optionsIng3Control, Validators.required ],
-      entreprise: [this.item.entreprise, Validators.required ],
-      ville: [this.item.ville, Validators.required ],
-      salaire: [this.item.salaire, Validators.required ],
-      role: [this.item.role, Validators.required ],
+      email: [this.item.email],
+      password: [this.item.password],
+      name: [this.item.name],
+      surname: [this.item.surname],
+      promo: [this.item.promo],
+      optionsIng3Control: [this.item.optionsIng3Control],
+      entreprise: [this.item.entreprise],
+      ville: [this.item.ville],
+      salaire: [this.item.salaire],
+      role: [this.item.role],
     });
   }
 
