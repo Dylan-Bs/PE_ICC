@@ -16,7 +16,7 @@ export class ConnexionService {
   email:string;
   userOption:string;
 
-  savedinfo:Student;
+  savedinfo:any;
 
   constructor(public router:Router, public api:ApiService) {
     this.connecte=false;
@@ -38,7 +38,7 @@ export class ConnexionService {
    }
 
    route(){
-     return this.email;
+     return "mon-profil";
    }
 
    deconnecte(){

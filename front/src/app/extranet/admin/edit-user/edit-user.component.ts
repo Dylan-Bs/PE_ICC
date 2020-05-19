@@ -66,9 +66,10 @@ export class EditUserComponent implements OnInit {
       if (data) {
         
           this.loading=true;
+          this.item=data;
           this.createForm()
-          
-          this.api.getUserByID(data).subscribe(
+          this.loading=false;
+          /*this.api.getUserByID(data).subscribe(
             result => {
               this.loading=false;
     
@@ -83,7 +84,7 @@ export class EditUserComponent implements OnInit {
             err=>{
               alert("Error");
             }
-          )
+          )*/
       }
     })
     
