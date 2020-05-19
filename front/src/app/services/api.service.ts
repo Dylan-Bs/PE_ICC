@@ -21,16 +21,22 @@ export class ApiService {
    }
 
 
-  getUser(userKey) {
-    return this.http.get(`${this.apiUrl}/users?id=${userKey}`,this.httpOptions);
+  getUser() {
+    return this.http.get(`${this.apiUrl}/user`,this.httpOptions);
   }
 
-  deleteUser(userKey) {
-    return this.http.delete(`${this.apiUrl}/user/id/${userKey}`);
+  getUserByID(id) {
+    var idstring=id.toString()
+    return this.http.get(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
+  }
+
+  deleteUser(id) {
+    var idstring=id.toString()
+    return this.http.delete(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
   }
 
   getUsers() {
-    return this.http.get(`${this.apiUrl}/users`);
+    return this.http.get(`${this.apiUrl}/users`,this.httpOptions);
   }
 
   searchUsersByPromo(value) {

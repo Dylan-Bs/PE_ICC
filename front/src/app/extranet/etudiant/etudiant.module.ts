@@ -11,7 +11,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
-import { EditionResolver } from './edition/edition.resolver';
+import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 
 
 
@@ -30,10 +30,11 @@ import { EditionResolver } from './edition/edition.resolver';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
+    MatProgressSpinnerModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [EditionResolver],
+  providers: [],
 })
 export class EtudiantModule { }

@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
-import { Authentification } from '../interfaces/interface';
+import { Authentification, Student } from '../interfaces/interface';
 
 @Injectable({
   providedIn: 'root'
@@ -15,6 +15,8 @@ export class ConnexionService {
   token:string;
   email:string;
   userOption:string;
+
+  savedinfo:Student;
 
   constructor(public router:Router, public api:ApiService) {
     this.connecte=false;
@@ -41,6 +43,7 @@ export class ConnexionService {
 
    deconnecte(){
      this.connecte=false;
+     this.savedinfo=undefined;
      this.router.navigateByUrl("/")
 
    }

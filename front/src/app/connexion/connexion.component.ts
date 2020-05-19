@@ -55,23 +55,7 @@ export class ConnexionComponent implements OnInit {
 
   onSubmit(value) {
     this.loading=true
-    /*this.firebaseService.connect(value).subscribe(
-      result => {
-        this.loading=false
-        this.user = result;
-        console.log(this.user)
-        console.log("tentative d'authentification");
-        if (this.user.length > 0) {
-          this.conne.user = this.user;
-          this.conne.connecte = true;
-          this.conne.role = this.user[0].payload.doc.data().role;
-          this.conne.userId = this.user[0].payload.doc.id;
-          this.conne.userOption = this.user[0].payload.doc.data().optionsIng3Control;
-          console.log("utilisateur authentifié, role:" + this.conne.role + " userID:" + this.conne.userId + " option:" + this.conne.userOption);
-          this.getUserInfo();
-        }
-      }
-    )*/
+    
 
       
     this.api.connect(value).subscribe(
@@ -91,7 +75,8 @@ export class ConnexionComponent implements OnInit {
       },
       err => {
         this.loading=false
-        alert("Error");
+        console.log(err)
+        alert(err);
       }
     )
     

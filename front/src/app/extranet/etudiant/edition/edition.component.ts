@@ -29,7 +29,8 @@ export interface optionsIng3Group {
 export class EditionComponent implements OnInit {
 
   exampleForm: FormGroup;
-  option: optionsIng3Group[] = [
+  loading:boolean=false;
+  optionsIng3Groups: optionsIng3Group[] = [
     {
       name: 'Pau',
       option: [
@@ -61,38 +62,35 @@ export class EditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    /*this.route.data.subscribe(routeData => {
-      let data = routeData['data'];
-      if (data) {
-        this.item = data.payload.data();
-        this.item.id = data.payload.id;
-        this.createForm();
-      }
-    })*/
-    this.createForm()
-    this.api.getEtudiant().subscribe(
-      result => {
-        console.log(result)
+    if (this.conne.savedinfo === undefined){
+      this.loading=true;
+      this.createForm()
+      this.api.getEtudiant().subscribe(
+        result => {
+          this.loading=false;
 
-        var res=result as Student
+          var res=result as Student
 
-        this.item=res;
-        this.createForm()
-        
-        
-      },
-      err=>{
-        alert("Error");
-      }
-    )
+          this.item=res;
+          this.conne.savedinfo=this.item;
+          this.createForm()
+          
+          
+        },
+        err=>{
+          alert("Error");
+        }
+      )
+    }else{
+      this.item=this.conne.savedinfo;
+      this.createForm();
+    }
+    
   }
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [{
-        value : this.item.email,
-        disabled: true
-      },Validators.required],
+      email: [this.item.email,Validators.required],
       first_name: [this.item.first_name, Validators.required ],
       last_name: [this.item.last_name, Validators.required ],
       promotion: [this.item.promotion, Validators.required ],

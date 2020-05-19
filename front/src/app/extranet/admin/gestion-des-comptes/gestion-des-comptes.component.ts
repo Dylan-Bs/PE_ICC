@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { FirebaseService } from '../../../services/firebase.service';
 import { Router, Params } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { User } from 'src/app/interfaces/interface';
 
 @Component({
   selector: 'app-gestion-des-comptes',
@@ -12,12 +14,14 @@ export class GestionDesComptesComponent implements OnInit {
   max:number=(new Date()).getFullYear();
   promoValue: number = 0;
   searchValue: string = "";
-  items: Array<any>;
-  promo_filtered_items: Array<any>;
-  name_filtered_items: Array<any>;
+  items: Array<User>;
+  items_filtered: Array<User>;
+
+  loading:boolean=true
 
   constructor(
     public firebaseService: FirebaseService,
+    public api : ApiService,
     private router: Router
   ) { }
 
@@ -26,16 +30,19 @@ export class GestionDesComptesComponent implements OnInit {
   }
 
   getData(){
-    this.firebaseService.getUsers()
+    this.loading=true
+    this.api.getUsers()
     .subscribe(result => {
-      this.items = result;
-      this.promo_filtered_items = result;
-      this.name_filtered_items = result;
+      console.log(result)
+      this.loading=false
+      var res =result as Array<User>
+      this.items = res;
+      this.items_filtered = res;
     })
   }
 
   viewDetails(item){
-    this.router.navigate(['extranet/admin/details/'+ item.payload.doc.id]);
+    this.router.navigate(['extranet/admin/details/'+ item.id]);
   }
 
   capitalizeFirstLetter(value){
@@ -44,19 +51,15 @@ export class GestionDesComptesComponent implements OnInit {
 
   searchByName(){
     let value = this.searchValue.toLowerCase();
-    this.firebaseService.searchUsers(value)
-    .subscribe(result => {
-      this.name_filtered_items = result;
-      this.items = this.combineLists(result, this.promo_filtered_items);
-    })
+    this.items_filtered = this.items.filter(item=> (item.first_name+item.last_name).toLowerCase().includes(value))
   }
 
   rangeChange(event){
-    this.firebaseService.searchUsersByPromo(event.value)
+    /*this.firebaseService.searchUsersByPromo(event.value)
     .subscribe(result =>{
       this.promo_filtered_items = result;
       this.items = this.combineLists(result, this.name_filtered_items);
-    })
+    })*/
   }
 
   combineLists(a, b){
