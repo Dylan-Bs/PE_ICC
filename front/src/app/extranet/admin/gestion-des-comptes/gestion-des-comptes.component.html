@@ -29,7 +29,7 @@
         <div class="row">
             <div class="col col-md-8 text-col">
                 <h5 class="mb-1">{{item.first_name}} {{item.last_name}}</h5>
-                <small>Promo: {{item.promotion}}</small>
+                <small *ngIf="item.promotion>1970">Promo: {{item.promotion}}</small>
             </div>
             <div class="col col-md-2 actions-col">
                 <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">

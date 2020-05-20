@@ -35,7 +35,6 @@ export class GestionDesComptesComponent implements OnInit {
     this.loading=true
     this.api.getUsers()
     .subscribe(result => {
-      console.log(result)
       this.loading=false
       var res =result as Array<User>
       this.items = res;
@@ -62,7 +61,7 @@ export class GestionDesComptesComponent implements OnInit {
 
   rangeChange(event){
     let value=event.value
-    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value)
+    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value || item.promotion===undefined)
     this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
