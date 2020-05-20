@@ -23,10 +23,10 @@ class Users(views.APIView):
         for user in users:
             if(Student.objects.filter(id = user.id).exists()):
                 tmp_student = Student.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "student"})
+                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "2"})
             elif (Teacher.objects.filter(id = user.id).exists()):
                 tmp_teacher = Teacher.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "teacher"})
+                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "1"})
         resp = JsonResponse(data, safe = False)
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
@@ -39,12 +39,13 @@ class Users(views.APIView):
         users = User.objects.all()
         users = list(users)
         for user in users:
-            if(Student.objects.filter(id = user.id).exists()):
-                tmp_student = Student.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "student"})
-            elif (Teacher.objects.filter(id = user.id).exists()):
-                tmp_teacher = Teacher.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "teacher"})
+            if user.is_active:
+                if(Student.objects.filter(id = user.id).exists()):
+                    tmp_student = Student.objects.get(id = user.id)
+                    data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "1"})
+                elif (Teacher.objects.filter(id = user.id).exists()):
+                    tmp_teacher = Teacher.objects.get(id = user.id)
+                    data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "2"})
         resp = JsonResponse(data, safe = False)
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"

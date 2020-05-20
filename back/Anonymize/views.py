@@ -3,6 +3,7 @@ from rest_framework import views
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth.models import User as UserModel
+from Student.models import Student
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.http import JsonResponse
@@ -16,12 +17,12 @@ class Anonymize(APIView):
             resp = JsonResponse({'Error': "Please provide username/password"}, status="400")
         try:
             if('user-token' in request.headers):
-                token = request.header['user-token']
+                token = request.headers['user-token']
                 payload = jwt.decode(token, "PCSK")
-                email = payload['email']
                 userid = payload['id']
-                user = UserModel.objects.get(username = email)
+                user = UserModel.objects.get(id = userid)
                 user.IsActive = False;
+                student = Student.objects.get(id = userid)
                 resp = JsonResponse({'Success': "User deleted, anonymization completed"}, status = "200")
         except UserModel.DoesNotExist:
             resp = JsonResponse({'NotFound': "User does not exist"}, status = "404")

@@ -1,0 +1,13 @@
+[
+    {
+        "email": "jeanlasalle@test.com",
+        "password": "testpswd",
+        "first_name": "Jean",
+        "last_name": "Lasalle",
+        "promotion": "2020",
+        "option": "iapau",
+        "company": "Total",
+        "working_city": "Pau",
+        "wage": "50000"
+    }
+]

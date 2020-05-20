@@ -18,9 +18,9 @@ COPY package*.json /app/
 # install and cache app dependencies
 RUN npm install
 
-COPY ./ /app
-
 RUN npm install -g @angular/cli@8.3.25
+
+COPY ./ /app
 
 EXPOSE 4200
 

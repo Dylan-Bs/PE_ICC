@@ -19,11 +19,11 @@ class Authenticate(APIView):
         user = authenticate(username=email_r, password=password_r)
         if user:
             expiry = datetime.date.today() + datetime.timedelta(days=7)
-            role = 'student'
+            role = '0'
             if(user.is_staff):
-                role = 'teacher'
+                role = '1'
             if(user.is_superuser):
-                role = 'admin'
+                role = '2'
             token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
             resp = HttpResponse(
               json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.email), 'role': str(role)}),

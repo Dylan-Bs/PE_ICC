@@ -1,6 +1,7 @@
 import django
 import pathlib
 import os
+import jwt
 from django.core import serializers
 from rest_framework import views
 from rest_framework.response import Response
@@ -39,6 +40,37 @@ class Teacher(views.APIView):
                 resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
+        resp["Access-Control-Max-Age"] = "1000"
+        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
+        return resp
+
+    def post(self, request, *args, **kwargs):
+        if not request.data:
+            resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
+        else: 
+            if('user-token' in request.headers):
+                token = request.headers['user-token']
+                payload = jwt.decode(token, "PCSK")
+                userid = payload['id']
+                user = User.objects.get(id=userid)
+                if(user != None):
+                    first_name = request.data['first_name']
+                    last_name = request.data['last_name']
+                    option = request.data['option']
+                    user.first_name = first_name
+                    user.last_name = last_name
+                    user.save()
+                    res = User.objects.get(id=userid)
+                    teacher = TeacherModel.objects.get(id= res.id)
+                    teacher.option = option
+                    teacher.save()
+                    resp = JsonResponse({'Modifications accepted': "Teacher " + res.first_name + " " + res.last_name + " updated"}, status = "200")
+                else:
+                    resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
+            else:
+                resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
+        resp["Access-Control-Allow-Origin"] = "*"
+        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
