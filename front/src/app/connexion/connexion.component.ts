@@ -38,7 +38,6 @@ export class ConnexionComponent implements OnInit {
     if (this.conne.connecte) {
       this.getUserInfo();
     }
-    this.try = false
   }
 
   createForm() {
