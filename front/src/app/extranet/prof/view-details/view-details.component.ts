@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { FirebaseService } from '../../../services/firebase.service';
+import { ApiService } from 'src/app/services/api.service';
 
 export interface option {
   value: string;
@@ -25,7 +25,7 @@ export class ViewDetailsComponent implements OnInit {
   item: any;
 
   constructor(
-    public firebaseService: FirebaseService,
+    public api: ApiService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
   ) { }
@@ -34,8 +34,7 @@ export class ViewDetailsComponent implements OnInit {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
-        this.item = data.payload.data();
-        this.item.id = data.payload.id;
+        this.item = data;
         if (this.item.email == "") {
           this.item.email = "Non renseigné"
         }
