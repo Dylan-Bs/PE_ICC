@@ -20,8 +20,10 @@ export class ConnexionComponent implements OnInit {
   name: string;
   surname: string;
   role: string;
+
   error:boolean=false
   errormsg:string
+
   loading:boolean=false
 
   constructor(
@@ -36,6 +38,7 @@ export class ConnexionComponent implements OnInit {
     if (this.conne.connecte) {
       this.getUserInfo();
     }
+    this.try = false
   }
 
   createForm() {
@@ -61,6 +64,7 @@ export class ConnexionComponent implements OnInit {
       result => {
         this.loading=false
 
+
         var res:Authentification=result as Authentification
         
         console.log(res)
@@ -79,6 +83,7 @@ export class ConnexionComponent implements OnInit {
           this.errormsg="Connexion impossible avec le serveur"
         }else if (err.status==400){
           this.errormsg="Les données sont invalides"
+
         }
       }
     )

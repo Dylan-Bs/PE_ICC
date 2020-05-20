@@ -6,6 +6,7 @@ import { ViewDetailsComponent } from './view-details/view-details.component';
 import { ProfRoutingModule } from './prof-routing.module';
 
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatCardModule } from '@angular/material/card';
 import { MatButtonModule } from '@angular/material/button';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { MatIconModule } from '@angular/material/icon';
@@ -26,6 +27,7 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     ReactiveFormsModule,
     MatButtonModule,
     MatInputModule,
+    MatCardModule,
     MatSliderModule,
     MatCheckboxModule,
     MatSelectModule,

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
@@ -19,6 +20,9 @@ export interface optionsIng3Group {
   templateUrl: './collecte.component.html',
   styleUrls: ['./collecte.component.scss']
 })
+
+
+
 export class CollecteComponent implements OnInit {
 
   personalForm: FormGroup;
@@ -30,6 +34,8 @@ export class CollecteComponent implements OnInit {
   
   max:number=(new Date()).getFullYear();
   promo_value:number=this.max;
+  
+  
 
   optionsIng3Groups: optionsIng3Group[] = [
     {
@@ -73,6 +79,10 @@ export class CollecteComponent implements OnInit {
     'optionsIng3Control': [
       { type: 'required', message: 'L\' option est requise' },
     ],
+    'promo' :[
+      { type: 'required', message: 'L\' année de promotion est requise' },
+      { type: 'outOfRange', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
+    ]
   };
 
   constructor(
@@ -91,7 +101,7 @@ export class CollecteComponent implements OnInit {
       password: ['', [Validators.required, Validators.minLength(7)]],
       name: ['', Validators.required],
       surname: ['', Validators.required],
-      promo: ['', Validators.required],
+      promo: ['', [Validators.required, this.checkPromo]],
       optionsIng3Control: ['', Validators.required]});
     this.professionalForm = this.fb.group({
       entreprise: [''],
@@ -109,7 +119,7 @@ export class CollecteComponent implements OnInit {
       password: new FormControl('', [Validators.required, Validators.minLength(7)]),
       name: new FormControl('', Validators.required),
       surname: new FormControl('', Validators.required),
-      promo: new FormControl('', Validators.required),
+      promo: new FormControl('', [Validators.required, this.checkPromo]),
       optionsIng3Control: new FormControl('', Validators.required)});
     this.professionalForm = this.fb.group({
       entreprise: new FormControl(''),
@@ -128,6 +138,7 @@ export class CollecteComponent implements OnInit {
 
     let value:Object=Object.assign({}, a, b);
     this.loading=true
+
     console.log(value)
 
     this.api.createUser(value).subscribe(
@@ -141,5 +152,13 @@ export class CollecteComponent implements OnInit {
         alert("Error")
       }
     )
+
   }
+
+  checkPromo(control: FormControl) {
+    let maxi:number;
+    maxi = (new Date()).getFullYear();
+    return control.value >= 1990 && control.value <= maxi ? null : {'outOfRange': true};
+  }
+
 }

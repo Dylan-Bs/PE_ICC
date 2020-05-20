@@ -7,7 +7,7 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
-from spotlight import annotate
+from .spotlight import annotate
 
 from functools import partial
 
