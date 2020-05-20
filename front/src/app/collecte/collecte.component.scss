@@ -17,10 +17,6 @@
       width: 50%;
     }
 
-    .slider {
-      width: 52%;
-    }
-
     .mat-error {
       font-size: 12px;
     }
@@ -30,7 +26,7 @@
   margin: auto;
 }
 
-mat-form-field, mat-slider{
+mat-form-field{
   width: 100%;
 }
 
@@ -48,4 +44,8 @@ mat-form-field, mat-slider{
 
 .autorisationCollecte {
   text-align: center;
+}
+
+.promo {
+  font-size: 22px;
 }
