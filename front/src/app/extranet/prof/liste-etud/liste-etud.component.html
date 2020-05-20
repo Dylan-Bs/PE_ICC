@@ -21,14 +21,14 @@
         </div>
     </div>
 </div>
-
+<div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
 <!-- Liste des utilisateurs dans la bdd -->
 <div class="list-group users-list">
-    <div *ngFor="let item of items" class="list-group-item list-group-item-action flex-column align-items-start">
+    <div *ngFor="let item of items_filtered" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="row">
             <div class="col col-md-8 text-col">
-                <h5 class="mb-1">{{item.payload.doc.data().name}} {{item.payload.doc.data().surname}}</h5>
-                <small>Promo: {{item.payload.doc.data().promo}}</small>
+                <h5 class="mb-1">{{item.name}}</h5>
+                <small>Promo: {{item.promotion}}</small>
             </div>
             <div class="col col-md-2 actions-col">
                 <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">

@@ -12,6 +12,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 import { AdminRoutingModule } from './admin-routing.module';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditUserResolver } from './edit-user/edit-user.resolver';
 
 
@@ -28,7 +29,8 @@ import { EditUserResolver } from './edit-user/edit-user.resolver';
     MatToolbarModule,
     MatIconModule,
     FormsModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    MatProgressSpinnerModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

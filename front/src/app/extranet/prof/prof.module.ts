@@ -15,6 +15,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ViewDetailsResolver } from './view-details/view-details.resolver';
+import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 
 
 @NgModule({
@@ -32,6 +33,7 @@ import { ViewDetailsResolver } from './view-details/view-details.resolver';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
+    MatProgressSpinnerModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

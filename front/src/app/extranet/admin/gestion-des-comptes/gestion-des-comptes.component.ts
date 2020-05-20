@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../services/firebase.service';
 import { Router, Params } from '@angular/router';
+import { ApiService } from 'src/app/services/api.service';
+import { User } from 'src/app/interfaces/interface';
+import { ConnexionService } from 'src/app/services/connexion.service';
 
 @Component({
   selector: 'app-gestion-des-comptes',
@@ -12,13 +14,17 @@ export class GestionDesComptesComponent implements OnInit {
   max:number=(new Date()).getFullYear();
   promoValue: number = 0;
   searchValue: string = "";
-  items: Array<any>;
-  promo_filtered_items: Array<any>;
-  name_filtered_items: Array<any>;
+  items: Array<User>;
+  items_name_filtered: Array<User>;
+  items_promo_filtered: Array<User>;
+  items_filtered : Array<User>;
+
+  loading:boolean=true
 
   constructor(
-    public firebaseService: FirebaseService,
-    private router: Router
+    public api : ApiService,
+    private router: Router,
+    public conne:ConnexionService
   ) { }
 
   ngOnInit() {
@@ -26,16 +32,21 @@ export class GestionDesComptesComponent implements OnInit {
   }
 
   getData(){
-    this.firebaseService.getUsers()
+    this.loading=true
+    this.api.getUsers()
     .subscribe(result => {
-      this.items = result;
-      this.promo_filtered_items = result;
-      this.name_filtered_items = result;
+      this.loading=false
+      var res =result as Array<User>
+      this.items = res;
+      this.items_name_filtered = res;
+      this.items_promo_filtered = res;
+      this.items_filtered=res;
+      this.conne.savedinfo=res;
     })
   }
 
   viewDetails(item){
-    this.router.navigate(['extranet/admin/details/'+ item.payload.doc.id]);
+    this.router.navigate(['extranet/admin/details/'+ item.id]);
   }
 
   capitalizeFirstLetter(value){
@@ -44,19 +55,14 @@ export class GestionDesComptesComponent implements OnInit {
 
   searchByName(){
     let value = this.searchValue.toLowerCase();
-    this.firebaseService.searchUsers(value)
-    .subscribe(result => {
-      this.name_filtered_items = result;
-      this.items = this.combineLists(result, this.promo_filtered_items);
-    })
+    this.items_name_filtered = this.items.filter(item=> (item.first_name+item.last_name).toLowerCase().includes(value))
+    this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
   rangeChange(event){
-    this.firebaseService.searchUsersByPromo(event.value)
-    .subscribe(result =>{
-      this.promo_filtered_items = result;
-      this.items = this.combineLists(result, this.name_filtered_items);
-    })
+    let value=event.value
+    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value || item.promotion===undefined)
+    this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
   combineLists(a, b){
@@ -64,7 +70,7 @@ export class GestionDesComptesComponent implements OnInit {
 
     a.filter(x => {
       return b.filter(x2 =>{
-        if(x2.payload.doc.id == x.payload.doc.id){
+        if(x2.id == x.id){
           result.push(x2);
         }
       });

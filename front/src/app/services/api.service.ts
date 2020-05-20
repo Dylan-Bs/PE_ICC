@@ -11,9 +11,7 @@ export class ApiService {
   httpOptions =
 {   
   headers: new HttpHeaders({ 
-    'Content-Type': 'application/json',
-    'Access-Control-Allow-Origin': '*',
-    'Authorization': 'Basic ' + btoa('xxx:xxx')
+    'Content-Type': 'application/json'
   }),
     withCredentials: true
 }
@@ -23,16 +21,23 @@ export class ApiService {
    }
 
 
-  getUser(userKey) {
-    return this.http.get(`${this.apiUrl}/users?id=${userKey}`,this.httpOptions);
+  getUser() {
+    return this.http.get(`${this.apiUrl}/user`,this.httpOptions);
   }
 
-  deleteUser(userKey) {
-    return this.http.delete(`${this.apiUrl}/user/id/${userKey}`);
+  getUserByID(id) {
+    var idstring=id.toString()
+    return this.http.get(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
+  }
+
+  deleteUser(data) {
+    var options=this.httpOptions
+    options["body"]=JSON.stringify(data)
+    return this.http.delete(`${this.apiUrl}/user`,options);
   }
 
   getUsers() {
-    return this.http.get(`${this.apiUrl}/users`);
+    return this.http.get(`${this.apiUrl}/users`,this.httpOptions);
   }
 
   searchUsersByPromo(value) {
@@ -41,38 +46,49 @@ export class ApiService {
 
   //Register
 
-  updateUser(userKey, value) {
-    value.id=userKey
-    return this.http.put(`${this.apiUrl}/register`,value);
+  updateUser(value) {
+    return this.http.post(`${this.apiUrl}/user`,JSON.stringify(value),this.httpOptions);
   }
 
   createUser(value) {
     var info:object={
-      email: value.email,
-      password: value.password,
-      name: value.name,
-      nameToSearch: value.name.toLowerCase(),
-      surname: value.surname,
-      promo: parseInt(value.promo),
-      optionsIng3Control: value.optionsIng3Control,
-      entreprise: value.entreprise,
-      ville: value.ville,
-      salaire: parseInt(value.salaire),
-      role: parseInt('0')
+      "email": value.email,
+      "password": value.password,
+      "first_name": value.name,
+      "last_name": value.surname,
+      "promotion": parseInt(value.promo),
+      "option": value.optionsIng3Control,
+      "company": value.entreprise,
+      "working_city": value.ville,
+      "wage": parseInt(value.salaire)
     }
-    return this.http.post(`${this.apiUrl}/register`,info);
+    return this.http.put(`${this.apiUrl}/register`,info,this.httpOptions);
   }
 
   //Login
 
   connect(value) {
-    return this.http.post(`${this.apiUrl}/authenticate`,value,this.httpOptions);
+    return this.http.post(`${this.apiUrl}/authenticate`,JSON.stringify(value),this.httpOptions);
   }
 
   //Students
 
+  getEtudiant() {
+    return this.http.get(`${this.apiUrl}/student`,this.httpOptions);
+  }
+
+  updateEtudiant(value) {
+    return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
+  }
+
+  updateEtudiantAdmin(value,id) {
+    this.clean(value)
+    value["id"]=id
+    return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
+  }
+
   getEtudiants() {
-    return this.http.get(`${this.apiUrl}/students`);
+    return this.http.get(`${this.apiUrl}/students`,this.httpOptions);
   }
 
   getEtudByOption(optioning3) {
@@ -90,6 +106,22 @@ export class ApiService {
     value.first_name = 'anonymous';
     value.last_name = 'anonymous';
     return this.http.put(`${this.apiUrl}/anonymiser`,value);
+  }
+
+  //teacher
+
+  updateTeacher(value,id){
+    this.clean(value)
+    value["id"]=id
+    return this.http.post(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
+  clean(obj) {
+    for (var propName in obj) { 
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
   }
 
 }

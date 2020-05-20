@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../services/firebase.service';
 import { Router } from '@angular/router';
 import { ConnexionService } from '../../../services/connexion.service';
+import { Student } from 'src/app/interfaces/interface';
+import { ApiService } from 'src/app/services/api.service';
 
 
 @Component({
@@ -14,60 +15,64 @@ export class ListeEtudComponent implements OnInit {
   max:number=(new Date()).getFullYear();
   promoValue: number = 0;
   searchValue: string = "";
-  items: Array<any>;
-  promo_filtered_items: Array<any>;
-  name_filtered_items: Array<any>;
+  items: Array<Student>;
+  items_name_filtered: Array<Student>;
+  items_promo_filtered: Array<Student>;
+  items_filtered : Array<Student>;
+
+  loading:boolean=true
 
   constructor(
-    public firebaseService: FirebaseService,
-    public conne: ConnexionService,
-    private router: Router
+    public api : ApiService,
+    private router: Router,
+    public conne:ConnexionService
   ) { }
 
   ngOnInit() {
     this.getData();
   }
-  
-  getData() {
-    this.firebaseService.getEtudByOption(this.conne.userOption)
-      .subscribe(result => {
-        this.items = result;
-        this.promo_filtered_items = result;
-        this.name_filtered_items = result;
-      })
+
+  getData(){
+    this.loading=true
+    this.api.getEtudiants()
+    .subscribe(result => {
+      console.log(result)
+      this.loading=false
+      var res =result as Array<Student>
+      this.items = res;
+      this.items_name_filtered = res;
+      this.items_promo_filtered = res;
+      this.items_filtered=res;
+      this.conne.savedinfo=res;
+    })
   }
 
-  viewDetails(item) {
-    this.router.navigate(['extranet/prof/view/' + item.payload.doc.id]);
+  viewDetails(item){
+    this.router.navigate(['extranet/prof/details/'+ item.id]);
   }
 
-  capitalizeFirstLetter(value) {
+  capitalizeFirstLetter(value){
     return value.charAt(0).toUpperCase() + value.slice(1);
   }
 
-  searchByName() {
+  searchByName(){
     let value = this.searchValue.toLowerCase();
-    this.firebaseService.searchUsers(value)
-      .subscribe(result => {
-        this.name_filtered_items = result;
-        this.items = this.combineLists(result, this.promo_filtered_items);
-      })
+    this.items_name_filtered = this.items.filter(item=> (item.name).toLowerCase().includes(value))
+    this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
-  rangeChange(event) {
-    this.firebaseService.searchUsersByPromo(event.value)
-      .subscribe(result => {
-        this.promo_filtered_items = result;
-        this.items = this.combineLists(result, this.name_filtered_items);
-      })
+  rangeChange(event){
+    let value=event.value
+    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value)
+    this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
-  combineLists(a, b) {
+  combineLists(a, b){
     let result = [];
 
     a.filter(x => {
-      return b.filter(x2 => {
-        if (x2.payload.doc.id == x.payload.doc.id) {
+      return b.filter(x2 =>{
+        if(x2.id == x.id){
           result.push(x2);
         }
       });

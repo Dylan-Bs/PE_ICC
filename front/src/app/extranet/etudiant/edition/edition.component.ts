@@ -2,10 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebaseService } from '../../../services/firebase.service';
 import { ConnexionService } from '../../../services/connexion.service';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ApiService } from 'src/app/services/api.service';
+import { Student } from 'src/app/interfaces/interface';
+
 
 export interface option {
   value: string;
@@ -26,6 +28,7 @@ export interface optionsIng3Group {
 export class EditionComponent implements OnInit {
 
   exampleForm: FormGroup;
+  loading:boolean=false;
   optionsIng3Groups: optionsIng3Group[] = [
     {
       name: 'Pau',
@@ -45,10 +48,10 @@ export class EditionComponent implements OnInit {
       ]
     },
   ];
-  item: any;
+  item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
 
   constructor(
-    public firebaseService: FirebaseService,
+    public api:ApiService,
     public conne: ConnexionService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -57,37 +60,54 @@ export class EditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.route.data.subscribe(routeData => {
-      let data = routeData['data'];
-      if (data) {
-        this.item = data.payload.data();
-        this.item.id = data.payload.id;
-        this.createForm();
-      }
-    })
+    if (this.conne.savedinfo === undefined){
+      this.loading=true;
+      this.createForm()
+      this.api.getEtudiant().subscribe(
+        result => {
+          this.loading=false;
+
+          var res=result as Student
+
+          this.item=res;
+          this.conne.savedinfo=this.item;
+          this.createForm()
+          
+          
+        },
+        err=>{
+          alert("Error");
+        }
+      )
+    }else{
+      this.item=this.conne.savedinfo;
+      this.createForm();
+    }
+    
   }
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [this.item.email, Validators.required ],
-      password: ["", Validators.required ],
-      name: [this.item.name, Validators.required ],
-      surname: [this.item.surname, Validators.required ],
-      promo: [this.item.promo, Validators.required ],
-      optionsIng3Control: [this.item.optionsIng3Control, Validators.required ],
-      entreprise: [this.item.entreprise, Validators.required ],
-      ville: [this.item.ville, Validators.required ],
-      salaire: [this.item.salaire, Validators.required ],
-      role: [this.item.role, Validators.required ],
+      email: [this.item.email,Validators.required],
+      first_name: [this.item.first_name, Validators.required ],
+      last_name: [this.item.last_name, Validators.required ],
+      promotion: [this.item.promotion, Validators.required ],
+      option: [this.item.option, Validators.required ],
+      company: [this.item.company, Validators.required ],
+      working_city: [this.item.working_city, Validators.required ],
+      wage: [this.item.wage, Validators.required ],
+      role: [0, Validators.required ],
     });
   }
 
   onSubmit(value){
-    value.age = Number(value.age);
-    this.firebaseService.updateUser(this.item.id, value)
-    .then(
-      res => {
+    this.api.updateEtudiant(value)
+    .subscribe(
+      result => {
         this.openDialog()
+      },
+      err=>{
+        alert("Error");
       }
     )
   }
@@ -103,8 +123,12 @@ export class EditionComponent implements OnInit {
     });
   }
 
+  popup_email(){
+
+  }
+
   anonymisation(value){
-    this.firebaseService.anonymiser(this.item.id, value)
+    /*this.firebaseService.anonymiser(this.item.id, value)
     .then(
       res => {
         this.router.navigate(['/']);
@@ -113,6 +137,6 @@ export class EditionComponent implements OnInit {
       err => {
         console.log(err);
       }
-    )
+    )*/
   }
 }

@@ -1,3 +1,4 @@
+<mat-toolbar *ngIf="error" color="accent"><mat-icon aria-hidden="false" aria-label="remove_circle">remove_circle</mat-icon>  {{errormsg}}</mat-toolbar>
 <section>
   <mat-card class="col col-md-4">
     <h3 *ngIf="!conne.connecte">Connexion</h3>
@@ -20,11 +21,13 @@
 
     <button mat-raised-button class="submit-button" color="primary" type="submit"
       [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
-      <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
-    
-     
-  </form>
+      <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner></div>
+      <br>
+      
+      
 
+  </form>
+  
   <div *ngIf="conne.connecte">
     <h3>Bonjour {{surname | titlecase }} {{name | uppercase }}</h3>
       <p>vous êtes bien connecté avec le role: {{role}}
@@ -32,4 +35,5 @@
     </p>
   </div>
 </mat-card>
+
 </section>

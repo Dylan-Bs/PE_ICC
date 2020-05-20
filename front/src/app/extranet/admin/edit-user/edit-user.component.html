@@ -5,43 +5,44 @@
     </ol>
   </nav>
   <div class="page-content">
+    <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
     <div class="row">
-      <div class="col col-md-8 form-container">
+      <div class="col col-md-8 form-container" [ngStyle]="{'visibility':loading ? 'hidden' : 'visible'}">
 
-        <form class="edit-form" [formGroup]="exampleForm" novalidate (ngSubmit)="onSubmit(exampleForm.value)">
+        <form class="edit-form" [formGroup]="exampleForm" novalidate (ngSubmit)="onSubmit(exampleForm.value)" >
           <div class="form-group">
             <mat-form-field class="input-style">
               <input matInput type="email" placeholder="Adresse électronique" class="form-control"
                 formControlName="email">
             </mat-form-field>
           </div>
-          <div class="form-group">
+          <!--<div class="form-group">
             <mat-form-field class="input-style">
               <input matInput type="password" placeholder="Mot de passe" class="form-control"
                 formControlName="password">
             </mat-form-field>
-          </div>
+          </div>-->
           <div class="form-group">
             <mat-form-field class="input-style">
-              <input matInput placeholder="Nom" class="form-control" formControlName="name">
+              <input matInput placeholder="Nom" class="form-control" formControlName="first_name">
             </mat-form-field>
           </div>
           <div class="form-group">
             <mat-form-field class="input-style">
-              <input matInput placeholder="Prénom" class="form-control" formControlName="surname">
-            </mat-form-field>
-          </div>
-
-          <div class="form-group">
-            <mat-form-field class="input-style">
-              <input matInput type="number" placeholder="Promotion" class="form-control" formControlName="promo">
+              <input matInput placeholder="Prénom" class="form-control" formControlName="last_name">
             </mat-form-field>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" *ngIf="role!=1">
+            <mat-form-field class="input-style">
+              <input matInput type="number" placeholder="Promotion" class="form-control" formControlName="promotion">
+            </mat-form-field>
+          </div>
+
+          <div class="form-group" *ngIf="role!=1">
             <mat-form-field class="input-style">
               <mat-label>Option ING3</mat-label>
-              <mat-select formControlName="optionsIng3Control">
+              <mat-select formControlName="option">
                 <mat-option>-- Aucun --</mat-option>
                 <mat-optgroup *ngFor="let group of optionsIng3Groups" [label]="group.name" [disabled]="group.disabled">
                   <mat-option *ngFor="let option of group.option" [value]="option.value">
@@ -52,29 +53,29 @@
             </mat-form-field>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" *ngIf="role!=1">
             <mat-form-field class="input-style">
-              <input matInput placeholder="Entreprise" class="form-control" formControlName="entreprise">
+              <input matInput placeholder="Entreprise" class="form-control" formControlName="company">
             </mat-form-field>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" *ngIf="role!=1">
             <mat-form-field class="input-style">
-              <input matInput placeholder="Ville travail" class="form-control" formControlName="ville">
+              <input matInput placeholder="Ville travail" class="form-control" formControlName="working_city">
             </mat-form-field>
           </div>
 
-          <div class="form-group">
+          <div class="form-group" *ngIf="role!=1">
             <mat-form-field class="input-style">
-              <input matInput type="number" placeholder="Salaire" class="form-control" formControlName="salaire">
+              <input matInput type="number" placeholder="Salaire" class="form-control" formControlName="wage">
             </mat-form-field>
           </div>
 
-          <div class="form-group">
+          <!--<div class="form-group">
             <mat-form-field class="input-style">
               <input matInput type="number" placeholder="Role" class="form-control" formControlName="role">
             </mat-form-field>
-          </div>
+          </div>-->
 
 
           <div class="submit-button-container d-flex">
