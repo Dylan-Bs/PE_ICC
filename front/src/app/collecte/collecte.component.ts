@@ -80,7 +80,7 @@ export class CollecteComponent implements OnInit {
     ],
     'promo' :[
       { type: 'required', message: 'L\' année de promotion est requise' },
-      { type: 'outOfRange', message: 'Entrez une année de promotion valide' }
+      { type: 'outOfRange', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
     ]
   };
 
