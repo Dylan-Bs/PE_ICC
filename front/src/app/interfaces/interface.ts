@@ -8,8 +8,9 @@ export interface Authentification {
   }
 
 export interface Student{
-    first_name: string;
-    last_name: string;
+    first_name?: string;
+    last_name?: string;
+    name?:string;
     email:string;
     password?:string;
     role?:string;

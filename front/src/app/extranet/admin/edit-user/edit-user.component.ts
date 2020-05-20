@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebaseService } from '../../../services/firebase.service';
 import { Router } from '@angular/router';
 import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
@@ -50,6 +49,7 @@ export class EditUserComponent implements OnInit {
   ];
   item: User={"id":0,"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","role":0};
   loading:boolean=false;
+  role:number=1
 
   constructor(
     public api: ApiService,
@@ -69,22 +69,7 @@ export class EditUserComponent implements OnInit {
           this.item=data;
           this.createForm()
           this.loading=false;
-          /*this.api.getUserByID(data).subscribe(
-            result => {
-              this.loading=false;
-    
-              var res=result as User
-    
-              this.item=res;
-              console.log(res)
-              this.createForm()
-              
-              
-            },
-            err=>{
-              alert("Error");
-            }
-          )*/
+          this.role=this.item.role
       }
     })
     
@@ -92,7 +77,7 @@ export class EditUserComponent implements OnInit {
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [this.item.email],
+      email: [{value:this.item.email,disabled:true}],
       password: [this.item.password],
       first_name: [this.item.first_name],
       last_name: [this.item.last_name],
@@ -106,7 +91,8 @@ export class EditUserComponent implements OnInit {
   }
 
   onSubmit(value){
-    this.api.updateEtudiant(value)
+    if (this.role==1){
+      this.api.updateTeacher(value,this.item.id)
     .subscribe(
       result => {
         this.openDialog()
@@ -115,6 +101,18 @@ export class EditUserComponent implements OnInit {
         alert("Error");
       }
     )
+    }else{
+      this.api.updateEtudiantAdmin(value,this.item.id)
+    .subscribe(
+      result => {
+        this.openDialog()
+      },
+      err=>{
+        alert("Error");
+      }
+    )
+    }
+    
   }
 
   openDialog(): void {
@@ -129,7 +127,7 @@ export class EditUserComponent implements OnInit {
   }
 
   delete(){
-    this.api.deleteUser(this.item.id)
+    this.api.deleteUser({"id":this.item.id})
     .subscribe(
       result => {
         this.router.navigate(['extranet/admin']);

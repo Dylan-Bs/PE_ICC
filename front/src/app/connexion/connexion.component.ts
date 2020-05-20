@@ -3,7 +3,6 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 import { Authentification } from '../interfaces/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
-import { FirebaseService } from '../services/firebase.service';
 import { ApiService } from '../services/api.service';
 
 
@@ -21,13 +20,13 @@ export class ConnexionComponent implements OnInit {
   name: string;
   surname: string;
   role: string;
-
+  error:boolean=false
+  errormsg:string
   loading:boolean=false
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
-    public firebaseService: FirebaseService,
     public api:ApiService,
     public conne: ConnexionService
   ) { }
@@ -55,7 +54,7 @@ export class ConnexionComponent implements OnInit {
 
   onSubmit(value) {
     this.loading=true
-    
+    this.error=false
 
       
     this.api.connect(value).subscribe(
@@ -75,8 +74,12 @@ export class ConnexionComponent implements OnInit {
       },
       err => {
         this.loading=false
-        console.log(err)
-        alert(err);
+        this.error=true
+        if (err.status==502){
+          this.errormsg="Connexion impossible avec le serveur"
+        }else if (err.status==400){
+          this.errormsg="Les données sont invalides"
+        }
       }
     )
     

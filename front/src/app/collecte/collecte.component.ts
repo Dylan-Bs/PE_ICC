@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { FirebaseService } from '../services/firebase.service';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
 
@@ -78,7 +77,6 @@ export class CollecteComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    public firebaseService: FirebaseService,
     public conne: ConnexionService,
     public api:ApiService
   ) { }

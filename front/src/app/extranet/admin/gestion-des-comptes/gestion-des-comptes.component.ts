@@ -1,5 +1,4 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../services/firebase.service';
 import { Router, Params } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
 import { User } from 'src/app/interfaces/interface';
@@ -23,7 +22,6 @@ export class GestionDesComptesComponent implements OnInit {
   loading:boolean=true
 
   constructor(
-    public firebaseService: FirebaseService,
     public api : ApiService,
     private router: Router,
     public conne:ConnexionService

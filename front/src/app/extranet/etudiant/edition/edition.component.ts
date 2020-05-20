@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { MatDialog } from '@angular/material/dialog';
-import { FirebaseService } from '../../../services/firebase.service';
 import { ConnexionService } from '../../../services/connexion.service';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
@@ -52,7 +51,6 @@ export class EditionComponent implements OnInit {
   item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
 
   constructor(
-    public firebaseService: FirebaseService,
     public api:ApiService,
     public conne: ConnexionService,
     private route: ActivatedRoute,

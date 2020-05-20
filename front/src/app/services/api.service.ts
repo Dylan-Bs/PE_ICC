@@ -30,9 +30,10 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
   }
 
-  deleteUser(id) {
-    var idstring=id.toString()
-    return this.http.delete(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
+  deleteUser(data) {
+    var options=this.httpOptions
+    options["body"]=JSON.stringify(data)
+    return this.http.delete(`${this.apiUrl}/user`,options);
   }
 
   getUsers() {
@@ -45,9 +46,8 @@ export class ApiService {
 
   //Register
 
-  updateUser(userKey, value) {
-    value.id=userKey
-    return this.http.put(`${this.apiUrl}/register`,value);
+  updateUser(value) {
+    return this.http.post(`${this.apiUrl}/user`,JSON.stringify(value),this.httpOptions);
   }
 
   createUser(value) {
@@ -81,8 +81,14 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
   }
 
+  updateEtudiantAdmin(value,id) {
+    this.clean(value)
+    value["id"]=id
+    return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
+  }
+
   getEtudiants() {
-    return this.http.get(`${this.apiUrl}/students`);
+    return this.http.get(`${this.apiUrl}/students`,this.httpOptions);
   }
 
   getEtudByOption(optioning3) {
@@ -100,6 +106,22 @@ export class ApiService {
     value.first_name = 'anonymous';
     value.last_name = 'anonymous';
     return this.http.put(`${this.apiUrl}/anonymiser`,value);
+  }
+
+  //teacher
+
+  updateTeacher(value,id){
+    this.clean(value)
+    value["id"]=id
+    return this.http.post(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
+  clean(obj) {
+    for (var propName in obj) { 
+      if (obj[propName] === null || obj[propName] === undefined) {
+        delete obj[propName];
+      }
+    }
   }
 
 }
