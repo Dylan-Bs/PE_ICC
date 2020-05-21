@@ -54,6 +54,9 @@ class Teacher(views.APIView):
                 userid = payload['id']
                 user = User.objects.get(id=userid)
                 if(user != None):
+                    if user.is_superuser:
+                        userid = request.data['id']
+                        user = User.objects.get(id=userid)
                     first_name = request.data['first_name']
                     last_name = request.data['last_name']
                     option = request.data['option']

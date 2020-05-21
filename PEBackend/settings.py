@@ -89,7 +89,6 @@ TEMPLATES = [{
 # }
 
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
-print(os.getenv('DATABASE_HOST')+':'+os.getenv('DATABASE_PORT'))
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
