@@ -17,7 +17,7 @@ services:
         ports:
             - "27017:27017"
         networks:
-            - api
+            - backend
 
     migration:
         build: ./back
@@ -29,7 +29,7 @@ services:
         depends_on:
             - mongodb
         networks:
-            - api
+            - backend
 
     initialization:
         build: ./back
@@ -40,7 +40,7 @@ services:
             - mongodb
             - migration
         networks:
-            - api
+            - backend
 
     api:
         restart: always
@@ -56,7 +56,8 @@ services:
         depends_on:
             - migration
         networks: 
-            - api
+            - backend
+            - frontend
 
     front:
         restart: always
@@ -70,10 +71,14 @@ services:
             - ./front:/PE_ICC/front
             - '/PE_ICC/front/node_modules'
         ports:
-          - "80:4200"
+            - "80:4200"
+        networks:
+            - frontend
 
 networks: 
-    api:
+    backend:
+        driver: bridge
+    frontend:
         driver: bridge
 
 volumes:
