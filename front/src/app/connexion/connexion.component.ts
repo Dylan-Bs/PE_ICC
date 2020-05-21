@@ -78,7 +78,7 @@ export class ConnexionComponent implements OnInit {
       err => {
         this.loading=false
         this.error=true
-        if (err.status==502){
+        if (err.status==502 || err.status== 500){
           this.errormsg="Connexion impossible avec le serveur."
         }else if (err.status==400){
           this.errormsg="Identifiant et/ou mot de passse incorrect(s)."
