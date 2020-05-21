@@ -120,7 +120,104 @@ export class StatsComponent implements OnInit {
     }
   };
 
+  /*save
+  Highcharts.chart('container', {
+    chart: {
+        type: 'column'
+    },
+    
+    plotOptions: {
+    	column:{
+      	allowPointSelect: true,
+        cursor: 'pointer',states: {
+                select: {
+                    color: "#003399"
+                }
+            }
+      }
+    },
+    title: {
+        text: 'World\'s largest cities per 2017'
+    },
+    subtitle: {
+        text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+    },
+    xAxis: {
+        type: 'category',
+        labels: {
+            rotation: -45,
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        }
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: 'Population (millions)'
+        },
+        plotLines: [{
+        label: {
+                text: 'Moyenne',
+                align: 'right',
+                style: {
+                    color: 'red',
+                    fontWeight: 'bold'
+                }
+            },
+        color: 'red',
+        value : test(),
+        zIndex: 10 // To not get stuck below the regular plot lines
+    }]
+    },
+    
+    legend: {
+        enabled: false
+    },
+    tooltip: {
+        pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+    },
+    series: [{
+        name: 'Population',
+        color : "#3366AA",
+        data: [
+            {"name":'Shanghai', "y":24.2, selected: true},
+            {"name":'a', "y":4.2}
+        ],
+        
+        
+        dataLabels: {
+            enabled: true,
+            rotation: -90,
+            color: '#FFFFFF',
+            align: 'right',
+            format: '{point.y:.1f}', // one decimal
+            y: 10, // 10 pixels down from the top
+            style: {
+                fontSize: '13px',
+                fontFamily: 'Verdana, sans-serif'
+            }
+        },
+        point: {
+                events: {
+                    select: function(event) {
+                        
+                    },
+                    unselect: function(event) {
+                        event.preventDefault();
+                    }
+                }
+            }
+        
+    }]
+});
 
+function test(){
+	return 10
+}
+
+*/
 
   chartCallback = function (chart) {  } // optional function, defaults to null
   updateFlag = false; // optional boolean
