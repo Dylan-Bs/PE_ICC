@@ -5,26 +5,28 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, WebDriverException
 
-import pickle
+from .spotlight import annotate
+
+from functools import partial
+
+URL = "https://www.linkedin.com/"
 
 class LinkedinCrawler:
     def __init__(self, headless=False):
         opts = webdriver.chrome.options.Options()
-
         if headless:
             opts.add_argument('--headless')
-
-            # no-sandbox is required to run as ROOT in a container
-            opts.add_argument('--no-sandbox')
-
+        opts.add_experimental_option('prefs', {'intl.accept_languages': 'fr,fr_FR'})
+        opts.add_argument('--lang=fr')
         self.driver = webdriver.Chrome(options=opts)
+        self.wdriver = WebDriverWait(self.driver, 180)
 
     def login(self, username, password):
-        self.driver.get('https://www.linkedin.com/')
+        self.driver.get(URL)
 
-        login_btn = WebDriverWait(self.driver, 10).until(
+        login_btn = self.wdriver.until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 '.nav > [data-tracking-control-name="guest_homepage-basic_nav-header-signin"]'
@@ -35,15 +37,13 @@ class LinkedinCrawler:
             .click(login_btn)
         ).perform()
 
-        uname_field = WebDriverWait(self.driver, 5).until(
+        uname_field = self.wdriver.until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 'input#username'
             ))
         )
         (ActionChains(self.driver)
-            .pause(0.2)
-            .click(uname_field)
             .pause(0.5)
             .send_keys(username)
             .pause(0.2)
@@ -69,32 +69,117 @@ class LinkedinCrawler:
             print('No phone verification this time')
             pass
 
-        nav_prof = WebDriverWait(self.driver, 10).until(
+        nav_prof = self.wdriver.until(
             EC.presence_of_element_located((
                 By.ID,
                 'launchpad-wormhole'
             ))
         )
+    
+    def find_user_url(self, query):
+        self.driver.get(f'{URL}/feed/')
 
-    def crawl_page(self, url):
-        self.driver.get(url)
+        profile_bg = self.wdriver.until(
+            EC.presence_of_element_located((
+                By.CSS_SELECTOR,
+                'input.search-global-typeahead__input'
+            ))
+        )
 
-        WebDriverWait(self.driver, 10).until(
+        search_box = self.driver.find_element_by_css_selector(
+            'input.search-global-typeahead__input'
+        )
+
+        (ActionChains(self.driver)
+            .click(search_box)
+            .send_keys(query)
+            .pause(1)
+            .key_down(Keys.ARROW_DOWN)
+            .pause(0.01)
+            .key_up(Keys.ARROW_DOWN)
+            .pause(0.1)
+            .key_down(Keys.ENTER)
+            .pause(0.01)
+            .key_up(Keys.ENTER)
+        ).perform()
+
+        profile_bg = self.wdriver.until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR,
                 '.profile-background-image'
             ))
         )
 
-        top_xp = self.driver.find_element_by_css_selector(
-            '.pv-profile-section__list-item .pv-entity__summary-info'
+        return self.driver.current_url
+
+    def crawl_page(self, url):
+        self.driver.get(url)
+
+        profile_bg = self.wdriver.until(
+            EC.presence_of_element_located((
+                By.CSS_SELECTOR,
+                '.profile-background-image'
+            ))
         )
+        
+        data = {}
 
-        title = top_xp.find_element_by_css_selector('h3.t-bold').text
-        company = top_xp.find_element_by_css_selector('p.t-normal').text
-        date_range = top_xp.find_element_by_css_selector('.pv-entity__date-range :not(.visually-hidden)').text
+        try:
+            # raise WebDriverException('Dummy error to skip DOM analysis')
 
-        return title, company, date_range
+            company_box = self.driver.find_element_by_css_selector(
+                '.pv-top-card--experience-list li:first-child span'
+            )
+
+            location_box = self.driver.find_element_by_css_selector(
+                '.pv-top-card--list-bullet li:first-child'
+            )
+
+            return {
+                'company': company_box.text,
+                'work_place': location_box.text
+            }
+        except WebDriverException as e:
+            print('Could not extract specific DOM elements', e)
+            print('Falling back to more general analysis...')
+
+        try:
+            big_box = self.driver.find_element_by_css_selector(
+                'main.core-rail'
+            )
+
+            top_box = self.driver.find_element_by_css_selector(
+                '.pv-top-card > .ph5.pb5 > .mt2'
+            )
+
+            bg_box = self.driver.find_element_by_id('oc-background-section')
+
+            texts = (
+                top_box.text,
+                bg_box.text,
+                big_box.text
+            )
+        except WebDriverException as e:
+            print('Could not extract general web elements', e)
+            return None
+        
+        company_candidates  = annotate(texts, ['dbo:Company', 'DBpedia:Company', 'DBpedia:Organisation'])
+        place_candidates = annotate(texts, ['DBpedia:Location', 'DBpedia:Place'])
+        
+        if not company_candidates and not place_candidates:
+            print('Nothing interesting could be annotated')
+            return None
+        
+        def get_result(candidates):
+            if not candidates: return None
+            candidate = candidates.pop(0)
+            uri = candidate['@URI']
+            return ' '.join(uri.split('/')[-1].split('_'))
+
+        return {
+            'company': get_result(company_candidates),
+            'work_place': get_result(place_candidates)
+        }
 
 
 if __name__ == '__main__':
@@ -102,9 +187,18 @@ if __name__ == '__main__':
     print('Use LinkedinCrawler(headless=True) to hide browser')
 
     crawler = LinkedinCrawler(headless=False)
-    crawler.login('angivare-bot@yahoo.com', 'CODE_COM1')
-    ret = crawler.crawl_page('https://www.linkedin.com/in/dylan-bersans/')
+    try:
+        crawler.login('angivare-bot@yahoo.com', 'CODE_COM1')
+        url = crawler.find_user_url('Wassila Sabbagh')
+        ret = crawler.crawl_page(url)
 
-    print(ret)
+        if ret is None:
+            print('No results')
+            exit(1)
 
-    crawler.driver.quit()
+        for key in ret:
+            print(f'{key.upper()}:')
+            print(ret[key])
+            print('---------------')
+    finally:
+        crawler.driver.quit()

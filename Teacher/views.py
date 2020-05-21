@@ -21,6 +21,7 @@ class Teacher(views.APIView):
             password = request.data['password']
             first_name = request.data['first_name']
             last_name = request.data['last_name']
+            email = request.data['email']
             option = request.data['option']
             if User.objects.filter(username=userlogin).exists():
                 resp = JsonResponse({'Error': "Already registered"}, status = "400")
@@ -28,6 +29,7 @@ class Teacher(views.APIView):
                 user = User.objects.create_user(userlogin,userlogin, password)
                 user.first_name = first_name
                 user.last_name = last_name
+                user.email = email
                 user.is_active = True
                 user.is_staff = True
                 user.is_superuser = False
