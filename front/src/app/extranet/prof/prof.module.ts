@@ -16,6 +16,9 @@ import { MatSliderModule } from '@angular/material/slider';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { ViewDetailsResolver } from './view-details/view-details.resolver';
 import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import {MatTabsModule} from '@angular/material/tabs';
+import {  HighchartsChartModule } from 'highcharts-angular';
+
 
 
 @NgModule({
@@ -33,7 +36,9 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
     MatSelectModule,
     MatToolbarModule,
     MatIconModule,
-    MatProgressSpinnerModule
+    MatProgressSpinnerModule,
+    MatTabsModule,
+    HighchartsChartModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

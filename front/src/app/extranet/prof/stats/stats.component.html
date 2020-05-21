@@ -1,10 +1,35 @@
-<div>
-    <div>
-        <div style="display: flex">
-            <!-- <canvas baseChart [data]="polarAreaChartData" [labels]="polarAreaChartLabels" [legend]="polarAreaLegend"
-                [chartType]="polarAreaChartType">
-            </canvas> -->
-            <canvas id="myChart" width="700" height="400"></canvas>
-        </div>
-    </div>
-</div>
+<mat-tab-group>
+    <mat-tab label="Promotion et options">
+        <highcharts-chart 
+        [Highcharts]="Highcharts"
+      
+        [constructorType]="chartConstructor"
+        [options]="option_promo"
+        [callbackFunction]="chartCallback"
+      
+        [(update)]="updateFlag"
+      
+        class="chart"
+      ></highcharts-chart>
+
+      <highcharts-chart 
+        [Highcharts]="Highcharts"
+      
+        [constructorType]="chartConstructor"
+        [options]="option_option"
+        [callbackFunction]="chartCallback"
+      
+        [(update)]="updateFlag"
+      
+        class="chart"
+      ></highcharts-chart>
+    </mat-tab>
+    <mat-tab label="Salaires">
+      <h1>Some more tab content</h1>
+      <p>...</p>
+    </mat-tab>
+    <mat-tab label="Entreprises">
+        <h1>Some more tab content</h1>
+        <p>...</p>
+      </mat-tab>
+  </mat-tab-group>

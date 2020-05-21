@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { FirebaseService } from '../../../services/firebase.service';
-// import { SingleDataSet, Label } from 'ng2-charts';
-// import { ChartType } from 'chart.js';
-import * as Chart from 'chart.js'
+import { ApiService } from 'src/app/services/api.service';
+import * as Highcharts from 'highcharts';
+import { HighchartsService } from 'src/app/services/highcharts.service';
 
 @Component({
   selector: 'app-stats',
@@ -11,81 +10,120 @@ import * as Chart from 'chart.js'
 })
 export class StatsComponent implements OnInit {
 
-  etudiants: Array<any>;
-  data: Array<number>;
-  canvas: any;
-  ctx: any;
+
+  
 
   constructor(
-    public firebaseService: FirebaseService
+    public api: ApiService,public hc:HighchartsService
   ) { }
 
   ngOnInit() {
-    this.firebaseService.getEtudiants().subscribe(result => {
-      this.etudiants = result;
-      this.data = new Array(7);
-      // pour ne pas avoir à remplir la bdd pour avoir un joli diagramme, je n'initialise pas le tableau avec des 0
-      this.data = [0, 20, 40, 50, 60, 70, 80];
-      //this.data = [0, 0, 0, 0, 0, 0, 0];
-      console.log(this.data)
-      this.etudiants.forEach(etudiant => {
-        switch (etudiant.payload.doc.data().optionsIng3Control) {
-          case "icc":
-            this.data[0] += 1;
-            break;
-          case "iapau":
-            this.data[1] += 1;
-            break;
-          case "imsi":
-            this.data[2] += 1;
-            break;
-          case "inem":
-            this.data[3] += 1;
-            break;
-          case "iacergy":
-            this.data[4] += 1;
-            break;
-          case "vc":
-            this.data[5] += 1;
-            break;
-          case "fintech":
-            this.data[6] += 1;
-            break;
-          default:
-            break;
-        }
-      });
-      this.ngAfterViewInit();
-    })
   }
 
   ngAfterViewInit() {
-    this.canvas = document.getElementById('myChart');
-    this.ctx = this.canvas.getContext('2d');
-    console.log("der" + this.data)
-    let myChart = new Chart(this.ctx, {
-      type: 'pie',
-      data: {
-        labels: ["ICC", "IA Pau", "IMSI", "INEM", "IA Cergy", "VC", "FinTech"],
-        datasets: [{
-          label: 'Options des diplomes',
-          data: this.data,
-          backgroundColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 106, 6, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(25, 206, 86, 1)',
-            'rgba(255, 26, 86, 1)',
-            'rgba(255, 206, 156, 1)'
-          ],
-          borderWidth: 1
-        }]
-      },
-      options: {
-        responsive: true
-      }
-    });
+
   }
+
+  Highcharts: typeof Highcharts = Highcharts;
+  chartConstructor = 'chart'; // optional string, defaults to 'chart'
+
+  option_option :Highcharts.Options = {
+    chart: {
+      plotBackgroundColor: null,
+      plotBorderWidth: null,
+      plotShadow: false,
+      type: 'pie'
+  },
+  title: {
+      text: 'Proportion des étudiants par option'
+  },
+  tooltip: {
+      pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
+  },
+  accessibility: {
+      point: {
+          valueSuffix: '%'
+      }
+  },
+  plotOptions: {
+      pie: {
+          allowPointSelect: true,
+          cursor: 'pointer',
+          dataLabels: {
+              enabled: true,
+              format: '<b>{point.name}</b>: {point.percentage:.1f} %'
+          }
+      }
+  },
+  series: this.hc.options,
+  credits:{
+    enabled:false
+  }
+  }
+
+
+  option_promo: Highcharts.Options = {
+    chart: {
+      backgroundColor: '#00000000',
+      type: 'column'
+    },
+    title: {
+      text: 'Etudiants par promotion'
+    },
+    xAxis: {
+      type: 'category'
+    },
+    yAxis: {
+        min: 0,
+        title: {
+            text: "Nombres d'étudiants par promotion"
+        },
+        stackLabels: {
+            enabled: true,
+            style: {
+                fontWeight: 'bold',
+                color: ( // theme
+                    Highcharts.defaultOptions.title.style &&
+                    Highcharts.defaultOptions.title.style.color
+                ) || 'gray'
+            }
+        }
+    },
+    legend: {
+      align: 'right',
+      x: -30,
+      verticalAlign: 'top',
+      y: 25,
+      floating: true,
+      backgroundColor:
+          Highcharts.defaultOptions.legend.backgroundColor || 'white',
+      borderColor: '#CCC',
+      borderWidth: 1,
+      shadow: false
+  },
+  plotOptions: {
+      column: {
+          stacking: 'normal',
+          dataLabels: {
+              enabled: true
+          }
+      }
+  },
+  
+    tooltip: {
+      headerFormat: '<span style="font-size:11px">{point.x}</span><br>',
+      pointFormat: '<span style="color:{series.color}">{series.name}</span>: <b>{point.y}</b><br/>Total: {point.stackTotal}'
+    },
+    series: this.hc.etu_promo,
+    credits:{
+      enabled:false
+    }
+  };
+
+
+
+  chartCallback = function (chart) {  } // optional function, defaults to null
+  updateFlag = false; // optional boolean
+  oneToOneFlag = false; // optional boolean, defaults to false
 
 }
