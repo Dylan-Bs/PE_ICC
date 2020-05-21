@@ -48,6 +48,7 @@ class Student(views.APIView):
                         user = User.objects.get(id=userid)
                     first_name = request.data['first_name']
                     last_name = request.data['last_name']
+                    email = request.data['email']
                     promotion = request.data['promotion']
                     option = request.data['option']
                     company = request.data['company']
@@ -55,6 +56,7 @@ class Student(views.APIView):
                     working_city = request.data['working_city']
                     user.first_name = first_name
                     user.last_name = last_name
+                    user.email = email
                     user.save()
                     res = User.objects.get(id=userid)
                     student = StudentModel.objects.get(id= res.id)

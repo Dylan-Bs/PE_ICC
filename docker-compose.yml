@@ -33,7 +33,9 @@ services:
 
     initialization:
         build: ./back
-        command: python manage.py runscript create-SuperUser
+        command: bash -c "
+            python manage.py runscript create-SuperUser &&
+            python manage.py runscript populate-Database"
         volumes:
             - .:/web-django
         depends_on:
