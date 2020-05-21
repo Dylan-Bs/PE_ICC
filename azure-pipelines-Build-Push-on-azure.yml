@@ -4,6 +4,7 @@
 
 trigger:
 - master
+- firebase
 
 resources:
 - repo: self
