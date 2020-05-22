@@ -50,7 +50,16 @@
       </mat-card>
     </mat-tab>
     <mat-tab label="Entreprises">
-        <h1>Some more tab content</h1>
-        <p>...</p>
+      <highcharts-chart 
+      [Highcharts]="Highcharts"
+    
+      [constructorType]="chartConstructor"
+      [options]="option_company"
+      [callbackFunction]="chartCallback"
+    
+      [(update)]="updateFlag"
+    
+      class="chart"
+    ></highcharts-chart>
       </mat-tab>
   </mat-tab-group>

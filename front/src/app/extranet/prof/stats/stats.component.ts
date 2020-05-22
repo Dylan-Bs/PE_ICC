@@ -2,7 +2,15 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import * as Highcharts from 'highcharts';
 import { HighchartsService } from 'src/app/services/highcharts.service';
+import * as HighchartsMore from "highcharts/highcharts-more";
 import { Student } from 'src/app/interfaces/interface';
+
+declare var require: any;
+require('highcharts/highcharts-more')(Highcharts);
+require('highcharts/modules/solid-gauge')(Highcharts);
+require('highcharts/modules/heatmap')(Highcharts);
+require('highcharts/modules/treemap')(Highcharts);
+require('highcharts/modules/funnel')(Highcharts);
 
 @Component({
   selector: 'app-stats',
@@ -189,7 +197,7 @@ export class StatsComponent implements OnInit {
             },
         color: 'red',
         value : this.hc.mean_etu_wage(),
-        zIndex: 10 // To not get stuck below the regular plot lines
+        zIndex: 5 // To not get stuck below the regular plot lines
     }]
     },
     
@@ -233,6 +241,58 @@ export class StatsComponent implements OnInit {
 
   }
 
+  option_company: Highcharts.Options = {
+    chart: {
+        backgroundColor: '#00000000',
+      type: 'packedbubble'
+
+    },
+    title: {
+      text: "Etudiants par entreprise"
+    },
+    subtitle:{
+        text:"Regroupé par ville"
+    },
+    tooltip: {
+      useHTML: true,
+      pointFormat: '<b>{point.name}:</b> {point.value} Etudiants'
+    },
+    plotOptions: {
+      packedbubble: {
+        minSize: '10%',
+        maxSize: '100%',
+        zMin: 0,
+        zMax: 1000,
+        layoutAlgorithm: {
+          gravitationalConstant: 0.05,
+          splitSeries: true,
+          seriesInteraction: false,
+          dragBetweenSeries: true,
+          parentNodeLimit: true,
+          enableSimulation: false
+        } as object,
+        dataLabels: {
+          enabled: true,
+          format: '{point.name}',
+          filter: {
+            property: 'y',
+            operator: '>',
+            value: 0
+          },
+          style: {
+            color: 'black',
+            textOutline: 'none',
+            fontWeight: 'normal'
+          }
+        }
+      } as object
+    },
+    series:this.hc.etu_company,
+    credits:{
+        enabled:false
+      }
+}
+
   get_detail(id){
     this.item=this.hc.get_detail(id)
   }
@@ -240,7 +300,10 @@ export class StatsComponent implements OnInit {
   tabchange($event){
       if($event.index==2 && this.item.email=="..."){
         this.get_detail(this.hc.etu_wage[0].id)
+        
       }
+
+      console.log(this.hc.etu_company)
   }
   
 

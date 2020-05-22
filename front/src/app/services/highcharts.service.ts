@@ -13,6 +13,8 @@ export class HighchartsService {
 
   etu_wage:Array<any>=[]
 
+  etu_company:Array<any>=[]
+
   data:Array<any>=[]
 
   options_bddtoview:object={'icc': 'ICC',
@@ -44,6 +46,8 @@ export class HighchartsService {
       let id_promo=-1
 
       let id_option=-1
+
+      let id_company=-1
       
 
       for (let i=0;i<this.etu_promo.length;i++){
@@ -57,6 +61,33 @@ export class HighchartsService {
           id_option=i
         }
       }
+
+      for (let i=0;i<this.etu_company.length;i++){
+        if (this.etu_company[i].name==this.data[k].working_city){
+          id_company=i
+        }
+      }
+
+      if (id_company==-1){
+        this.etu_company.push({"name":this.data[k].working_city,"data":[{"name":this.data[k].company,"value":1}]})
+      }else{
+        let id_company2=-1
+        for (let i=0;i<this.etu_company[id_company]["data"].length;i++){
+          if (this.etu_company[id_company]["data"][i].name==this.data[k].company){
+            id_company2=i
+          }
+        }
+
+        if (id_company2==-1){
+          this.etu_company[id_company]["data"].push({"name":this.data[k].company,"value":1})
+        }else{
+          this.etu_company[id_company]["data"][id_company2].value+=1
+        }
+
+      }
+
+
+
       if (! isNaN(parseInt(data[k].wage))){
         if (this.etu_wage.length==0){
         
