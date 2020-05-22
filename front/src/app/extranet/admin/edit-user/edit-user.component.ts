@@ -32,18 +32,23 @@ export class EditUserComponent implements OnInit {
     {
       name: 'Pau',
       option: [
-        {value: 'icc', viewValue: 'Ingénierie Cloud Computing'},
-        {value: 'iapau', viewValue: 'Intelligence Artificielle'},
-        {value: 'imsi', viewValue: 'Ingénierie Mathématique et Simulation Numérique'},
+        { value: 'icc', viewValue: 'Ingénierie Cloud Computing' },
+        { value: 'iapau', viewValue: 'Intelligence Artificielle' },
+        { value: 'imsi', viewValue: 'Ingénierie Mathématique et Simulation Numérique' },
+        { value: 'erp', viewValue: 'Intégration ERP'},
       ]
     },
     {
       name: 'Cergy',
       option: [
-        {value: 'inem', viewValue: 'Informatique Embarquée'},
-        {value: 'iacergy', viewValue: 'Intelligence Artificielle'},
-        {value: 'vc', viewValue: 'Visual Computing'},
-        {value: 'fintech', viewValue: 'Finance et Technologie'},
+        { value: 'inem', viewValue: 'Informatique Embarquée' },
+        { value: 'iacergy', viewValue: 'Intelligence Artificielle' },
+        { value: 'vc', viewValue: 'Visual Computing' },
+        { value: 'fintech', viewValue: 'Finance et Technologie' },
+        { value: 'ingfin', viewValue: 'Ingénierie Financière'},
+        { value: 'ds', viewValue: 'Data Science'},
+        { value: 'bi', viewValue: 'Business Intelligence & Analytics'},
+        { value: 'secu', viewValue: 'Cybersécurité'},
       ]
     },
   ];

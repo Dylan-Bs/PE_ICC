@@ -44,6 +44,7 @@ export class CollecteComponent implements OnInit {
         { value: 'icc', viewValue: 'Ingénierie Cloud Computing' },
         { value: 'iapau', viewValue: 'Intelligence Artificielle' },
         { value: 'imsi', viewValue: 'Ingénierie Mathématique et Simulation Numérique' },
+        { value: 'erp', viewValue: 'Intégration ERP'},
       ]
     },
     {
@@ -53,6 +54,10 @@ export class CollecteComponent implements OnInit {
         { value: 'iacergy', viewValue: 'Intelligence Artificielle' },
         { value: 'vc', viewValue: 'Visual Computing' },
         { value: 'fintech', viewValue: 'Finance et Technologie' },
+        { value: 'ingfin', viewValue: 'Ingénierie Financière'},
+        { value: 'ds', viewValue: 'Data Science'},
+        { value: 'bi', viewValue: 'Business Intelligence & Analytics'},
+        { value: 'secu', viewValue: 'Cybersécurité'},
       ]
     },
   ];

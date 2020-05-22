@@ -27,13 +27,20 @@ export class ViewDetailsComponent implements OnInit {
     private route: ActivatedRoute
   ) { }
 
-  options_bddtoview:object={'icc': 'Ingénierie Cloud Computing',
-  'iapau': 'Intelligence Artificielle Pau',
-  'imsi': 'Ingénierie Mathématique et Simulation Numérique',
-'inem': 'Informatique Embarquée',
-  'iacergy': 'Intelligence Artificielle Cergy',
-  'vc': 'Visual Computing',
-  'fintech': 'Finance et Technologie'}
+  options_bddtoview:object={
+    'icc': 'Ingénierie Cloud Computing',
+    'iapau': 'Intelligence Artificielle Pau',
+    'imsi': 'Ingénierie Mathématique et Simulation Numérique',
+    'inem': 'Informatique Embarquée',
+    'iacergy': 'Intelligence Artificielle Cergy',
+    'vc': 'Visual Computing',
+    'fintech': 'Finance et Technologie',
+    'erp': 'Intégration ERP',
+    'ingfin': 'Ingénierie Financière',
+    'ds': 'Data Science',
+    'bi': 'Business Intelligence & Analytics',
+    'secu': 'Cybersécurité',
+  }
 
   ngOnInit() {
     this.route.data.subscribe(routeData => {
