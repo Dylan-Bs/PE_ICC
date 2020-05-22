@@ -151,7 +151,7 @@ export class StatsComponent implements OnInit {
       	allowPointSelect: true,
         cursor: 'pointer',states: {
                 select: {
-                    color: "#003399"
+                    color: "#a6cdf2"
                 }
             }
       },
@@ -207,7 +207,7 @@ export class StatsComponent implements OnInit {
     tooltip: {
         pointFormat: 'Salaire: <b>{point.y:.1f} €</b>'
     },
-    series: [{name: 'Etudiants',color : "#3366AA",
+    series: [{name: 'Etudiants',color : "#7cb5ec",
         data: this.hc.etu_wage,
         
         
