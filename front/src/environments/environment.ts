@@ -6,14 +6,6 @@ export const environment = {
 
   production: false,
   
-  firebase: {
-    apiKey: 'AIzaSyDMMdUNmECtD01wJzzAJHP-PKYUFYBU-QQ',  
-    authDomain: 'projetangularicc.firebaseapp.com',  
-    databaseURL: 'https://projetangularicc.firebaseio.com',  
-    projectId: 'projetangularicc',  
-    storageBucket: 'projetangularicc.appspot.com',  
-    messagingSenderId: '475061426828'
-  }
   };
 /*
  * For easier debugging in development mode, you can import the following file

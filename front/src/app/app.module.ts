@@ -17,10 +17,7 @@ import {MatProgressSpinnerModule} from '@angular/material/progress-spinner';
 import {MatStepperModule} from '@angular/material/stepper';
 import {MatSnackBarModule} from '@angular/material/snack-bar';
 
-//Firebase
-import { AngularFireModule } from '@angular/fire';
-import { AngularFirestoreModule } from '@angular/fire/firestore';
-import { environment } from '../environments/environment';
+
 //Lecture de fichiers dans les assets
 import { HttpClientModule } from '@angular/common/http';
 //Composants
@@ -56,8 +53,6 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule,
     BrowserAnimationsModule,
     ReactiveFormsModule,
     MatButtonModule,

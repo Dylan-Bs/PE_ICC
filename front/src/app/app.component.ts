@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, ViewChild } from '@angular/core';
-import { FirebaseApp } from '@angular/fire';
 import { ConnexionService } from './services/connexion.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationEnd } from '@angular/router';
@@ -20,7 +19,7 @@ export class AppComponent implements OnInit {
   enable_overflowy:boolean=true;
 
   open:boolean=false;
-  constructor(public conne:ConnexionService,public app: FirebaseApp,public router:Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
+  constructor(public conne:ConnexionService,public router:Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd){
         this.close()
