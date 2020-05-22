@@ -10,7 +10,10 @@
       
       <mat-toolbar color="primary" style="height:100%;">
         <mat-toolbar-row>
-            <a mat-button class="fill-width" href routerLink='/'>Accueil</a>
+          <a mat-button class="fill-width" href routerLink='/'>
+            <mat-icon svgIcon="logoPEICC" aria-hidden="false" aria-label="logoPEICC"></mat-icon>
+            Accueil
+          </a>
           </mat-toolbar-row>
           <mat-toolbar-row *ngIf="conne.role>1 && conne.connecte == true">
             <a mat-button class="fill-width" href routerLink='/extranet/admin'>Lister les utilisateurs</a>

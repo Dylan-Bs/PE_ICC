@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { ConnexionService } from '../services/connexion.service';
 import { AppComponent } from '../app.component';
 import { Router } from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
   selector: 'app-menu',
@@ -12,7 +14,11 @@ import { Router } from '@angular/router';
   }
 })
 export class MenuComponent implements OnInit {
-  constructor(public conne:ConnexionService, public  parent:AppComponent,public router:Router) { }
+  constructor(public conne:ConnexionService, public  parent:AppComponent,public router:Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) { 
+    iconRegistry.addSvgIcon(
+      'logoPEICC',
+      sanitizer.bypassSecurityTrustResourceUrl('assets/img/logoPEICC_blanc.svg'));
+  }
   isMobile = false;
   getIsMobile(): boolean {
     const w = document.documentElement.clientWidth;
@@ -24,7 +30,7 @@ export class MenuComponent implements OnInit {
 
     }
   }
-
+  
   onResize(event){
     this.isMobile = this.getIsMobile();
   }

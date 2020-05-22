@@ -3,6 +3,8 @@ import { FirebaseApp } from '@angular/fire';
 import { ConnexionService } from './services/connexion.service';
 import { MatSidenav } from '@angular/material/sidenav';
 import { Router, NavigationEnd } from '@angular/router';
+import {DomSanitizer} from '@angular/platform-browser';
+import {MatIconRegistry} from '@angular/material/icon';
 
 @Component({
   selector: 'app-root',
@@ -18,13 +20,16 @@ export class AppComponent implements OnInit {
   enable_overflowy:boolean=true;
 
   open:boolean=false;
-  constructor(public conne:ConnexionService,public app: FirebaseApp,public router:Router) {
+  constructor(public conne:ConnexionService,public app: FirebaseApp,public router:Router, iconRegistry: MatIconRegistry, sanitizer: DomSanitizer) {
     router.events.subscribe((val) => {
       if (val instanceof NavigationEnd){
         this.close()
       }
   });
 
+  iconRegistry.addSvgIcon(
+    'logoPEICC',
+    sanitizer.bypassSecurityTrustResourceUrl('assets/img/logoPEICC_blanc.svg'));
   }
 
   _toggle(){
