@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import * as Highcharts from 'highcharts';
 import { HighchartsService } from 'src/app/services/highcharts.service';
+import { Student } from 'src/app/interfaces/interface';
 
 @Component({
   selector: 'app-stats',
@@ -11,13 +12,17 @@ import { HighchartsService } from 'src/app/services/highcharts.service';
 export class StatsComponent implements OnInit {
 
 
-  
+    item:Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
 
   constructor(
     public api: ApiService,public hc:HighchartsService
-  ) { }
+  ) {
+
+    
+   }
 
   ngOnInit() {
+    
   }
 
   ngAfterViewInit() {
@@ -29,6 +34,7 @@ export class StatsComponent implements OnInit {
 
   option_option :Highcharts.Options = {
     chart: {
+        backgroundColor: '#00000000',
       plotBackgroundColor: null,
       plotBorderWidth: null,
       plotShadow: false,
@@ -55,7 +61,11 @@ export class StatsComponent implements OnInit {
           }
       }
   },
-  series: this.hc.options,
+  series: [{
+    name: 'Etudiants',
+    colorByPoint: true,
+    data:this.hc.etu_options
+  }] as Array<any>,
   credits:{
     enabled:false
   }
@@ -120,9 +130,11 @@ export class StatsComponent implements OnInit {
     }
   };
 
-  /*save
-  Highcharts.chart('container', {
+
+  option_wage: Highcharts.Options = {
+
     chart: {
+        backgroundColor: '#00000000',
         type: 'column'
     },
     
@@ -134,13 +146,22 @@ export class StatsComponent implements OnInit {
                     color: "#003399"
                 }
             }
-      }
+      },
+      series: {
+        cursor: 'pointer',
+        point: {
+            events: {
+                click: function (e) {
+                    const p = e.point
+                   
+                    this.get_detail(p["id"])
+                }.bind(this),
+            }
+        }
+    }
     },
     title: {
-        text: 'World\'s largest cities per 2017'
-    },
-    subtitle: {
-        text: 'Source: <a href="http://en.wikipedia.org/wiki/List_of_cities_proper_by_population">Wikipedia</a>'
+        text: 'Salaire par an des étudiants'
     },
     xAxis: {
         type: 'category',
@@ -155,19 +176,19 @@ export class StatsComponent implements OnInit {
     yAxis: {
         min: 0,
         title: {
-            text: 'Population (millions)'
+            text: 'Salaire par an (€)'
         },
         plotLines: [{
         label: {
-                text: 'Moyenne',
-                align: 'right',
+                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage(),
+                align: 'left',
                 style: {
                     color: 'red',
                     fontWeight: 'bold'
                 }
             },
         color: 'red',
-        value : test(),
+        value : this.hc.mean_etu_wage(),
         zIndex: 10 // To not get stuck below the regular plot lines
     }]
     },
@@ -176,15 +197,10 @@ export class StatsComponent implements OnInit {
         enabled: false
     },
     tooltip: {
-        pointFormat: 'Population in 2017: <b>{point.y:.1f} millions</b>'
+        pointFormat: 'Salaire: <b>{point.y:.1f} €</b>'
     },
-    series: [{
-        name: 'Population',
-        color : "#3366AA",
-        data: [
-            {"name":'Shanghai', "y":24.2, selected: true},
-            {"name":'a', "y":4.2}
-        ],
+    series: [{name: 'Etudiants',color : "#3366AA",
+        data: this.hc.etu_wage,
         
         
         dataLabels: {
@@ -202,7 +218,7 @@ export class StatsComponent implements OnInit {
         point: {
                 events: {
                     select: function(event) {
-                        
+
                     },
                     unselect: function(event) {
                         event.preventDefault();
@@ -210,14 +226,23 @@ export class StatsComponent implements OnInit {
                 }
             }
         
-    }]
-});
+    }] as Array<any>
+    ,credits:{
+        enabled:false
+      }
 
-function test(){
-	return 10
-}
+  }
 
-*/
+  get_detail(id){
+    this.item=this.hc.get_detail(id)
+  }
+
+  tabchange($event){
+      if($event.index==2 && this.item.email=="..."){
+        this.get_detail(this.hc.etu_wage[0].id)
+      }
+  }
+  
 
   chartCallback = function (chart) {  } // optional function, defaults to null
   updateFlag = false; // optional boolean

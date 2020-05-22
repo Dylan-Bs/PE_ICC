@@ -1,4 +1,4 @@
-<mat-tab-group>
+<mat-tab-group (selectedTabChange)="tabchange($event)">
     <mat-tab label="Promotions">
         <highcharts-chart 
         [Highcharts]="Highcharts"
@@ -26,8 +26,28 @@
       ></highcharts-chart>
     </mat-tab>
     <mat-tab label="Salaires">
-      <h1>Some more tab content</h1>
-      <p>...</p>
+      <highcharts-chart 
+        [Highcharts]="Highcharts"
+      
+        [constructorType]="chartConstructor"
+        [options]="option_wage"
+        [callbackFunction]="chartCallback"
+      
+        [(update)]="updateFlag"
+      
+        class="chart"
+      ></highcharts-chart>
+
+
+      <mat-card style="margin: 20px;">
+        <mat-card-title>Détails du profil de {{item.name}}</mat-card-title>
+        <mat-card-content>Email : {{item.email}}</mat-card-content>
+        <mat-card-content>Promotion : {{item.promotion}}</mat-card-content>
+        <mat-card-content>Option en ING3 : {{item.option}}</mat-card-content>
+        <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
+        <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
+        <mat-card-content>Salaire : {{item.wage}}</mat-card-content>
+      </mat-card>
     </mat-tab>
     <mat-tab label="Entreprises">
         <h1>Some more tab content</h1>

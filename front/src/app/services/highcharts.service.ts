@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ApiService } from './api.service';
+import { SSL_OP_NO_SESSION_RESUMPTION_ON_RENEGOTIATION } from 'constants';
 
 @Injectable({
   providedIn: 'root'
@@ -8,11 +9,11 @@ export class HighchartsService {
 
   etu_promo:Array<any>=[]
 
-  options:Array<any>=[{
-    name: 'Etudiants',
-    colorByPoint: true,
-    data:[]
-  }]
+  etu_options:Array<any>=[]
+
+  etu_wage:Array<any>=[]
+
+  data:Array<any>=[]
 
   options_bddtoview:object={'icc': 'ICC',
   'iapau': 'IA PAU',
@@ -29,10 +30,13 @@ export class HighchartsService {
    maj_students(){
     this.api.getEtudiants()
     .subscribe(result => {
-      this.update_graph_data(result as Array<any>)
+      this.data=result as Array<any>
+      this.update_graph_data(this.data)
     })
     
    }
+
+   
 
    update_graph_data(data:Array<any>){
     for (let k=0;k<data.length;k++){
@@ -40,20 +44,33 @@ export class HighchartsService {
       let id_promo=-1
 
       let id_option=-1
+      
 
       for (let i=0;i<this.etu_promo.length;i++){
         if (this.etu_promo[i].name==this.options_bddtoview[data[k].option]){
           id_promo=i
         }
-        if (this.options[0]["data"][i].name==this.options_bddtoview[data[k].option]){
+        
+      }
+      for (let i=0;i<this.etu_options.length;i++){
+        if (this.etu_options[i].name==this.options_bddtoview[data[k].option]){
           id_option=i
         }
       }
+      if (! isNaN(parseInt(data[k].wage))){
+        if (this.etu_wage.length==0){
+        
+          this.etu_wage.push({"name":data[k].name,"y":parseInt(data[k].wage),selected:false,"id":data[k].id})
+        }else{
+          this.etu_wage.push({"name":data[k].name,"y":parseInt(data[k].wage),selected:false,"id":data[k].id})
+        }
+      }
+      
 
       if (id_option==-1){
-        this.options[0]["data"].push({"name":this.options_bddtoview[data[k].option],"y":1})
+        this.etu_options.push({"name":this.options_bddtoview[data[k].option],"y":1})
       }else{
-        this.options[0]["data"][id_option].y+=1
+        this.etu_options[id_option].y+=1
       }
 
 
@@ -74,5 +91,32 @@ export class HighchartsService {
         }
       }
     }
+
+    this.etu_wage.sort(function(a, b) {
+      return a.y - b.y;
+    });
+
+    this.etu_wage[0].selected=true
+
+   }
+
+   get_detail(id){
+     var index=0
+    for (let i=0;i<this.data.length;i++){
+      if (this.data[i].id==id){
+        index=i
+      }
+   }
+    return this.data[index]
+   }
+
+
+   mean_etu_wage(){
+     var acc=0.0
+     for (let i=0;i<this.etu_wage.length;i++){
+        acc+=this.etu_wage[i].y
+     }
+
+     return acc/this.etu_wage.length
    }
 }
