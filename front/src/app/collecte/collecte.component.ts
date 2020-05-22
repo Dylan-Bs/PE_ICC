@@ -81,7 +81,7 @@ export class CollecteComponent implements OnInit {
     ],
     'promo' :[
       { type: 'required', message: 'L\' année de promotion est requise' },
-      { type: 'outOfRange', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
+      { type: 'promo', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
     ]
   };
 
@@ -158,7 +158,7 @@ export class CollecteComponent implements OnInit {
   checkPromo(control: FormControl) {
     let maxi:number;
     maxi = (new Date()).getFullYear();
-    return control.value >= 1990 && control.value <= maxi ? null : {'outOfRange': true};
+    return control.value >= 1990 && control.value <= maxi ? null : {'promo': true};
   }
 
 }

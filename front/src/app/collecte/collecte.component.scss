@@ -30,22 +30,25 @@ mat-form-field{
   width: 100%;
 }
 
-.myButton {
-  margin-left: 90%;
+.spacer {
+  flex: 1 1 auto;
 }
 
-.myButton2 {
-  margin-left: 85%;
+.myButtonDiv{
+  display: flex;
 }
-
-.myButton3 {
-  margin-left: 80%;
-}
-
 .autorisationCollecte {
   text-align: center;
 }
 
-.promo {
-  font-size: 22px;
+@media screen and (max-width: 640px) {
+  .myButtonDiv{
+   flex-wrap: wrap;
+  }
+}
+
+.valid{
+  margin-top: -2%;
+  margin-bottom: 3%;
+  color: green;
 }
