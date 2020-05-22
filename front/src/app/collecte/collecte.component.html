@@ -82,12 +82,13 @@
                 </mat-form-field>
                 <ng-container *ngFor="let validation of validation_messages.promo">
                   <mat-error
-                    *ngIf="personalForm.get('promo').hasError(validation.type) && (personalForm.get('promo').dirty || personalForm.get('promo').touched)">
-                    {{validation.message}}</mat-error>
+                  *ngIf="personalForm.get('promo').hasError(validation.type) && (personalForm.get('promo').dirty || personalForm.get('promo').touched)">
+                  {{validation.message}}</mat-error>
                 </ng-container>
               </div>
 
-              <div class="myButton">
+              <div class="myButtonDiv">
+                <span class="spacer"></span>
                 <button mat-button matStepperNext>Next</button>
               </div>
             </form>
@@ -112,9 +113,10 @@
                   <input matInput type="number" placeholder="Salaire" formControlName="salaire">
                 </mat-form-field>
               </div>
-              <div>
-                <button class="myButton2" mat-button matStepperPrevious>Back</button>
-                <button mat-button matStepperNext>Next</button>
+              <div class="myButtonDiv">
+                <button mat-button matStepperPrevious>Back</button>
+                <span class="spacer"></span>
+                <button  mat-button matStepperNext>Next</button>
               </div>
             </form>
           </mat-step>
@@ -127,15 +129,16 @@
                 J'autorise la collecte et mise à jour numérique des informations de ce formulaire
               </mat-checkbox>
             </div>
-            <div>
-              <button class="myButton3" mat-button matStepperPrevious>Back</button>
-              <button mat-button (click)="stepper.reset()">Reset</button>
-              <button *ngIf="!loading" mat-raised-button class="submit-button" color="primary" type="button" (click)="onSubmit()"
+            <div class="myButtonDiv">
+              <button   mat-button matStepperPrevious>Back</button>
+              <span class="spacer"></span>
+              <button *ngIf="!loading" mat-raised-button class="submit-button myButton3" color="primary" type="button" (click)="onSubmit()"
             [disabled]="!validationForm.valid">Inscription</button>
-            <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
-            <br>
-            <mat-toolbar *ngIf="conne.form_send" color="accent"><mat-icon aria-hidden="false" aria-label="check_circle">check_circle</mat-icon>  Vos données ont été transmises, merci pour votre coopération</mat-toolbar>
+              <span class="spacer"></span>
+              <button  mat-button (click)="stepper.reset()">Reset</button>
+              <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
             </div>
+            <div class="valid" *ngIf="conne.form_send">Vos données ont été transmises, merci pour votre coopération</div>
           </form>
           </mat-step>
         </mat-horizontal-stepper>

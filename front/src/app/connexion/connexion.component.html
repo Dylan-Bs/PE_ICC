@@ -1,4 +1,3 @@
-<mat-toolbar *ngIf="error" color="accent"><mat-icon aria-hidden="false" aria-label="remove_circle">remove_circle</mat-icon>  {{errormsg}}</mat-toolbar>
 <section>
   <mat-card class="col col-md-4">
     <h3 *ngIf="!conne.connecte">Connexion</h3>
@@ -17,6 +16,7 @@
       </mat-form-field>
     </div>
 
+    <div class="error" *ngIf="error">Identifiant et/ou mot de passe incorrect(s).</div>
 
     <button mat-raised-button class="submit-button" color="primary" type="submit"
       [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
