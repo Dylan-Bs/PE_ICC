@@ -26,23 +26,20 @@ class Crawl(APIView):
         if('user-token' in request.headers):
             token = request.header['user-token']
             payload = jwt.decode(token, "PCSK")
-            email = payload['email']
             userid = payload['id']
+            user = User.objects.get(id = userid)
+            if user != None and (user.is_staff or user.is_superuser):
+                studentId = request.GET.get('id', '')
+                student = Student.objects.get(id=studentId)
 
-            studentId = request.GET.get('id', '')
-            student = Student.objects.get(id=studentId)
+                url = student.linkedin_url
+                res = self.crawler.crawl_page(url)
 
-            url = student.linkedin_url
-            res = self.crawler.crawl_page(url)
-
-            student.company = res['company']
-            student.working_place = res['working_place']
-            student.save()
+                student.company = res['company']
+                student.working_place = res['working_place']
+                student.save()
 
             resp = JsonResponse({'message': "Student updated"}, status = "200")
 
-        # resp["Access-Control-Allow-Origin"] = "*"
-        # resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
-        # resp["Access-Control-Max-Age"] = "1000"
-        # resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
-        # return resp
+        resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
+        return resp

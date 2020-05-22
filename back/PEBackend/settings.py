@@ -32,10 +32,12 @@ ALLOWED_HOSTS = ['*']
 # Application definition
 INSTALLED_APPS = [
     'django.contrib.auth',
+    'django.contrib.admin',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django_extensions',
     'corsheaders',
     'rest_framework',
     'Authenticate',
@@ -50,12 +52,15 @@ INSTALLED_APPS = [
     'Users'
 ]
 
-MIDDLEWARE_CLASSES = [
-    'corsheaders.middleware.CorsMaiddleware',
-    'django.contrib.sessions.middlewre.SessionMiddleware',
+MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
+    'django.middleware.security.SecurityMiddleware',
+    'django.middleware.csrf.CsrfViewMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
+    'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
 
 ROOT_URLCONF = 'PEBackend.urls'
@@ -84,7 +89,6 @@ TEMPLATES = [{
 # }
 
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
-print(os.getenv('DATABASE_HOST')+':'+os.getenv('DATABASE_PORT'))
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',

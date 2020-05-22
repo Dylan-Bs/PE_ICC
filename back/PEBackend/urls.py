@@ -1,4 +1,5 @@
 from django.conf.urls import include, url
+from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
 urlpatterns = [
@@ -11,6 +12,6 @@ urlpatterns = [
     url(r'^anonymize', include('Anonymize.urls'),name="anonymize"),
     url(r'^crawl', include('Crawl.urls'), name="crawl"),
     url(r'^user', include('User.urls'), name="user"),
-    url(r'^users', include('Users.urls'), name="users")
-
+    url(r'^users', include('Users.urls'), name="users"),
+    url(r'^admin', admin.site.urls, name="admin")
 ]
