@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { Authentification, Student } from '../interfaces/interface';
+import { HighchartsService } from './highcharts.service';
 
 @Injectable({
   providedIn: 'root'
@@ -18,7 +19,7 @@ export class ConnexionService {
 
   savedinfo:any;
 
-  constructor(public router:Router, public api:ApiService) {
+  constructor(public router:Router, public api:ApiService, public hc:HighchartsService) {
     this.connecte=false;
     this.form_send=false;
     this.user={};
@@ -34,7 +35,9 @@ export class ConnexionService {
     this.token= res.token;
     this.email=res.email;
     this.api.httpOptions.headers=this.api.httpOptions.headers.set("user-token",this.token);
-    console.log(this.api.httpOptions)
+    if (this.role==1){
+      this.hc.maj_students()
+    }
    }
 
    route(){

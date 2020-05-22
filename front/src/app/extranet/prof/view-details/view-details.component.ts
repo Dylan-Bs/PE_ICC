@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ApiService } from 'src/app/services/api.service';
 
 export interface option {
@@ -21,60 +20,46 @@ export interface optionsIng3Group {
 })
 export class ViewDetailsComponent implements OnInit {
 
-  exampleForm: FormGroup;
   item: any;
 
   constructor(
     public api: ApiService,
-    private route: ActivatedRoute,
-    private fb: FormBuilder,
+    private route: ActivatedRoute
   ) { }
+
+  options_bddtoview:object={'icc': 'Ingénierie Cloud Computing',
+  'iapau': 'Intelligence Artificielle Pau',
+  'imsi': 'Ingénierie Mathématique et Simulation Numérique',
+'inem': 'Informatique Embarquée',
+  'iacergy': 'Intelligence Artificielle Cergy',
+  'vc': 'Visual Computing',
+  'fintech': 'Finance et Technologie'}
 
   ngOnInit() {
     this.route.data.subscribe(routeData => {
       let data = routeData['data'];
       if (data) {
         this.item = data;
+        console.log(this.item)
         if (this.item.email == "") {
           this.item.email = "Non renseigné"
         }
-        if (this.item.promo == "") {
-          this.item.promo = "Non renseigné"
+        if (this.item.promotion == "") {
+          this.item.promotion = "Non renseigné"
         }
-        if (this.item.optionsIng3Control == "") {
-          this.item.optionsIng3Control = "Non renseigné"
+        if (this.item.option == "") {
+          this.item.option = "Non renseigné"
         }
-        if (this.item.entreprise == "") {
-          this.item.entreprise = "Non renseigné"
+        if (this.item.company == "") {
+          this.item.company = "Non renseigné"
         }
-        if (this.item.ville == "") {
-          this.item.ville = "Non renseigné"
+        if (this.item.working_city == "") {
+          this.item.working_city = "Non renseigné"
         }
-        if (isNaN(this.item.salaire)) {
-          this.item.salaire = "Non renseigné"
+        if (isNaN(this.item.wage)) {
+          this.item.wage = "Non renseigné"
         }
-        if (this.item.optionsIng3Control == "icc"){
-          
-          this.item.optionsIng3Control = 'Ingénierie Cloud Computing'
-        }
-        if (this.item.optionsIng3Control == "iapau"){
-          this.item.optionsIng3Control = 'Intelligence Artificielle'
-        }
-        if (this.item.optionsIng3Control == "imsi"){
-          this.item.optionsIng3Control = 'Ingénierie Mathématique et Simulation Numérique' 
-        }
-        if (this.item.optionsIng3Control == "inem"){
-          this.item.optionsIng3Control = 'Informatique Embarquée'
-        }
-        if (this.item.optionsIng3Control == "iacergy"){
-          this.item.optionsIng3Control = 'Intelligence Artificielle'
-        }
-        if (this.item.optionsIng3Control == "vc"){
-          this.item.optionsIng3Control = 'Visual Computing'
-        }
-        if (this.item.optionsIng3Control == "fintech"){
-          this.item.optionsIng3Control = 'Finance et Technologie'
-        }
+        this.item.option = this.options_bddtoview[this.item.option]
       }
     })
   }
