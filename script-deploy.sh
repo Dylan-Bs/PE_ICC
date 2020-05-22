@@ -1,10 +1,11 @@
  #/bin/sh -x
 
 # Vérification si un docker-compose est déjà lancé
-if [ -f dockercompose.lock ]; then
+isUp=$(docker-compose ps front | grep Up)
+if [ -n "$isUp" ]; then
   echo "Arret du précédant docker-compose"
-  docker-compose stop
-  rm dockercompose.lock
+  docker-compose down --rmi all --volumes --remove-orphans
+  docker system prune -a --volumes
 fi
 echo "Lancement docker compose"
 docker-compose up -d --build --remove-orphans
