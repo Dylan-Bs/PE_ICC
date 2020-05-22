@@ -39,7 +39,7 @@ class Students(views.APIView):
         students = list(students)
         for student in students:
             tmp_user = User.objects.get(id = student.id)
-            data.append({"id": str(student.id), "name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.email), "promotion": str(student.promotion), "company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city)})
+            data.append({"id": str(student.id), "name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.email), "promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city)})
         resp = JsonResponse(data, safe = False)
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"

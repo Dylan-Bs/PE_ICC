@@ -23,10 +23,10 @@ class Users(views.APIView):
         for user in users:
             if(Student.objects.filter(id = user.id).exists()):
                 tmp_student = Student.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "student"})
+                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "2"})
             elif (Teacher.objects.filter(id = user.id).exists()):
                 tmp_teacher = Teacher.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "teacher"})
+                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "1"})
         resp = JsonResponse(data, safe = False)
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
@@ -35,19 +35,31 @@ class Users(views.APIView):
         return resp
 
     def delete(self, request, *args, **kwargs):
-        data = []
-        users = User.objects.all()
-        users = list(users)
-        for user in users:
-            if(Student.objects.filter(id = user.id).exists()):
-                tmp_student = Student.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "student"})
-            elif (Teacher.objects.filter(id = user.id).exists()):
-                tmp_teacher = Teacher.objects.get(id = user.id)
-                data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "teacher"})
-        resp = JsonResponse(data, safe = False)
+        if request.data != None:
+            if('user-token' in request.headers):
+                token = request.headers['user-token']
+                payload = jwt.decode(token, "PCSK")
+                userid = payload['id']
+                user = User.objects.get(id = userid)
+                if(user.is_superuser):
+                    for jsonObject in request.Data:
+                        deleteId = jsonObject['user_id']
+                        userToDelete = User.objects.get(id = deleteId)
+                        if userToDelete != None:
+                            if userToDelete.is_staff:
+                                teacher = Teacher.objects.get(id=deleteId)
+                                teacher.delete()
+                            else:
+                                student = Student.objects.get(id=deleteId)
+                                student.delete()                        
+                        userToDelete.delete()
+                    resp = JsonResponse({"Success": "Users deleted with success"}, status = 200)
+                else:
+                    resp = JsonResponse({"Denied": "No enough rights to operate this"}, status = 403)
+        else:
+            resp = JsonResponse({"Error": "No data provided"}, status = 400, safe = False)
         resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        resp["Access-Control-Allow-Methods"] = "DELETE, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
