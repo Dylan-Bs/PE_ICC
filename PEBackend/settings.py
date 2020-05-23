@@ -49,7 +49,8 @@ INSTALLED_APPS = [
     'Anonymize',
     'Crawl',
     'User',
-    'Users'
+    'Users',
+    'Import'
 ]
 
 MIDDLEWARE = [

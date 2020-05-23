@@ -14,32 +14,46 @@ from .models import Teacher as TeacherModel
 class Teacher(views.APIView):
 
     def put(self, request, *args, **kwargs):
-        if not request.data:
-            resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
-        else: 
-            userlogin = request.data['email']
-            password = request.data['password']
-            first_name = request.data['first_name']
-            last_name = request.data['last_name']
-            email = request.data['email']
-            option = request.data['option']
-            if User.objects.filter(username=userlogin).exists():
-                resp = JsonResponse({'Error': "Already registered"}, status = "400")
+        if('user-token' in request.headers):
+            token = request.headers['user-token']
+            payload = jwt.decode(token, "PCSK")
+            userid = payload['id']
+            user = User.objects.get(id=userid)
+            if user != None:
+                if user.is_superuser:
+                    if not request.data:
+                        resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
+                    else: 
+                        userlogin = request.data['email']
+                        password = request.data['password']
+                        first_name = request.data['first_name']
+                        last_name = request.data['last_name']
+                        email = request.data['email']
+                        option = request.data['option']
+                        if User.objects.filter(username=userlogin).exists():
+                            resp = JsonResponse({'Error': "Already registered"}, status = "400")
+                        else:
+                            user = User.objects.create_user(userlogin,userlogin, password)
+                            user.first_name = first_name
+                            user.last_name = last_name
+                            user.email = email
+                            user.is_active = True
+                            user.is_staff = True
+                            user.is_superuser = False
+                            user.save()
+                            res = User.objects.get(username=userlogin)
+                            teacher = TeacherModel()
+                            teacher.id = str(res.id)
+                            teacher.option = option
+                            teacher.save()
+                            resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
+                else:
+                    resp = JsonResponse({'Access Denied': "No enough rights to achieve this"}, status = "403")
+
             else:
-                user = User.objects.create_user(userlogin,userlogin, password)
-                user.first_name = first_name
-                user.last_name = last_name
-                user.email = email
-                user.is_active = True
-                user.is_staff = True
-                user.is_superuser = False
-                user.save()
-                res = User.objects.get(username=userlogin)
-                teacher = TeacherModel()
-                teacher.id = str(res.id)
-                teacher.option = option
-                teacher.save()
-                resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
+                resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
+        else:
+            resp = JsonResponse({'Access Denied': " You must be authenticated"}, status = "403")
         resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"

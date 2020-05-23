@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^crawl', include('Crawl.urls'), name="crawl"),
     url(r'^user', include('User.urls'), name="user"),
     url(r'^users', include('Users.urls'), name="users"),
+    url(r'^import', include('Import.urls'), name="import"),    
     url(r'^admin', admin.site.urls, name="admin")
 ]
