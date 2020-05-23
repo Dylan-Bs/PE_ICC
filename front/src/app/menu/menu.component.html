@@ -6,7 +6,7 @@
             
             <a *ngIf="!this.isMobile" mat-button href routerLink='/'>
                 <mat-icon svgIcon="logoPEICC" aria-hidden="false" aria-label="logoPEICC"></mat-icon>
-                Acceuil
+                Accueil
             </a>
             <a mat-button *ngIf="!this.isMobile && conne.role>1 && conne.connecte == true" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='extranet/prof'>Lister les étudiants</a>
