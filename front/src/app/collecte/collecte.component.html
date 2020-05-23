@@ -33,22 +33,22 @@
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Nom" formControlName="name" required>
+                  <input matInput placeholder="Nom" formControlName="last_name" required>
                 </mat-form-field>
-                <ng-container *ngFor="let validation of validation_messages.name">
+                <ng-container *ngFor="let validation of validation_messages.last_name">
                   <mat-error
-                    *ngIf="personalForm.get('name').hasError(validation.type) && (personalForm.get('name').dirty || personalForm.get('name').touched)">
+                    *ngIf="personalForm.get('last_name').hasError(validation.type) && (personalForm.get('last_name').dirty || personalForm.get('last_name').touched)">
                     {{validation.message}}</mat-error>
                 </ng-container>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Prénom" formControlName="surname" required>
+                  <input matInput placeholder="Prénom" formControlName="first_name" required>
                 </mat-form-field>
-                <ng-container *ngFor="let validation of validation_messages.surname">
+                <ng-container *ngFor="let validation of validation_messages.first_name">
                   <mat-error
-                    *ngIf="personalForm.get('surname').hasError(validation.type) && (personalForm.get('surname').dirty || personalForm.get('surname').touched)">
+                    *ngIf="personalForm.get('first_name').hasError(validation.type) && (personalForm.get('first_name').dirty || personalForm.get('first_name').touched)">
                     {{validation.message}}</mat-error>
                 </ng-container>
               </div>

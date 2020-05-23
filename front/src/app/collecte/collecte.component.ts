@@ -75,10 +75,10 @@ export class CollecteComponent implements OnInit {
       { type: 'required', message: 'Le mot de passe est requis' },
       { type: 'minlength', message: 'Le mot de passe doit faire minimum 7 caractères' }
     ],
-    'name': [
+    'last_name': [
       { type: 'required', message: 'Le nom est requis' }
     ],
-    'surname': [
+    'first_name': [
       { type: 'required', message: 'Le prénom est requis' }
     ],
     'optionsIng3Control': [
@@ -104,8 +104,8 @@ export class CollecteComponent implements OnInit {
     this.personalForm = this.fb.group({
       email: ['', [Validators.email, Validators.required]],
       password: ['', [Validators.required, Validators.minLength(7)]],
-      name: ['', Validators.required],
-      surname: ['', Validators.required],
+      last_name: ['', Validators.required],
+      first_name: ['', Validators.required],
       promo: ['', [Validators.required, this.checkPromo]],
       optionsIng3Control: ['', Validators.required]});
     this.professionalForm = this.fb.group({
@@ -122,8 +122,8 @@ export class CollecteComponent implements OnInit {
     this.personalForm = this.fb.group({
       email: new FormControl('', [Validators.email, Validators.required]),
       password: new FormControl('', [Validators.required, Validators.minLength(7)]),
-      name: new FormControl('', Validators.required),
-      surname: new FormControl('', Validators.required),
+      last_name: new FormControl('', Validators.required),
+      first_name: new FormControl('', Validators.required),
       promo: new FormControl('', [Validators.required, this.checkPromo]),
       optionsIng3Control: new FormControl('', Validators.required)});
     this.professionalForm = this.fb.group({

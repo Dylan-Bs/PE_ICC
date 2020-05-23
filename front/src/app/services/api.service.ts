@@ -54,8 +54,8 @@ export class ApiService {
     var info:object={
       "email": value.email,
       "password": value.password,
-      "first_name": value.name,
-      "last_name": value.surname,
+      "first_name": value.first_name,
+      "last_name": value.last_name,
       "promotion": parseInt(value.promo),
       "option": value.optionsIng3Control,
       "company": value.entreprise,
