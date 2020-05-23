@@ -93,11 +93,7 @@ WSGI_APPLICATION = 'PEBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-<<<<<<< HEAD
         'ENFORCE_SCHEMA': True,
-=======
-        'ENFORCE_SCHEMA': False,
->>>>>>> master
         'NAME': os.getenv('DATABASE_NAME'),
         'AUTH_SOURCE': 'admin',
         'AUTH_MECHANISM': 'SCRAM-SHA-1',
@@ -106,10 +102,6 @@ DATABASES = {
             'port': int(os.getenv('DATABASE_PORT')),
             'username': os.getenv('DATABASE_USER'),
             'password': os.getenv('DATABASE_PASSWORD'),
-<<<<<<< HEAD
-=======
-            # Or an IP Address that your DB is hosted on
->>>>>>> master
         }
     }
 }

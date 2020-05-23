@@ -4,7 +4,6 @@ import json
  
 def run():
     data = {}
-<<<<<<< HEAD
     if not User.objects.filter(username='admin@peicc.com').exists():
         print("Creating superuser")
         user = User.objects.create_user('admin@peicc.com', 'admin@peicc.com', 'adminpeic*')
@@ -13,17 +12,11 @@ def run():
         user.is_staff = True
         user.is_superuser = True
         user.save()
-=======
->>>>>>> master
     with open('/src/scripts/students.json') as studentsFile:
         data = json.load(studentsFile)
     students = data["students"]
     for tmp_student in students:
-<<<<<<< HEAD
         if not User.objects.filter(username=tmp_student['email']).exists():
-=======
-        if not User.objects.filter(username=tmp_student['email']).count():
->>>>>>> master
             print("adding user " + tmp_student['first_name'] + " " + tmp_student['last_name'])
             user = User.objects.create_user(tmp_student['email'], tmp_student['email'], tmp_student['password'])
             user.first_name = tmp_student['first_name']
@@ -33,11 +26,7 @@ def run():
             user.save()
             student = Student()
             student.id = str(user.id)
-<<<<<<< HEAD
             student.promotion = int(tmp_student['promotion'])
-=======
-            student.promotion = tmp_student['promotion']
->>>>>>> master
             student.option = tmp_student['option']
             student.company = tmp_student['company']
             student.working_city = tmp_student['working_city']
