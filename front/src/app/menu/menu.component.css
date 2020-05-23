@@ -1,0 +1,17 @@
+.flex-spacer{
+    -webkit-box-flex: 1;
+    flex-grow: 1;
+}
+
+a:not(.raisebutton) {
+    color: inherit;
+   
+}
+
+.raisebutton{
+    margin-left: 10px;
+}
+
+a:hover{
+    text-decoration: none;
+}

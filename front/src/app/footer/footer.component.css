@@ -1,0 +1,30 @@
+footer {
+    /*margin-top: 8px;*/
+    display: flex;
+    align-items: center;
+    line-height: 20px;
+
+    text-align:center;
+    width: 100%;
+    height: 6vh;
+
+    justify-content: center;
+  }
+
+  footer>div{
+    display: flex;
+    align-items: center;
+  }
+
+  footer a {
+    display: flex;
+    align-items: center;
+  }
+
+  svg#clouds {
+    position: fixed;
+    bottom: -160px;
+    left: -230px;
+    z-index: -10;
+    width: 1920px;
+  }

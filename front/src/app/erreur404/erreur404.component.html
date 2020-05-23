@@ -1,0 +1,11 @@
+<h2>
+    <mat-toolbar color="accent">
+        <mat-icon aria-hidden="false" aria-label="erreur">error</mat-icon>
+        <span class="spacer"></span>
+        <div>Erreur 404 !</div>
+        <span class="spacer"></span>
+        <mat-icon aria-hidden="false" aria-label="erreur">error</mat-icon>
+    </mat-toolbar>
+</h2>
+<p>La page que vous voulez atteindre n'a pas été trouvée.</p>
+<p *ngIf="path != null">Vous vouliez peut-être aller sur la page : <a [routerLink]="path">"{{ path }}"</a></p>

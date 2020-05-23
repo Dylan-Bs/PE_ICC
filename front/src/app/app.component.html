@@ -1,0 +1,57 @@
+
+  
+<header>
+  <app-menu></app-menu>
+</header>
+
+
+<mat-sidenav-container class="example-container" (click)="close()"> 
+    <mat-sidenav [opened]="open"  #sidenav mode="push">
+      
+      <mat-toolbar color="primary" style="height:100%;">
+        <mat-toolbar-row>
+          <a mat-button class="fill-width" href routerLink='/'>
+            <mat-icon svgIcon="logoPEICC" aria-hidden="false" aria-label="logoPEICC"></mat-icon>
+            Accueil
+          </a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.role>1 && conne.connecte == true">
+            <a mat-button class="fill-width" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.role==1 && conne.connecte == true">
+            <a mat-button class="fill-width" href routerLink='extranet/prof'>Lister les étudiants</a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.role==1 && conne.connecte == true">
+            <a mat-button class="fill-width" href routerLink='/extranet/prof/stats'>Afficher les statistiques</a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.role==0 && conne.connecte == true">
+            <a mat-button class="fill-width"  href routerLink='/extranet/etudiant/edit/{{conne.route()}}'>Mon Profil</a>
+          </mat-toolbar-row>
+
+            <mat-toolbar-row class="fill-height"><div class="fill-height"></div></mat-toolbar-row>
+
+          <mat-toolbar-row *ngIf="conne.connecte == false">
+            <a mat-raised-button class="raisebutton fill-width" href routerLink='/formulaire'>Inscription</a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.connecte == false">
+            <a mat-raised-button  class="raisebutton fill-width"  href routerLink='/connexion'>Connexion</a>
+          </mat-toolbar-row>
+          <mat-toolbar-row *ngIf="conne.connecte == true">
+            <a mat-raised-button class="raisebutton fill-width"   href routerLink='/connexion'>Compte</a>
+        </mat-toolbar-row>
+        <mat-toolbar-row *ngIf="conne.connecte == true">
+          <a mat-raised-button class="raisebutton fill-width"  (click)="conne.deconnecte()">Déconnexion</a>
+      </mat-toolbar-row>
+    </mat-toolbar>
+    </mat-sidenav>
+  <mat-sidenav-content style="overflow: hidden;">
+  <main #main class="content">
+  <router-outlet>
+    
+  </router-outlet>
+  </main>
+
+  <app-footer></app-footer>
+</mat-sidenav-content>
+</mat-sidenav-container>
+

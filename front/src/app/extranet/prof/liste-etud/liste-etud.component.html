@@ -1,0 +1,39 @@
+<br />
+<div class="row">
+    <div class="col-md-4 offset-md-1">
+        <div class="input-group">
+            <input type="text" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
+                placeholder="Recherche par nom..." (keyup)="searchByName()" >
+        </div>
+    </div>
+    <div class="col-md-6 filter-by-promo">
+        <div class="row">
+            <div class="col-md-auto title">
+                <span>Filtre par promo (older than):</span>
+            </div>
+            <div class="col">
+                <span>1970 </span>
+                <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" [(ngModel)]="promoValue"
+                    (change)="rangeChange($event)">
+                </mat-slider>
+                <span>{{max}}</span>
+            </div>
+        </div>
+    </div>
+</div>
+<div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
+<!-- Liste des utilisateurs dans la bdd -->
+<div class="list-group users-list">
+    <div *ngFor="let item of items_filtered" class="list-group-item list-group-item-action flex-column align-items-start">
+        <div class="row">
+            <div class="col col-md-8 text-col">
+                <h5 class="mb-1">{{item.name}}</h5>
+                <small>Promo: {{item.promotion}}</small>
+            </div>
+            <div class="col col-md-2 actions-col">
+                <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
+                        <i class="material-icons">search</i> Détails
+                </button>
+            </div>
+        </div>
+    </div>

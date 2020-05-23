@@ -1,0 +1,17 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+/* Available pre-built themes:
+deeppurple-amber.css
+indigo-pink.css
+pink-bluegrey.css (dark theme)
+purple-green.css  (dark theme)*/
+
+html, body { 
+    min-height:100vh; 
+    overflow-x:hidden; /* mobile viewport bug fix */
+    min-height: -webkit-fill-available;
+}
+body { margin: 0; font-family: "Roboto", "Helvetica Neue", sans-serif;}
+input:focus {
+    background-color: transparent;
+}

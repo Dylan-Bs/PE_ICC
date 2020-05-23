@@ -1,0 +1,38 @@
+<section>
+  <mat-card class="col col-md-4">
+    <h3 *ngIf="!conne.connecte">Connexion</h3>
+  <form *ngIf="!conne.connecte" class="create-form" [formGroup]="connexionForm" novalidate
+    (ngSubmit)="onSubmit(connexionForm.value)">
+
+    <div class="form-group">
+      <mat-form-field class="input-style">
+        <input matInput type="email" placeholder="Email" formControlName="email">
+      </mat-form-field>
+    </div>
+
+    <div class="form-group">
+      <mat-form-field class="input-style">
+        <input matInput type="password" placeholder="Password" formControlName="password">
+      </mat-form-field>
+    </div>
+
+    <div class="error" *ngIf="error">Identifiant et/ou mot de passe incorrect(s).</div>
+
+    <button mat-raised-button class="submit-button" color="primary" type="submit"
+      [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
+      <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner></div>
+      <br>
+      
+      
+
+  </form>
+  
+  <div *ngIf="conne.connecte">
+    <h3>Bonjour {{surname | titlecase }} {{name | uppercase }}</h3>
+      <p>vous êtes bien connecté avec le role: {{role}}
+      <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
+    </p>
+  </div>
+</mat-card>
+
+</section>
