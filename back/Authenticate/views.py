@@ -6,6 +6,8 @@ from django.contrib.auth.models import User
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse
 from django.http import JsonResponse
+from Teacher.models import Teacher
+from Student.models import Student
 import datetime
 import time
 
@@ -20,13 +22,19 @@ class Authenticate(APIView):
         if user:
             expiry = datetime.date.today() + datetime.timedelta(days=7)
             role = '0'
-            if(user.is_staff):
+            if(user.is_staff and not user.is_superuser):
                 role = '1'
+                teacher = Teacher.objects.get(id = user.id)
+                option = teacher.option
+            else:
+                student = Student.objects.get(id = user.id)
+                option = student.option
             if(user.is_superuser):
                 role = '2'
+                option = ''
             token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
             resp = HttpResponse(
-              json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.email), 'role': str(role)}),
+              json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.email), 'role': str(role), 'option': str(option)}),
               status=200,
               content_type="application/json",
              )

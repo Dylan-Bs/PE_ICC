@@ -1,7 +1,7 @@
 from django.contrib.auth.models import User
  
 def run():
-    if not User.objects.filter(username='adminPEICC').count():
+    if not User.objects.filter(username='admin@peicc.com').exists():
         print("Creating superuser")
         user = User.objects.create_user('admin@peicc.com', 'admin@peicc.com', 'adminpeic*')
         user.first_name = 'Admin'

@@ -21,7 +21,9 @@ class Anonymize(APIView):
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = UserModel.objects.get(id = userid)
-                user.IsActive = False;
+                user.first_name = ''
+                user.last_name = ''
+                user.IsActive = False
                 student = Student.objects.get(id = userid)
                 resp = JsonResponse({'Success': "User deleted, anonymization completed"}, status = "200")
         except UserModel.DoesNotExist:

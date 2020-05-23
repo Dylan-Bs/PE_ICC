@@ -65,8 +65,6 @@ class User(views.APIView):
                     resp = JsonResponse({"Denied": "No enough rights to operate this"}, status = 403)
         else:
             resp = JsonResponse({"Error": "No data provided"}, status = 400, safe = False)
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "DELETE, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp

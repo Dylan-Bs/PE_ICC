@@ -27,10 +27,8 @@ class Student(views.APIView):
                 resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
         else:
             resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
-        resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
 
     def post(self, request, *args, **kwargs):
@@ -71,8 +69,6 @@ class Student(views.APIView):
                     resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
             else:
                 resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp

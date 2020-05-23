@@ -12,7 +12,7 @@ class Register(APIView):
 
     def put(self, request, *args, **kwargs):
         if not request.data:
-            resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
+            resp = JsonResponse({'Error': "No data provided"}, status = "400")
         else: 
             userlogin = request.data['email']
             password = request.data['password']
@@ -43,8 +43,6 @@ class Register(APIView):
                 student.wage = wage
                 student.save()
                 resp = JsonResponse({'Success': 'Successfully registered', 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
