@@ -25,8 +25,8 @@ def run():
             user.is_superuser = False
             user.save()
             student = Student()
-            student.id = str(user.id)
-            student.promotion = int(tmp_student['promotion'])
+            student.id = user.id
+            student.promotion = tmp_student['promotion']
             student.option = tmp_student['option']
             student.company = tmp_student['company']
             student.working_city = tmp_student['working_city']
