@@ -20,7 +20,7 @@ services:
             - backend
 
     migration:
-        build: ./back
+        build: ./PEBackend
         command: bash -c "
             python manage.py makemigrations &&
             python manage.py migrate"
@@ -32,7 +32,7 @@ services:
             - backend
 
     initialization:
-        build: ./back
+        build: ./PEBackend
         command: bash -c "
             python manage.py runscript create-SuperUser &&
             python manage.py runscript populate-Database"
@@ -47,7 +47,7 @@ services:
     api:
         restart: always
         build: 
-            context: ./back/ 
+            context: ./PEBackend/ 
             dockerfile: Dockerfile   
         container_name: django
         volumes:
