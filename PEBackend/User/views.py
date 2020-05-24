@@ -36,10 +36,8 @@ class User(views.APIView):
                     resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
             else:
                 resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
 
     def delete(self, request, *args, **kwargs):
@@ -53,12 +51,12 @@ class User(views.APIView):
                 if(user.is_superuser):
                     userToDelete = UserModel.objects.get(id = deleteId)
                     if userToDelete != None:
-                        if userToDelete.is_staff:
-                            teacher = Teacher.objects.get(id=deleteId)
-                            teacher.delete()
-                        else:
+                        if not userToDelete.is_staff and not userToDelete.is_superuser:
                             student = Student.objects.get(id=deleteId)
                             student.delete()                        
+                        elif userToDelete.is_staff and not userToDelete.is_superuser:
+                            teacher = Teacher.objects.get(id=deleteId)
+                            teacher.delete()
                         userToDelete.delete()
                     resp = JsonResponse({"Success": "User deleted with success"}, status = 200)
                 else:

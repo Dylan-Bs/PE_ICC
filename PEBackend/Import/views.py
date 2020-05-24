@@ -15,26 +15,26 @@ class Import(APIView):
             resp = JsonResponse({'Error': "Please provice file"}, status = "400")
         else: 
             nbStudents = 0
-            for filename, file in request.FILES.iteritems():
-                name = request.FILES[filename].name
-                with open(name) as students:
-                    # On ignore la première ligne, correspondants aux headers
-                    next(students)
-                    for student in students:
-                        tmp_student = StudentModel()
-                        tmp_student.email = student[0]
-                        tmp_student.first_name = student[1]
-                        tmp_student.last_name = student[2]
-                        tmp_student.promotion = student[3]
-                        tmp_student.option = student[4]
-                        tmp_student.company = student[5]
-                        tmp_student.working_city = student[6]
-                        tmp_student.wage = student[7]
-                        tmp_student.save()
-                        nbStudents += 1
-
-        resp["Access-Control-Allow-Origin"] = "*"
+            for filename, file in request.FILES.items():
+                students = file.read()
+                # On ignore la première ligne, correspondants aux headers
+                next(students)
+                for student in students:
+                    tmp_student = StudentModel()
+                    tmp_student.email = student[0]
+                    tmp_student.first_name = student[1]
+                    tmp_student.last_name = student[2]
+                    tmp_student.promotion = student[3]
+                    tmp_student.option = student[4]
+                    tmp_student.company = student[5]
+                    tmp_student.working_city = student[6]
+                    tmp_student.wage = student[7]
+                    tmp_student.save()
+                    nbStudents += 1
+            if nbStudents > 0:
+                resp = JsonResponse({"Success": nbStudents +" users added."}, status = 400, safe = False)
+            else:
+                resp = JsonResponse({"NotFound": "No users added"}, status = 400, safe = False)
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
