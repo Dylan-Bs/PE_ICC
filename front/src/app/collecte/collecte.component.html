@@ -9,7 +9,8 @@
               <ng-template matStepLabel>Informations personnelles</ng-template>
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput type="email" placeholder="Adresse électronique"
+                  <mat-label>Adresse électronique</mat-label>
+                  <input matInput type="email" placeholder="Ex. toto@eisti.eu"
                     formControlName="email" required>
                 </mat-form-field>
                 <ng-container *ngFor="let validation of validation_messages.email">
@@ -98,19 +99,22 @@
               <ng-template matStepLabel>Information professionnelles</ng-template>
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Entreprise" formControlName="entreprise">
+                  <mat-label>Entreprise</mat-label>
+                  <input matInput placeholder="Ex: Total,Orange,Viveris" formControlName="entreprise">
                 </mat-form-field>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Ville travail" formControlName="ville">
+                  <mat-label>Ville de travail</mat-label>
+                  <input matInput placeholder="Ex: Paris;Toulouse;Novossibirsk" formControlName="ville">
                 </mat-form-field>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput type="number" placeholder="Salaire" formControlName="salaire">
+                  <mat-label>Salaire</mat-label>
+                  <input matInput type="number" placeholder="Salaire brut €/mois" formControlName="salaire">
                 </mat-form-field>
               </div>
               <div class="myButtonDiv">
