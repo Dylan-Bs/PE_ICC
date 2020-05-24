@@ -11,7 +11,6 @@
             <a mat-button *ngIf="!this.isMobile && conne.role>1 && conne.connecte == true" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='extranet/prof'>Lister les étudiants</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='/extranet/prof/stats'>Afficher les statistiques</a>
-            <a mat-button *ngIf="!this.isMobile && conne.role==0 && conne.connecte == true" href routerLink='/extranet/etudiant/edit/{{conne.route()}}'>Mon Profil</a>
             <div class="flex-spacer"></div>
             <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/formulaire'>Inscription</a>
             <a mat-raised-button class="raisebutton"  *ngIf="!this.isMobile && conne.connecte == false" href routerLink='/connexion'>Connexion</a>
