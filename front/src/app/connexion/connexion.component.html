@@ -32,7 +32,7 @@
     <div *ngIf="conne.connecte">
       <mat-card-title>Bonjour {{first_name | titlecase }} {{last_name | uppercase }}</mat-card-title>
       <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
-        <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
+        <span *ngIf="conne.role == 1"> de l'option {{conne.userOption }}</span>.
       </mat-card-content>
       <div *ngIf="conne.role == 0">
         <mat-card-content>Email : {{item.email}}</mat-card-content>

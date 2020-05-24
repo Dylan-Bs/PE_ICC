@@ -37,10 +37,10 @@ export class ConnexionComponent implements OnInit {
 
   options_bddtoview: object = {
     'icc': 'Ingénierie Cloud Computing',
-    'iapau': 'Intelligence Artificielle Pau',
+    'iapau': 'Intelligence Artificielle à Pau',
     'imsi': 'Ingénierie Mathématique et Simulation Numérique',
     'inem': 'Informatique Embarquée',
-    'iacergy': 'Intelligence Artificielle Cergy',
+    'iacergy': 'Intelligence Artificielle à Cergy',
     'vc': 'Visual Computing',
     'fintech': 'Finance et Technologie',
     'erp': 'Intégration ERP',
@@ -143,6 +143,7 @@ export class ConnexionComponent implements OnInit {
       this.role = "Ancien étudiant"
     } else if (this.conne.role == 1) {
       this.role = "Professseur"
+      this.conne.userOption = this.options_bddtoview[this.conne.user["option"]]
     }
 
 
