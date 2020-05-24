@@ -105,7 +105,7 @@ export class ApiService {
     value.password = '';//un mot de passe vide, empeche les gens de valider un formulaire de connexion 
     value.first_name = 'anonymous';
     value.last_name = 'anonymous';
-    return this.http.put(`${this.apiUrl}/anonymiser`,value);
+    return this.http.post(`${this.apiUrl}/anonymize`,value);
   }
 
   //teacher
