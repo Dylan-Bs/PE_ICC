@@ -82,7 +82,7 @@ export class EditUserComponent implements OnInit {
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [{value:this.item.email,disabled:true}],
+      email: [this.item.email],
       password: [this.item.password],
       first_name: [this.item.first_name],
       last_name: [this.item.last_name],
