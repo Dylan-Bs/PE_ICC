@@ -46,7 +46,7 @@ export class ConnexionService {
     this.email=res.email;
     this.api.httpOptions.headers=this.api.httpOptions.headers.set("user-token",this.token);
     if (this.role==1){
-      this.hc.maj_students()
+      //this.hc.maj_students()
     }
     console.log(res)
     //this.startTimer()

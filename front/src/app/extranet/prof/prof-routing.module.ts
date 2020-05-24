@@ -7,11 +7,12 @@ import { StatsComponent } from './stats/stats.component';
 import { ViewDetailsComponent } from './view-details/view-details.component';
 import { ViewDetailsResolver } from './view-details/view-details.resolver';
 import { paths } from 'src/app/app-paths';
+import { StatsResolver } from './stats/stats.resolver';
 
 
 const profRoutes: Routes = [
   { path: paths.empty, canActivate: [AuthGuard, ProfGuard], component: ListeEtudComponent },
-  { path: paths.stats, canActivate: [AuthGuard, ProfGuard], component: StatsComponent },
+  { path: paths.stats, canActivate: [AuthGuard, ProfGuard], component: StatsComponent,resolve: { data: StatsResolver } },
   { path: paths.details_pr, canActivate: [AuthGuard, ProfGuard], component: ViewDetailsComponent, resolve: { data: ViewDetailsResolver } }
 ];
 

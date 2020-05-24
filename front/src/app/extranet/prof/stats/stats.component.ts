@@ -4,6 +4,7 @@ import * as Highcharts from 'highcharts';
 import { HighchartsService } from 'src/app/services/highcharts.service';
 import * as HighchartsMore from "highcharts/highcharts-more";
 import { Student } from 'src/app/interfaces/interface';
+import { ActivatedRoute } from '@angular/router';
 
 declare var require: any;
 require('highcharts/highcharts-more')(Highcharts);
@@ -23,24 +24,14 @@ export class StatsComponent implements OnInit {
     item:Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
 
   constructor(
-    public api: ApiService,public hc:HighchartsService
+    public api: ApiService,public hc:HighchartsService,private route: ActivatedRoute
   ) {
     
    }
 
-  ngOnInit() {
-    this.updateFlag=false
-    this.api.getEtudiants()
-    .subscribe(result => {
-      var res=result as Array<any>
-      if (res!=this.hc.data){
-        this.hc.data=res
-        this.hc.update_graph_data(this.hc.data)
-        this.updateFlag=true
-      }
-      
-    })
-  }
+   ngOnInit() {
+    this.route.data.subscribe(routeData => {})
+   }
 
   ngAfterViewInit() {
     
@@ -198,7 +189,7 @@ export class StatsComponent implements OnInit {
         },
         plotLines: [{
         label: {
-                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage(),
+                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage().toFixed(2),
                 align: 'left',
                 style: {
                     color: 'red',
@@ -215,7 +206,7 @@ export class StatsComponent implements OnInit {
         enabled: false
     },
     tooltip: {
-        pointFormat: 'Salaire: <b>{point.y:.1f} €</b>'
+        pointFormat: 'Salaire: <b>{point.y:.2f} €</b>'
     },
     series: [{name: 'Etudiants',color : "#7cb5ec",
         data: this.hc.etu_wage,
@@ -226,7 +217,7 @@ export class StatsComponent implements OnInit {
             rotation: -90,
             color: '#FFFFFF',
             align: 'right',
-            format: '{point.y:.1f}', // one decimal
+            format: '{point.y:.2f}', // one decimal
             y: 10, // 10 pixels down from the top
             style: {
                 fontSize: '13px',

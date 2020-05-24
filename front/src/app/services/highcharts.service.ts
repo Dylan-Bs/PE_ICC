@@ -96,11 +96,12 @@ export class HighchartsService {
       if (! isNaN(parseInt(data[k].wage))){
         if (this.etu_wage.length==0){
         
-          this.etu_wage.push({"name":data[k].name,"y":parseInt(data[k].wage),selected:false,"id":data[k].id})
+          this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id})
         }else{
-          this.etu_wage.push({"name":data[k].name,"y":parseInt(data[k].wage),selected:false,"id":data[k].id})
+          this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id})
         }
       }
+
       
 
       if (id_option==-1){
@@ -153,6 +154,6 @@ export class HighchartsService {
         acc+=this.etu_wage[i].y
      }
 
-     return (acc/this.etu_wage.length).toFixed(2)
+     return (acc/this.etu_wage.length)
    }
 }
