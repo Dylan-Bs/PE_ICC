@@ -5,7 +5,7 @@ isUp=$(docker-compose ps front | grep Up)
 if [ -n "$isUp" ]; then
   echo "Arret du précédant docker-compose"
   docker-compose down --rmi all --volumes --remove-orphans
-  docker system prune -a --volumes
+  docker system prune -a --volumes -f
 fi
 echo "Lancement docker compose"
 docker-compose up -d --build --remove-orphans
