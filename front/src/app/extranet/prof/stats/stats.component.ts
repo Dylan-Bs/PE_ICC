@@ -50,7 +50,7 @@ export class StatsComponent implements OnInit {
       type: 'pie'
   },
   title: {
-      text: 'Proportion des étudiants par option'
+      text: 'Proportion des diplômés par option'
   },
   tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -170,7 +170,7 @@ export class StatsComponent implements OnInit {
     }
     },
     title: {
-        text: 'Salaire par an des étudiants'
+        text: 'Salaire par an des diplômés'
     },
     xAxis: {
         type: 'category',
