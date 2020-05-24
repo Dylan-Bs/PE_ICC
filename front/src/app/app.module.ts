@@ -35,6 +35,7 @@ import { AppRoutingModule } from './app-routing.module';
 import { PathResolveService } from './path-resolve.service';
 import { FooterComponent } from './footer/footer.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
+import { ImportUsersComponent } from './extranet/admin/import-users/import-users.component';
 
 
 @NgModule({
@@ -47,7 +48,8 @@ import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-
     ConnexionComponent,
     Erreur404Component,
     FooterComponent,
-    ConfirmationDialogComponent
+    ConfirmationDialogComponent,
+    ImportUsersComponent
   ],
   imports:[
     BrowserModule,

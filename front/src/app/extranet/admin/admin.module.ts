@@ -15,10 +15,12 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditUserResolver } from './edit-user/edit-user.resolver';
 import { MatTabsModule } from '@angular/material/tabs';
+import { DndDirective } from './import-users/dnd.directive';
+
 
 
 @NgModule({
-  declarations: [GestionDesComptesComponent, EditUserComponent],
+  declarations: [GestionDesComptesComponent, EditUserComponent, DndDirective],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -32,7 +34,8 @@ import { MatTabsModule } from '@angular/material/tabs';
     FormsModule,
     ReactiveFormsModule,
     MatProgressSpinnerModule,
-    MatTabsModule
+    MatTabsModule,
+     FormsModule
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

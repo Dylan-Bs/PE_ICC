@@ -37,12 +37,10 @@ export class ApiService {
   }
 
   uploadCSVFile( file) {
-    let formData:FormData = new FormData();
-    formData.append('uploadFile', file, file.name);
-    let options = this.httpOptions;
-    options.headers=options.headers.set("Content-Type","multipart/form-data");
-    options.headers=options.headers.set("Accept","application/json");
-    return this.http.post(`${this.apiUrl}/import`, formData, options)
+    var options=this.httpOptions
+    options.headers=options.headers.set("Content-Type","text/csv");
+    return this.http.put(`${this.apiUrl}/import`, file, options)
+    
 }
 
   getUsers() {

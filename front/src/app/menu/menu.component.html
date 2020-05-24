@@ -9,6 +9,7 @@
                 Accueil
             </a>
             <a mat-button *ngIf="!this.isMobile && conne.role>1 && conne.connecte == true" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
+            <a mat-button *ngIf="!this.isMobile && conne.role>1 && conne.connecte == true" href routerLink='/extranet/admin/import'>Importer des utilisateurs</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='extranet/prof'>Lister les étudiants</a>
             <a mat-button *ngIf="!this.isMobile && conne.role==1 && conne.connecte == true" href routerLink='/extranet/prof/stats'>Afficher les statistiques</a>
             <div class="flex-spacer"></div>

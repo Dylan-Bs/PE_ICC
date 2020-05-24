@@ -10,6 +10,7 @@ export const paths = {
   etudiant: 'etudiant',
   prof: 'prof',
   //path in admin
+  import : 'import',
   details_ad: 'details/:id',
   //path in etudiant
   details_et: 'edit/:id',

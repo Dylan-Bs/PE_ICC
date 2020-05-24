@@ -24,6 +24,7 @@
     "angular-highcharts": "^9.0.11",
     "chart.js": "^2.9.3",
     "core-js": "^3.6.4",
+    "file-saver": "^2.0.2",
     "highcharts": "^8.1.0",
     "highcharts-angular": "^2.4.0",
     "ionicons": "^4.6.3",
