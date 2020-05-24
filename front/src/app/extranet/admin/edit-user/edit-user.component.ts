@@ -7,7 +7,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { ConnexionService } from 'src/app/services/connexion.service';
 import { ApiService } from 'src/app/services/api.service';
-import { Student, User } from 'src/app/interfaces/interface';
+import { Student, User, STATE } from 'src/app/interfaces/interface';
 
 export interface option {
   value: string;
@@ -123,7 +123,7 @@ export class EditUserComponent implements OnInit {
   openDialog(): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
-      data: {}
+      data: {state:STATE.confirm,text:"Les changements ont bien été sauvegardés."}
     });
 
     dialogRef.afterClosed().subscribe(result => {

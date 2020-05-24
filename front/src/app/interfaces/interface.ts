@@ -1,3 +1,14 @@
+export enum STATE {
+  confirm,
+  warning
+}
+
+export enum ANSWER {
+  ok,
+  yes,
+  no
+}
+
 export interface Authentification {
     token :string;
     expiry : string;

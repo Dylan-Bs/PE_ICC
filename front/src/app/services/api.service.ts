@@ -99,13 +99,8 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/students?promotion=${promo}`);
   }
 
-  anonymiser(userKey, value) {
-    value.id=userKey;
-    value.email = 'anonymous';
-    value.password = '';//un mot de passe vide, empeche les gens de valider un formulaire de connexion 
-    value.first_name = 'anonymous';
-    value.last_name = 'anonymous';
-    return this.http.post(`${this.apiUrl}/anonymize`,value);
+  anonymize() {
+    return this.http.post(`${this.apiUrl}/anonymize`,{},this.httpOptions);
   }
 
   //teacher
