@@ -1,38 +1,50 @@
 <section>
   <mat-card class="col col-md-4">
     <h3 *ngIf="!conne.connecte">Connexion</h3>
-  <form *ngIf="!conne.connecte" class="create-form" [formGroup]="connexionForm" novalidate
-    (ngSubmit)="onSubmit(connexionForm.value)">
+    <form *ngIf="!conne.connecte" class="create-form" [formGroup]="connexionForm" novalidate
+      (ngSubmit)="onSubmit(connexionForm.value)">
 
-    <div class="form-group">
-      <mat-form-field class="input-style">
-        <input matInput type="email" placeholder="Email" formControlName="email">
-      </mat-form-field>
-    </div>
+      <div class="form-group">
+        <mat-form-field class="input-style">
+          <input matInput type="email" placeholder="Email" formControlName="email">
+        </mat-form-field>
+      </div>
 
-    <div class="form-group">
-      <mat-form-field class="input-style">
-        <input matInput type="password" placeholder="Password" formControlName="password">
-      </mat-form-field>
-    </div>
+      <div class="form-group">
+        <mat-form-field class="input-style">
+          <input matInput type="password" placeholder="Password" formControlName="password">
+        </mat-form-field>
+      </div>
 
-    <div class="error" *ngIf="error">Identifiant et/ou mot de passe incorrect(s).</div>
+      <div class="error" *ngIf="error">{{errormsg}}</div>
 
-    <button mat-raised-button class="submit-button" color="primary" type="submit"
-      [disabled]="!connexionForm.valid" *ngIf="!loading">Connexion</button>
-      <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner></div>
+      <button mat-raised-button class="submit-button" color="primary" type="submit" [disabled]="!connexionForm.valid"
+        *ngIf="!loading">Connexion</button>
+      <div>
+        <mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner>
+      </div>
       <br>
-      
-      
 
-  </form>
-  
-  <div *ngIf="conne.connecte">
-    <h3>Bonjour {{surname | titlecase }} {{name | uppercase }}</h3>
-      <p>vous êtes bien connecté avec le role: {{role}}
-      <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
-    </p>
-  </div>
-</mat-card>
+
+
+    </form>
+
+    <div *ngIf="conne.connecte">
+      <mat-card-title>Bonjour {{first_name | titlecase }} {{last_name | uppercase }}</mat-card-title>
+      <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
+        <span *ngIf="conne.role == 1"> de l'option {{conne.userOption | uppercase }}</span>.
+      </mat-card-content>
+      <div *ngIf="conne.role == 0">
+        <mat-card-content>Email : {{item.email}}</mat-card-content>
+        <mat-card-content>Promotion : {{item.promotion}}</mat-card-content>
+        <mat-card-content>Option en ING3 : {{item.option}}</mat-card-content>
+        <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
+        <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
+        <mat-card-content>Salaire : {{item.wage}}</mat-card-content>
+        <button mat-raised-button class="return-button" color="accent" type="button"
+      routerLink="/extranet/etudiant/edit/{{conne.route()}}"><i class="material-icons">edit</i>Editer mon profil</button>
+      </div>
+    </div>
+  </mat-card>
 
 </section>

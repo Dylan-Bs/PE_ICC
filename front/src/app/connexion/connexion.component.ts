@@ -4,7 +4,7 @@ import { Authentification } from '../interfaces/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
-
+import { Student } from 'src/app/interfaces/interface';
 
 
 @Component({
@@ -17,21 +17,38 @@ export class ConnexionComponent implements OnInit {
 
   connexionForm: FormGroup;
   //user: User;
-  name: string;
-  surname: string;
+  last_name: string;
+  first_name: string;
+  item: any;
+
   role: string;
 
-  error:boolean=false
-  errormsg:string
+  error: boolean = false
+  errormsg: string
 
-  loading:boolean=false
+  loading: boolean = false
 
   constructor(
     private fb: FormBuilder,
     public dialog: MatDialog,
-    public api:ApiService,
+    public api: ApiService,
     public conne: ConnexionService
   ) { }
+
+  options_bddtoview: object = {
+    'icc': 'Ingénierie Cloud Computing',
+    'iapau': 'Intelligence Artificielle Pau',
+    'imsi': 'Ingénierie Mathématique et Simulation Numérique',
+    'inem': 'Informatique Embarquée',
+    'iacergy': 'Intelligence Artificielle Cergy',
+    'vc': 'Visual Computing',
+    'fintech': 'Finance et Technologie',
+    'erp': 'Intégration ERP',
+    'ingfin': 'Ingénierie Financière',
+    'ds': 'Data Science',
+    'bi': 'Business Intelligence & Analytics',
+    'secu': 'Cybersécurité',
+  }
 
   ngOnInit() {
     this.createForm();
@@ -55,55 +72,83 @@ export class ConnexionComponent implements OnInit {
   }
 
   onSubmit(value) {
-    this.loading=true
-    this.error=false
+    this.loading = true
+    this.error = false
 
-      
+
     this.api.connect(value).subscribe(
       result => {
-        this.loading=false
+        this.loading = false
 
 
-        var res:Authentification=result as Authentification
-        
-        console.log(res)
+        var res: Authentification = result as Authentification
+
 
         this.conne.connection(res);
 
+
         this.getUserInfo();
 
-        
-        
+
       },
       err => {
-        this.loading=false
-        this.error=true
-        if (err.status==502 || err.status== 500){
-          this.errormsg="Connexion impossible avec le serveur."
-        }else if (err.status==400){
-          this.errormsg="Identifiant et/ou mot de passse incorrect(s)."
+        this.loading = false
+        this.error = true
+        if (err.status == 502 || err.status == 500) {
+          this.errormsg = "Connexion impossible avec le serveur."
+        } else if (err.status == 400) {
+          this.errormsg = "Identifiant et/ou mot de passse incorrect(s)."
 
         }
       }
     )
-    
+
   }
 
   getUserInfo() {
-    //ajout des infos utilisateurs dans des variables
-    //this.user = this.conne.user;
-    this.name = this.conne.user["first_name"]
-    this.surname = this.conne.user["last_name"]
-    if (this.conne.role==0) {
-        this.role = "Ancien étudiant"
-    }else if (this.conne.role==1){
+    this.last_name = this.conne.user["last_name"]
+    this.first_name = this.conne.user["first_name"]
+    if (this.conne.role == 0) {
+
+      this.api.getEtudiant().subscribe(
+        result => {
+
+          var res = result as Student
+
+          this.item = res;
+          if (this.item.email == "") {
+            this.item.email = "Non renseigné"
+          }
+          if (this.item.promotion == "") {
+            this.item.promotion = "Non renseigné"
+          }
+          if (this.item.option == "") {
+            this.item.option = "Non renseigné"
+          }
+          if (this.item.company == "") {
+            this.item.company = "Non renseigné"
+          }
+          if (this.item.working_city == "") {
+            this.item.working_city = "Non renseigné"
+          }
+          if (isNaN(this.item.wage)) {
+            this.item.wage = "Non renseigné"
+          }
+          this.item.option = this.options_bddtoview[this.item.option];
+        },
+        err => {
+          alert("Erreur lors du chargement des données du profil");
+        }
+      )
+      this.role = "Ancien étudiant"
+    } else if (this.conne.role == 1) {
       this.role = "Professseur"
     }
-        
-    
-  else if (this.conne.role==2){
-    this.role = "Administrateur"
-  }
-        
+
+
+    else if (this.conne.role == 2) {
+      this.role = "Administrateur"
+    }
+
   }
 }

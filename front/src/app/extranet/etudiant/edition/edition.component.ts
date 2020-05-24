@@ -124,7 +124,7 @@ export class EditionComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['extranet/etudiant/edit/:id']);
+      this.router.navigate(['/connexion']);
     });
   }
 
