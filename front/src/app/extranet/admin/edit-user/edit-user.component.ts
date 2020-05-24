@@ -120,10 +120,10 @@ export class EditUserComponent implements OnInit {
     
   }
 
-  openDialog(): void {
+  openDialog(data={state:STATE.confirm,text:"Les changements ont bien été sauvegardés."}): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
-      data: {state:STATE.confirm,text:"Les changements ont bien été sauvegardés."}
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -135,6 +135,7 @@ export class EditUserComponent implements OnInit {
     this.api.deleteUser({"id":this.item.id})
     .subscribe(
       result => {
+        this.openDialog({state:STATE.confirm,text:"Le compte a bien été supprimé."})
         this.router.navigate(['extranet/admin']);
       },
       err => {
