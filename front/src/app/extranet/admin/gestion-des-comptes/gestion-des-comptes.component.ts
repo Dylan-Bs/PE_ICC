@@ -73,12 +73,14 @@ export class GestionDesComptesComponent implements OnInit {
   searchByName(){
     let value = this.searchValue.toLowerCase();
     this.items_name_filtered = this.items.filter(item=> (item.first_name+item.last_name).toLowerCase().includes(value))
+    this.set_items_filtered()
     
   }
 
   rangeChange(event){
     let value=event.value
     this.items_promo_filtered = this.items.filter(item=> item.promotion>=value || item.role==1)
+    this.set_items_filtered()
   }
 
   set_items_filtered(){
