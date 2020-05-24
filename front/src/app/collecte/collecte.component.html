@@ -129,14 +129,15 @@
                 J'autorise la collecte et mise à jour numérique des informations de ce formulaire
               </mat-checkbox>
             </div>
-            <div class="myButtonDiv">
+            <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner></div>
+            <div class="myButtonDiv" *ngIf="!loading">
               <button   mat-button matStepperPrevious>Précédent</button>
               <span class="spacer"></span>
               <button *ngIf="!loading" mat-raised-button class="submit-button myButton3" color="primary" type="button" (click)="onSubmit()"
             [disabled]="!validationForm.valid">Inscription</button>
               <span class="spacer"></span>
               <button  mat-button (click)="stepper.reset()">Réinitialisation</button>
-              <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
+              
             </div>
             <div class="valid" *ngIf="conne.form_send">Vos données ont été transmises, merci pour votre coopération</div>
           </form>

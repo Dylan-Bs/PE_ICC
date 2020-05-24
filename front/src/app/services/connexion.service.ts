@@ -3,11 +3,19 @@ import { Router } from '@angular/router';
 import { ApiService } from './api.service';
 import { Authentification, Student } from '../interfaces/interface';
 import { HighchartsService } from './highcharts.service';
+import { interval } from 'rxjs';
+import { map } from 'rxjs/internal/operators';
+
+
 
 @Injectable({
   providedIn: 'root'
 })
 export class ConnexionService {
+
+
+  timeLeft: number = 60;
+  interval;
 
   connecte:boolean;
   form_send:boolean;
@@ -28,6 +36,8 @@ export class ConnexionService {
     this.userOption=''; //pour le dev, bug avec les profs
    }
 
+   
+
    connection(res:Authentification){
     this.user = res;
     this.connecte = true;
@@ -38,7 +48,25 @@ export class ConnexionService {
     if (this.role==1){
       this.hc.maj_students()
     }
+    console.log(res)
+    //this.startTimer()
    }
+   
+   startTimer(value:number=60) {
+    this.timeLeft=value
+    this.interval = setInterval(() => {
+      if(this.timeLeft > 0) {
+        this.timeLeft--;
+      } else {
+        this.timeLeft = value;
+        this.deconnecte()
+      }
+    },1000)
+  }
+
+  pauseTimer() {
+    clearInterval(this.interval);
+  }
 
    route(){
      return "mon-profil";
@@ -47,6 +75,7 @@ export class ConnexionService {
    deconnecte(){
      this.connecte=false;
      this.savedinfo=undefined;
+     this.pauseTimer()
      this.router.navigateByUrl("/")
 
    }

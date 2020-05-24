@@ -6,7 +6,7 @@ import { ConnexionService } from '../../../services/connexion.service';
 import { Router } from '@angular/router';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { ApiService } from 'src/app/services/api.service';
-import { Student } from 'src/app/interfaces/interface';
+import { Student, STATE, ANSWER } from 'src/app/interfaces/interface';
 
 
 export interface option {
@@ -114,19 +114,33 @@ export class EditionComponent implements OnInit {
         this.openDialog()
       },
       err=>{
-        alert("Error");
+        alert("Erreur lors de l'update");
       }
     )
   }
 
-  openDialog(): void {
+  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."}): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
-      data: {}
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['/connexion']);
+      if (result==ANSWER.yes){
+        this.api.anonymize()
+        .subscribe(
+          result => {
+            this.openDialog({state:STATE.confirm,text:"Votre compte a bien été anonymiser."})
+            //this.conne.deconnecte()
+          },
+          err=>{
+            alert("Erreur lors de l'anonymisation");
+          }
+        )
+      }else if (result==ANSWER.ok){
+        this.router.navigate(['/connexion']);
+      }
+      
     });
   }
 
@@ -134,16 +148,8 @@ export class EditionComponent implements OnInit {
 
   }
 
-  anonymisation(value){
-    /*this.firebaseService.anonymiser(this.item.id, value)
-    .then(
-      res => {
-        this.router.navigate(['/']);
-        this.conne.connecte=false;
-      },
-      err => {
-        console.log(err);
-      }
-    )*/
+  anonymisation(){
+    this.openDialog({state:STATE.warning,text:"Etes vous sur de vouloir anonymiser votre compte? Vos nom et prénom seront supprimés et dissocié de vos données."})
+    
   }
 }

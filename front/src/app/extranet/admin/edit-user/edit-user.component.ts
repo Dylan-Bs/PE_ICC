@@ -7,7 +7,7 @@ import {MatDialogRef, MAT_DIALOG_DATA} from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { ConnexionService } from 'src/app/services/connexion.service';
 import { ApiService } from 'src/app/services/api.service';
-import { Student, User } from 'src/app/interfaces/interface';
+import { Student, User, STATE, ANSWER } from 'src/app/interfaces/interface';
 
 export interface option {
   value: string;
@@ -120,27 +120,33 @@ export class EditUserComponent implements OnInit {
     
   }
 
-  openDialog(): void {
+  openDialog(data={state:STATE.confirm,text:"Les changements ont bien été sauvegardés."}): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
-      data: {}
+      data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.router.navigate(['extranet/admin']);
+      if (result==ANSWER.yes){
+        this.api.deleteUser({"id":this.item.id})
+        .subscribe(
+          result => {
+            this.openDialog({state:STATE.confirm,text:"Le compte a bien été supprimé."})
+            this.router.navigate(['extranet/admin']);
+          },
+          err => {
+            console.log(err);
+          }
+        )
+      }else if (result==ANSWER.ok){
+        this.router.navigate(['extranet/admin']);
+      }
+      
     });
   }
 
   delete(){
-    this.api.deleteUser({"id":this.item.id})
-    .subscribe(
-      result => {
-        this.router.navigate(['extranet/admin']);
-      },
-      err => {
-        console.log(err);
-      }
-    )
+    this.openDialog({state:STATE.warning,text:"Etes vous sur de supprimer ce compte et ainsi perdre toutes ses données."})
   }
 
   cancel(){
