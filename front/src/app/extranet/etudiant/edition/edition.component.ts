@@ -106,9 +106,11 @@ export class EditionComponent implements OnInit {
   }
 
   onSubmit(value){
+    
     this.api.updateEtudiant(value)
     .subscribe(
       result => {
+        this.conne.savedinfo=value
         this.openDialog()
       },
       err=>{

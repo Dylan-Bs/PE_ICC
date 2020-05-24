@@ -30,14 +30,15 @@
     </form>
 
     <div *ngIf="conne.connecte">
-      <mat-card-title>Bonjour {{first_name | titlecase }} {{last_name | uppercase }}</mat-card-title>
+      <mat-card-title>Bonjour {{item.first_name | titlecase }} {{item.last_name | uppercase }}</mat-card-title>
       <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
         <span *ngIf="conne.role == 1"> de l'option {{conne.userOption }}</span>.
       </mat-card-content>
-      <div *ngIf="conne.role == 0">
+      <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
+      <div *ngIf="conne.role == 0 && !loading">
         <mat-card-content>Email : {{item.email}}</mat-card-content>
         <mat-card-content>Promotion : {{item.promotion}}</mat-card-content>
-        <mat-card-content>Option en ING3 : {{item.option}}</mat-card-content>
+        <mat-card-content>Option en ING3 : {{this.options_bddtoview[this.item.option]}}</mat-card-content>
         <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
         <mat-card-content>Salaire : {{item.wage}}</mat-card-content>

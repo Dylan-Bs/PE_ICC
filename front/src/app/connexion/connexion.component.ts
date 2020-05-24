@@ -17,9 +17,7 @@ export class ConnexionComponent implements OnInit {
 
   connexionForm: FormGroup;
   //user: User;
-  last_name: string;
-  first_name: string;
-  item: any;
+  item: any={"email":"","first_name":"","last_name":"","company":"","wage":"","option":"","promotion":0,"working_city":""};
 
   role: string;
 
@@ -106,40 +104,50 @@ export class ConnexionComponent implements OnInit {
   }
 
   getUserInfo() {
-    this.last_name = this.conne.user["last_name"]
-    this.first_name = this.conne.user["first_name"]
+    this.item.last_name = this.conne.user["last_name"]
+    this.item.first_name = this.conne.user["first_name"]
+    
     if (this.conne.role == 0) {
-
-      this.api.getEtudiant().subscribe(
-        result => {
-
-          var res = result as Student
-
-          this.item = res;
-          if (this.item.email == "") {
-            this.item.email = "Non renseigné"
+      this.loading = true
+      console.log(this.conne.savedinfo)
+      if (this.conne.savedinfo===undefined){
+        console.log(this.conne.savedinfo)
+        this.api.getEtudiant().subscribe(
+          result => {
+            this.loading = false
+            var res = result as Student
+  
+            this.item = res;
+            console.log(this.item)
+            if (this.item.email == "") {
+              this.item.email = "Non renseigné"
+            }
+            if (this.item.promotion == "") {
+              this.item.promotion = "Non renseigné"
+            }
+            if (this.item.option == "") {
+              this.item.option = "Non renseigné"
+            }
+            if (this.item.company == "") {
+              this.item.company = "Non renseigné"
+            }
+            if (this.item.working_city == "") {
+              this.item.working_city = "Non renseigné"
+            }
+            if (isNaN(this.item.wage)) {
+              this.item.wage = "Non renseigné"
+            }
+            this.conne.savedinfo=this.item
+          },
+          err => {
+            alert("Erreur lors du chargement des données du profil");
           }
-          if (this.item.promotion == "") {
-            this.item.promotion = "Non renseigné"
-          }
-          if (this.item.option == "") {
-            this.item.option = "Non renseigné"
-          }
-          if (this.item.company == "") {
-            this.item.company = "Non renseigné"
-          }
-          if (this.item.working_city == "") {
-            this.item.working_city = "Non renseigné"
-          }
-          if (isNaN(this.item.wage)) {
-            this.item.wage = "Non renseigné"
-          }
-          this.item.option = this.options_bddtoview[this.item.option];
-        },
-        err => {
-          alert("Erreur lors du chargement des données du profil");
-        }
-      )
+        )
+      }else{
+        this.loading = false
+        this.item=this.conne.savedinfo
+      }
+      
       this.role = "Ancien étudiant"
     } else if (this.conne.role == 1) {
       this.role = "Professseur"
