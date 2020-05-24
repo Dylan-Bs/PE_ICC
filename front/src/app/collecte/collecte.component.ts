@@ -3,6 +3,10 @@ import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
+import { STATE, ANSWER } from '../interfaces/interface';
+import { ConfirmationDialogComponent } from '../confirmation-dialog/confirmation-dialog.component';
+import { MatDialog } from '@angular/material/dialog';
+import { Router } from '@angular/router';
 
 export interface option {
   value: string;
@@ -89,11 +93,14 @@ export class CollecteComponent implements OnInit {
       { type: 'promo', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
     ]
   };
+  
 
   constructor(
     private fb: FormBuilder,
     public conne: ConnexionService,
-    public api:ApiService
+    public api:ApiService,
+    public dialog: MatDialog,
+    private router: Router
   ) { }
 
   ngOnInit() {
@@ -151,13 +158,27 @@ export class CollecteComponent implements OnInit {
         this.loading=false;
         this.resetFields();
         this.conne.form_send = true;
-        console.log("formulaire envoyé avec succès");
+        this.openDialog()
       },
       err=>{
         alert("Error")
       }
     )
 
+  }
+
+  openDialog(data={state:STATE.confirm,text:"Vos données ont été transmises, merci pour votre coopération"}): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result==ANSWER.ok){
+        this.router.navigate(['/connexion']);
+      }
+      
+    });
   }
 
   checkPromo(control: FormControl) {
