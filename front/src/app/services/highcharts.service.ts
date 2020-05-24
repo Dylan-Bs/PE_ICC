@@ -34,12 +34,18 @@ export class HighchartsService {
       this.data=result as Array<any>
       this.update_graph_data(this.data)
     })
-    
    }
 
    
 
    update_graph_data(data:Array<any>){
+    this.etu_promo=[]
+
+    this.etu_options=[]
+  
+    this.etu_wage=[]
+  
+    this.etu_company=[]
     for (let k=0;k<data.length;k++){
       
       let id_promo=-1
@@ -117,7 +123,7 @@ export class HighchartsService {
         if (id_promo2==-1){
           this.etu_promo[id_promo]["data"].push({"x":parseInt(data[k].promotion),"y":1})
         }else{
-          this.etu_promo[id_promo]["data"][id_promo2].y+1
+          this.etu_promo[id_promo]["data"][id_promo2].y+=1
         }
       }
     }
@@ -147,6 +153,6 @@ export class HighchartsService {
         acc+=this.etu_wage[i].y
      }
 
-     return acc/this.etu_wage.length
+     return (acc/this.etu_wage.length).toFixed(2)
    }
 }

@@ -25,21 +25,31 @@ export class StatsComponent implements OnInit {
   constructor(
     public api: ApiService,public hc:HighchartsService
   ) {
-
     
    }
 
   ngOnInit() {
-    
+    this.updateFlag=false
+    this.api.getEtudiants()
+    .subscribe(result => {
+      var res=result as Array<any>
+      if (res!=this.hc.data){
+        this.hc.data=res
+        this.hc.update_graph_data(this.hc.data)
+        this.updateFlag=true
+      }
+      
+    })
   }
 
   ngAfterViewInit() {
+    
 
   }
 
   Highcharts: typeof Highcharts = Highcharts;
   chartConstructor = 'chart'; // optional string, defaults to 'chart'
-
+  chart
   option_option :Highcharts.Options = {
     chart: {
         backgroundColor: '#00000000',
@@ -303,12 +313,13 @@ export class StatsComponent implements OnInit {
         
       }
 
-      console.log(this.hc.etu_company)
   }
   
 
-  chartCallback = function (chart) {  } // optional function, defaults to null
+  chartCallback = function (chart) {
+      console.log(chart)
+    } // optional function, defaults to null
   updateFlag = false; // optional boolean
-  oneToOneFlag = false; // optional boolean, defaults to false
+  oneToOneFlag = true; // optional boolean, defaults to false
 
 }
