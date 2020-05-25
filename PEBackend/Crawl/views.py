@@ -42,7 +42,7 @@ class Crawl(APIView):
                     if res['company'] != None:
                         student.company = res['company']
                     if res['work_place'] != None:
-                        student.working_place = res['work_place']
+                        student.working_city = res['work_place']
                     student.save()
 
             resp = JsonResponse({'message': "Student updated"}, status = "200")
