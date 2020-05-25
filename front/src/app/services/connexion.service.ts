@@ -43,6 +43,7 @@ export class ConnexionService {
     this.role =res.role;
     this.token= res.token;
     this.email=res.email;
+    this.userOption=res.option
     this.api.httpOptions.headers=this.api.httpOptions.headers.set("Authorization",this.token);
    }
    

@@ -21,6 +21,7 @@ export interface Authentification {
     last_name: string;
     email : string;
     role: number;
+    option:string;
   }
 
 export interface Student{

@@ -101,8 +101,8 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
   }
 
-  getEtudiants() {
-    return this.http.get(`${this.apiUrl}/students`,this.httpOptions);
+  getEtudiants(filter:string="") {
+    return this.http.get(`${this.apiUrl}/students`+filter,this.httpOptions);
   }
 
   getEtudByOption(optioning3) {

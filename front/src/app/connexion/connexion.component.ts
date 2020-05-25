@@ -151,7 +151,6 @@ export class ConnexionComponent implements OnInit {
       this.role = "Diplômé"
     } else if (this.conne.role == 1) {
       this.role = "Professseur"
-      this.conne.userOption = this.options_bddtoview[this.conne.user["option"]]
     }
 
 

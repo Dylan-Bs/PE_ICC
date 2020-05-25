@@ -28,13 +28,13 @@ export class HighchartsService {
 
    }
 
-   maj_students(){
+   /*maj_students(){
     this.api.getEtudiants()
     .subscribe(result => {
       this.data=result as Array<any>
       this.update_graph_data(this.data)
     })
-   }
+   }*/
 
    
 

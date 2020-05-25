@@ -36,7 +36,7 @@ export class ListeEtudComponent implements OnInit {
 
   getData(){
     this.loading=true
-    this.api.getEtudiants()
+    this.api.getEtudiants("?option="+this.conne.userOption)
     .subscribe(result => {
       console.log(result)
       this.loading=false
