@@ -26,3 +26,19 @@
     }
   }
 }
+
+
+.flex{
+  display: flex;
+  justify-content: space-around;
+  flex-wrap: wrap;
+}
+
+.flexnowrap{
+  display: flex;
+  justify-content: space-around;
+}
+
+.bold{
+  font-weight: bold;
+}

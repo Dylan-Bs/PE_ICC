@@ -15,6 +15,7 @@ export class AuthGuard implements CanActivate, CanLoad {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {
+      this.conne.check_expiry()
       if (!this.conne.connecte) {
         // Si pas d'utilisateur connecté : redirection vers la page de connexion
         console.log('Vous n\'êtes pas connectés');

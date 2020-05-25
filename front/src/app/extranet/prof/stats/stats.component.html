@@ -8,6 +8,8 @@
         [callbackFunction]="chartCallback"
       
         [(update)]="updateFlag"
+
+        [oneToOne]="oneToOneFlag"
       
         class="chart"
       ></highcharts-chart>
@@ -21,7 +23,7 @@
         [callbackFunction]="chartCallback"
       
         [(update)]="updateFlag"
-      
+        [oneToOne]="oneToOneFlag"
         class="chart"
       ></highcharts-chart>
     </mat-tab>
@@ -34,7 +36,7 @@
         [callbackFunction]="chartCallback"
       
         [(update)]="updateFlag"
-      
+        [oneToOne]="oneToOneFlag"
         class="chart"
       ></highcharts-chart>
 
@@ -46,7 +48,7 @@
         <mat-card-content>Option en ING3 : {{item.option}}</mat-card-content>
         <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
-        <mat-card-content>Salaire : {{item.wage}}</mat-card-content>
+        <mat-card-content>Salaire : {{item.wage | currency : "EUR"}}</mat-card-content>
       </mat-card>
     </mat-tab>
     <mat-tab label="Entreprises">
@@ -58,7 +60,7 @@
       [callbackFunction]="chartCallback"
     
       [(update)]="updateFlag"
-    
+      [oneToOne]="oneToOneFlag"
       class="chart"
     ></highcharts-chart>
       </mat-tab>

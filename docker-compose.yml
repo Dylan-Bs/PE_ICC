@@ -3,7 +3,7 @@ version: '3'
 services:
     mongodb:
         restart: always
-        image: mongo:latest        
+        image: mongo:4.2.6        
         container_name: mongo
         command: mongod --auth
         environment:
@@ -12,7 +12,7 @@ services:
             MONGO_INITDB_DATABASE: pe_database
         hostname: mongodb-server
         volumes:
-            - ./init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - ./back/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
             - data-volume:/data/db
         ports:
             - "27017:27017"
@@ -25,7 +25,7 @@ services:
             python manage.py makemigrations &&
             python manage.py migrate"
         volumes:
-            - .:/web-django
+            - ./back/:/web-django
         depends_on:
             - mongodb
         networks:
@@ -37,7 +37,7 @@ services:
             python manage.py runscript create-SuperUser &&
             python manage.py runscript populate-Database"
         volumes:
-            - .:/web-django
+            - ./back/:/web-django
         depends_on:
             - mongodb
             - migration
