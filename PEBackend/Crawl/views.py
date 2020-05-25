@@ -33,10 +33,15 @@ class Crawl(APIView):
                 student = Student.objects.get(id=studentId)
 
                 url = student.linkedin_url
+                if url == None:
+                    url = self.crawler.find_user_url(f'{student.first_name} {student.last_name}')
+
                 res = self.crawler.crawl_page(url)
 
-                student.company = res['company']
-                student.working_place = res['working_place']
+                if res['company'] != None:
+                    student.company = res['company']
+                if res['working_place'] != None:
+                    student.working_place = res['working_place']
                 student.save()
 
             resp = JsonResponse({'message': "Student updated"}, status = "200")
