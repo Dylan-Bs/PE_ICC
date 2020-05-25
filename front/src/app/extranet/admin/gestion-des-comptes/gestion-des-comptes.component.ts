@@ -6,6 +6,7 @@ import { ConnexionService } from 'src/app/services/connexion.service';
 import { CreateTeacherComponent } from '../create-teacher/create-teacher.component';
 import { MatDialog } from '@angular/material/dialog';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
+import { ImportUsersComponent } from '../import-users/import-users.component';
 
 @Component({
   selector: 'app-gestion-des-comptes',
@@ -126,6 +127,17 @@ export class GestionDesComptesComponent implements OnInit {
     });
   }
 
+  open_import(){
+    const dialogRef = this.dialog.open(ImportUsersComponent, {
+      width: '600px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+
+  }
 
   openDialogTeacher(): void {
     const dialogRef = this.dialog.open(CreateTeacherComponent, {

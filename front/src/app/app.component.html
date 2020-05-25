@@ -18,9 +18,6 @@
           <mat-toolbar-row *ngIf="conne.role>1 && conne.connecte == true">
             <a mat-button class="fill-width" href routerLink='/extranet/admin'>Lister les utilisateurs</a>
           </mat-toolbar-row>
-          <mat-toolbar-row *ngIf="conne.role>1 && conne.connecte == true">
-            <a mat-button class="fill-width" href routerLink='/extranet/admin/import'>Importer des utilisateurs</a>
-          </mat-toolbar-row>
           <mat-toolbar-row *ngIf="conne.role==1 && conne.connecte == true">
             <a mat-button class="fill-width" href routerLink='extranet/prof'>Lister les diplômés</a>
           </mat-toolbar-row>

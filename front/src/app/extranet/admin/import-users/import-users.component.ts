@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Inject } from '@angular/core';
 import { ApiService } from 'src/app/services/api.service';
 import { STATE } from 'src/app/interfaces/interface';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
-import { MatDialog } from '@angular/material/dialog';
+import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { saveAs } from 'file-saver';
 
 @Component({
@@ -14,7 +14,8 @@ export class ImportUsersComponent {
 
   files: any[] = [];
 
-  constructor(public dialog: MatDialog,public api:ApiService){
+  constructor(public dialog: MatDialog,public api:ApiService,public dialogRef: MatDialogRef<ImportUsersComponent>,
+    @Inject(MAT_DIALOG_DATA) public data: any){
 
   }
 

@@ -10,8 +10,7 @@ import { ImportUsersComponent } from './import-users/import-users.component';
 
 const adminRoutes: Routes = [
   { path: paths.empty, canActivate: [AuthGuard, AdminGuard], component: GestionDesComptesComponent },
-  { path: paths.details_ad, canActivate: [AuthGuard, AdminGuard], component: EditUserComponent, resolve: { data: EditUserResolver } },
-  { path: paths.import, canActivate: [AuthGuard, AdminGuard], component: ImportUsersComponent }
+  { path: paths.details_ad, canActivate: [AuthGuard, AdminGuard], component: EditUserComponent, resolve: { data: EditUserResolver } }
 ];
 
 @NgModule({
