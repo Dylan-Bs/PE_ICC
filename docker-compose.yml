@@ -61,6 +61,16 @@ services:
             - backend
             - frontend
 
+    spotlight:
+        image: dbpedia/spotlight-french
+        ports:
+            - "2225:80"
+        command: "spotlight.sh"
+        environment:
+            JAVA_OPTS: -Xmx8g
+        networks:
+            - backend
+
     front:
         restart: always
         depends_on: 

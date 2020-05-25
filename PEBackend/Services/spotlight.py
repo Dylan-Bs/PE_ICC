@@ -3,7 +3,7 @@ from functools import partial
 
 from typing import Union
 
-URL = 'http://localhost:2225/rest'
+URL = 'http://spotlight:80/rest'
 
 def annotate(text: Union[str, list], types: list = None, confidence=0.5, support=0):
     if type(text) in (list, tuple):
@@ -29,7 +29,8 @@ def annotate(text: Union[str, list], types: list = None, confidence=0.5, support
         'policy': 'whitelist'
     }
 
-    resp = get(f'{URL}/annotate', params)
+    resp = get(f'{URL}/annotate', params,
+                headers={'Accept': 'application/json'})
 
     if resp.status_code == 200:
         json = resp.json()
