@@ -118,6 +118,7 @@ export class GestionDesComptesComponent implements OnInit {
 
 
   openDialog(data={state:STATE.confirm,text:"Le compte professeur a bien été créé"}): void {
+    this.getData()
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
       data: data
@@ -135,7 +136,7 @@ export class GestionDesComptesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
+      this.getData()
     });
 
   }

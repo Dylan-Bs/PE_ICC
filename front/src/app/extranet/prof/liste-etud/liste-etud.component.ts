@@ -13,7 +13,9 @@ import { ApiService } from 'src/app/services/api.service';
 export class ListeEtudComponent implements OnInit {
 
   max:number=(new Date()).getFullYear();
-  promoValue: number = 0;
+  min:number=1970;
+  promo_min_value: number = 1970;
+  promo_max_value: number = this.max;
   searchValue: string = "";
   items: Array<Student>;
   items_name_filtered: Array<Student>;
@@ -61,9 +63,8 @@ export class ListeEtudComponent implements OnInit {
     this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
-  rangeChange(event){
-    let value=event.value
-    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value)
+  promofilter_change(event){
+    this.items_promo_filtered = this.items.filter(item=> (item.promotion>=this.promo_min_value && item.promotion<=this.promo_max_value))
     this.items_filtered = this.combineLists(this.items_name_filtered,this.items_promo_filtered)
   }
 
