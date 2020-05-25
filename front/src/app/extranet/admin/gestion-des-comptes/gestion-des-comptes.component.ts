@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, Params } from '@angular/router';
 import { ApiService } from 'src/app/services/api.service';
-import { User } from 'src/app/interfaces/interface';
+import { User, STATE, ANSWER } from 'src/app/interfaces/interface';
 import { ConnexionService } from 'src/app/services/connexion.service';
+import { CreateTeacherComponent } from '../create-teacher/create-teacher.component';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 @Component({
   selector: 'app-gestion-des-comptes',
@@ -41,6 +44,7 @@ export class GestionDesComptesComponent implements OnInit {
   constructor(
     public api : ApiService,
     private router: Router,
+    public dialog: MatDialog,
     public conne:ConnexionService
   ) { }
 
@@ -104,6 +108,37 @@ export class GestionDesComptesComponent implements OnInit {
 
   tabchange($event){
 
+  }
+
+  create_teacher(){
+    this.openDialogTeacher()
+  }
+
+
+  openDialog(data={state:STATE.confirm,text:"Le compte professeur a bien été créé"}): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: '300px',
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+    });
+  }
+
+
+  openDialogTeacher(): void {
+    const dialogRef = this.dialog.open(CreateTeacherComponent, {
+      width: '600px',
+      data: {}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result){
+        this.openDialog()
+      }
+      
+    });
   }
 
 }

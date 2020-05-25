@@ -16,11 +16,14 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { EditUserResolver } from './edit-user/edit-user.resolver';
 import { MatTabsModule } from '@angular/material/tabs';
 import { DndDirective } from './import-users/dnd.directive';
+import {  MatDialogModule } from '@angular/material/dialog';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
 
 
 
 @NgModule({
-  declarations: [GestionDesComptesComponent, EditUserComponent, DndDirective],
+  declarations: [GestionDesComptesComponent, EditUserComponent, DndDirective, CreateTeacherComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,
@@ -35,7 +38,9 @@ import { DndDirective } from './import-users/dnd.directive';
     ReactiveFormsModule,
     MatProgressSpinnerModule,
     MatTabsModule,
-     FormsModule
+     FormsModule,
+     MatDialogModule,
+     MatFormFieldModule,
   ],
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA

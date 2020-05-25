@@ -118,6 +118,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
   }
 
+  createTeacher(value){
+    return this.http.put(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
   clean(obj) {
     for (var propName in obj) { 
       if (obj[propName] === null || obj[propName] === undefined) {
