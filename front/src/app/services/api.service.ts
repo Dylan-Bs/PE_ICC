@@ -42,10 +42,21 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}/user`,this.httpOptions);
   }
 
-  uploadCSVFile( file) {
+  uploadCSVFile( file,token) {
+    /*
     var options=this.httpOptions
-    options.headers=options.headers.set("Content-Type","text/csv");
-    return this.http.put(`${this.apiUrl}/import`, file, options)
+    //options.headers=options.headers.set("Content-Type","text/csv");
+    return this.http.put(`${this.apiUrl}/import`, file, options)*/
+
+    let formData:FormData = new FormData();
+    formData.append('uploadFile', file, file.name);
+    let headers = new HttpHeaders();
+    /** In Angular 5, including the header Content-Type can invalidate your request */
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', token);
+    let options = { headers: headers,withCredentials: true };
+    return this.http.put(`${this.apiUrl}/import`, formData, options)
     
 }
 
