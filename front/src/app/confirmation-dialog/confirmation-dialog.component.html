@@ -6,10 +6,13 @@
   <h1 mat-dialog-title class="orange" *ngIf="data.state==StateEnum.warning">
     <mat-icon>error</mat-icon> Attention
   </h1>
+  <h1 mat-dialog-title class="red" *ngIf="data.state==StateEnum.error">
+    <mat-icon>remove_circle</mat-icon> Erreur
+  </h1>
   <div mat-dialog-content>
     <p>{{data.text}}</p>
   </div>
-  <div mat-dialog-actions *ngIf="data.state==StateEnum.confirm">
+  <div mat-dialog-actions *ngIf="data.state==StateEnum.confirm || data.state==StateEnum.error">
     <button mat-button [mat-dialog-close]="AnswerEnum.ok" cdkFocusInitial>Ok</button>
   </div>
 

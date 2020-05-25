@@ -1,6 +1,7 @@
 export enum STATE {
   confirm,
-  warning
+  warning,
+  error
 }
 
 export enum ANSWER {
