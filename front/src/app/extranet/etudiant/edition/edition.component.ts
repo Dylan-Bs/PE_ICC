@@ -130,7 +130,7 @@ export class EditionComponent implements OnInit {
         this.api.anonymize()
         .subscribe(
           result => {
-            this.openDialog({state:STATE.confirm,text:"Votre compte a bien été anonymiser."})
+            this.openDialog({state:STATE.confirm,text:"Votre compte a bien été anonymisé."})
             //this.conne.deconnecte()
           },
           err=>{
@@ -149,7 +149,7 @@ export class EditionComponent implements OnInit {
   }
 
   anonymisation(){
-    this.openDialog({state:STATE.warning,text:"Etes vous sur de vouloir anonymiser votre compte? Vos nom et prénom seront supprimés et dissocié de vos données."})
+    this.openDialog({state:STATE.warning,text:"Êtes-vous sur de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
     
   }
 }

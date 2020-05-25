@@ -50,7 +50,7 @@ export class StatsComponent implements OnInit {
       type: 'pie'
   },
   title: {
-      text: 'Proportion des étudiants par option'
+      text: 'Proportion des diplômés par option'
   },
   tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -71,7 +71,7 @@ export class StatsComponent implements OnInit {
       }
   },
   series: [{
-    name: 'Etudiants',
+    name: 'Diplômés',
     colorByPoint: true,
     data:this.hc.etu_options
   }] as Array<any>,
@@ -87,7 +87,7 @@ export class StatsComponent implements OnInit {
       type: 'column'
     },
     title: {
-      text: 'Etudiants par promotion'
+      text: 'Diplômés par promotion'
     },
     xAxis: {
       type: 'category'
@@ -95,7 +95,7 @@ export class StatsComponent implements OnInit {
     yAxis: {
         min: 0,
         title: {
-            text: "Nombres d'étudiants par promotion"
+            text: "Nombres de diplômés par promotion"
         },
         stackLabels: {
             enabled: true,
@@ -170,7 +170,7 @@ export class StatsComponent implements OnInit {
     }
     },
     title: {
-        text: 'Salaire par an des étudiants'
+        text: 'Salaire par an des diplômés'
     },
     xAxis: {
         type: 'category',
@@ -208,7 +208,7 @@ export class StatsComponent implements OnInit {
     tooltip: {
         pointFormat: 'Salaire: <b>{point.y:.2f} €</b>'
     },
-    series: [{name: 'Etudiants',color : "#7cb5ec",
+    series: [{name: 'Diplômés',color : "#7cb5ec",
         data: this.hc.etu_wage,
         
         
@@ -249,14 +249,14 @@ export class StatsComponent implements OnInit {
 
     },
     title: {
-      text: "Etudiants par entreprise"
+      text: "Diplômés par entreprise"
     },
     subtitle:{
         text:"Regroupé par ville"
     },
     tooltip: {
       useHTML: true,
-      pointFormat: '<b>{point.name}:</b> {point.value} Etudiants'
+      pointFormat: '<b>{point.name}:</b> {point.value} Diplômés'
     },
     plotOptions: {
       packedbubble: {
