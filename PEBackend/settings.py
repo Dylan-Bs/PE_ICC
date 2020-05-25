@@ -128,7 +128,7 @@ AUTH_PASSWORD_VALIDATORS = [{
 CORS_ORIGIN_ALLOW_ALL = True
 # CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = list(default_headers) + [
-    'user-token',
+    'Authorization',
 ]
 
 # Internationalization

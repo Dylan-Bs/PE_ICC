@@ -16,8 +16,8 @@ class Students(views.APIView):
 
     def get(self, request, *args, **kwargs):
         data = []
-        if('user-token' in request.headers):
-            token = request.headers['user-token']
+        if('Authorization' in request.headers):
+            token = request.headers['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             user = User.objects.get(id=userid)
@@ -25,6 +25,7 @@ class Students(views.APIView):
                 if user.is_staff:
                     wageGET = request.GET.get('wage', '')
                     promotionGET = request.GET.get('promotion', '')
+                    optionGET = request.GET.get('option', '')
                     specialityGET = request.GET.get('speciality', '')
                     idGET = request.GET.get('id', '')
                     companyGET = request.GET.get('company', '')
@@ -34,6 +35,8 @@ class Students(views.APIView):
                         students = students.filter(wage = wageGET)
                     if(promotionGET != ''):
                         students = students.filter(promotion = promotionGET)
+                    if(optionGET != ''):
+                        students = students.filter(option = optionGET)
                     if(specialityGET != ''):
                         students = students.filter(speciality = specialityGET)
                     if(idGET != ''):

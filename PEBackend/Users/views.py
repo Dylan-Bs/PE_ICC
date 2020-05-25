@@ -18,8 +18,8 @@ class Users(views.APIView):
 
     def get(self, request, *args, **kwargs):
         data = []
-        if('user-token' in request.headers):
-            token = request.headers['user-token']
+        if('Authorization' in request.headers):
+            token = request.headers['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             user = User.objects.get(id = userid)
@@ -49,8 +49,8 @@ class Users(views.APIView):
 
     def delete(self, request, *args, **kwargs):
         if request.data != None:
-            if('user-token' in request.headers):
-                token = request.headers['user-token']
+            if('Authorization' in request.headers):
+                token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = User.objects.get(id = userid)

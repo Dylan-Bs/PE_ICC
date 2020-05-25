@@ -23,8 +23,8 @@ class Crawl(APIView):
             return crawler
 
     def get(self, request, *args, **kwargs):
-        if('user-token' in request.headers):
-            token = request.header['user-token']
+        if('Authorization' in request.headers):
+            token = request.header['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             user = User.objects.get(id = userid)

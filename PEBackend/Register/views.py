@@ -22,9 +22,10 @@ class Register(APIView):
             option = request.data['option']
             company = request.data['company']
             wage = request.data['wage']
+            linkedin_url = request.data['linkedin_url']
             working_city = request.data['working_city']
             if User.objects.filter(username=userlogin).exists():
-                resp = JsonResponse({'Error': "Already registered"}, status = "400")
+                resp = JsonResponse({'Error': "Already registered"}, status = "409")
             else:
                 user = User.objects.create_user(userlogin,userlogin, password)
                 user.first_name = first_name
@@ -41,8 +42,9 @@ class Register(APIView):
                 student.company = company
                 student.working_city = working_city
                 student.wage = wage
+                student.linkedin_url = linkedin_url
                 student.save()
-                resp = JsonResponse({'Success': 'Successfully registered', 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
+                resp = JsonResponse({'Created': 'Successfully registered', 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "201")
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         return resp

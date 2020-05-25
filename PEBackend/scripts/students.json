@@ -10,7 +10,8 @@
             "option": "iapau",
             "company": "Total",
             "working_city": "Pau",
-            "wage": "50000"
+            "wage": "50000",
+            "linkedin_url": "" 
         },
         {
             "email": "emmanuelmacron@test.com",
@@ -21,7 +22,8 @@
             "option": "icc",
             "company": "Capgemini",
             "working_city": "Pau",
-            "wage": "42000"
+            "wage": "42000",
+            "linkedin_url": ""
         },
         {
             "email": "edouardphilippe@test.com",
@@ -32,7 +34,8 @@
             "option": "imsi",
             "company": "Total",
             "working_city": "Pau",
-            "wage": "67000"
+            "wage": "67000",
+            "linkedin_url": ""
         }
     ]
 }

@@ -14,8 +14,8 @@ from .models import Teacher as TeacherModel
 class Teacher(views.APIView):
 
     def put(self, request, *args, **kwargs):
-        if('user-token' in request.headers):
-            token = request.headers['user-token']
+        if('Authorization' in request.headers):
+            token = request.headers['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             user = User.objects.get(id=userid)
@@ -31,7 +31,7 @@ class Teacher(views.APIView):
                         email = request.data['email']
                         option = request.data['option']
                         if User.objects.filter(username=userlogin).exists():
-                            resp = JsonResponse({'Error': "Already registered"}, status = "400")
+                            resp = JsonResponse({'Error': "Already registered"}, status = "409")
                         else:
                             user = User.objects.create_user(userlogin,userlogin, password)
                             user.first_name = first_name
@@ -46,26 +46,24 @@ class Teacher(views.APIView):
                             teacher.id = str(res.id)
                             teacher.option = option
                             teacher.save()
-                            resp = JsonResponse({'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "200")
+                            resp = JsonResponse({"Created": "Teacher succesfully created.", 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "201")
                 else:
                     resp = JsonResponse({'Access Denied': "No enough rights to achieve this"}, status = "403")
 
             else:
-                resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
+                resp = JsonResponse({'Access Denied': "Token invalid"}, status = "400")
         else:
-            resp = JsonResponse({'Access Denied': " You must be authenticated"}, status = "403")
-        resp["Access-Control-Allow-Origin"] = "*"
+            resp = JsonResponse({'Access Denied': " You must be authenticated"}, status = "401")
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
 
     def post(self, request, *args, **kwargs):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
         else: 
-            if('user-token' in request.headers):
-                token = request.headers['user-token']
+            if('Authorization' in request.headers):
+                token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = User.objects.get(id=userid)

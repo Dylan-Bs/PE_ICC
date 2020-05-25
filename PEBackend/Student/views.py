@@ -14,8 +14,8 @@ from django.http import JsonResponse
 class Student(views.APIView):
 
     def get(self, request, *args, **kwargs):
-        if('user-token' in request.headers):
-            token = request.headers['user-token']
+        if('Authorization' in request.headers):
+            token = request.headers['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             user = User.objects.get(id=userid)
@@ -35,8 +35,8 @@ class Student(views.APIView):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status = "400")
         else: 
-            if('user-token' in request.headers):
-                token = request.headers['user-token']
+            if('Authorization' in request.headers):
+                token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = User.objects.get(id=userid)

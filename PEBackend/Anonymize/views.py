@@ -16,8 +16,8 @@ class Anonymize(APIView):
         if not request.data:
             resp = JsonResponse({'Error': "Please provide username/password"}, status="400")
         try:
-            if('user-token' in request.headers):
-                token = request.headers['user-token']
+            if('Authorization' in request.headers):
+                token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = UserModel.objects.get(id = userid)
@@ -30,8 +30,6 @@ class Anonymize(APIView):
             resp = JsonResponse({'NotFound': "User does not exist"}, status = "404")
         except Exception as e: 
             resp = JsonResponse({'ExceptionOccured': "An exception occured during anonymization"}, status = "400")
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
