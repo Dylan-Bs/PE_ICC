@@ -7,29 +7,27 @@
     <mat-tab label="Diplômés">
 
         <br>
-        <div class="row" style="width: 100%;">
+        <div class="flex">
             
-            <div class="col-md-4">
+            <div>
                 <div class="input-group">
                     <input type="text" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
                         placeholder="Recherche par nom..." (keyup)="searchByName()">
                 </div>
             </div>
-            <div class="col-md-6 filter-by-promo">
-                <div class="row">
-                    <div class="col-md-auto title">
-                        <span>Filtre par promo (older than):</span>
-                    </div>
-                    <div class="col">
-                        <span>1970 </span>
-                        <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" (ngModel)="promoValue"
-                            (change)="rangeChange($event)">
-                        </mat-slider>
-                        <span>{{max}}</span>
-                    </div>
-                    <button mat-raised-button color="accent" (click)="open_import()">Importer des élèves</button>
+            <div class="breadcrumb" style="margin: 0px;">
+                <div class="flexnowrap">
+                    <span class='bold'>De</span>
+                    
+                    <input class="text-center" matInput type="number" tickInterval="1" [min]="min" [max]="promo_max_value" [(ngModel)]="promo_min_value" (change)="promofilter_change($event)"/>
+
+                    <span class='bold'>à</span>
+
+                    <input class="text-center" matInput type="number" tickInterval="1" [min]="promo_min_value" [max]="max" [(ngModel)]="promo_max_value" (change)="promofilter_change($event)"/>
+                    
                 </div>
             </div>
+            <button mat-raised-button color="accent" (click)="open_import()">Importer des élèves</button>
         </div>
 
 <div class="list-group users-list">

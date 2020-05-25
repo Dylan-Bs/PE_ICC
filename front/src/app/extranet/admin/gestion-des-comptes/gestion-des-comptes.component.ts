@@ -16,7 +16,9 @@ import { ImportUsersComponent } from '../import-users/import-users.component';
 export class GestionDesComptesComponent implements OnInit {
 
   max:number=(new Date()).getFullYear();
-  promoValue: number = 0;
+  min:number=1970;
+  promo_min_value: number = 1970;
+  promo_max_value: number = this.max;
   searchValue: string = "";
   items: Array<User>;
   items_name_filtered: Array<User>;
@@ -82,9 +84,8 @@ export class GestionDesComptesComponent implements OnInit {
     
   }
 
-  rangeChange(event){
-    let value=event.value
-    this.items_promo_filtered = this.items.filter(item=> item.promotion>=value || item.role==1)
+  promofilter_change(event){
+    this.items_promo_filtered = this.items.filter(item=> (item.promotion>=this.promo_min_value && item.promotion<=this.promo_max_value) || item.role==1)
     this.set_items_filtered()
   }
 
