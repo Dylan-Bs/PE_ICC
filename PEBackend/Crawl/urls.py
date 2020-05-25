@@ -7,4 +7,4 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.Crawl.as_view(), name='crawl'),
-]    
+]

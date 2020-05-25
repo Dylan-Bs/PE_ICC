@@ -20,8 +20,9 @@ class LinkedinCrawler:
             opts.add_argument('--headless')
         opts.add_experimental_option('prefs', {'intl.accept_languages': 'fr,fr_FR'})
         opts.add_argument('--lang=fr')
+        opts.add_argument('--no-sandbox')
         self.driver = webdriver.Chrome(options=opts)
-        self.wdriver = WebDriverWait(self.driver, 180)
+        self.wdriver = WebDriverWait(self.driver, 120)
 
     def login(self, username, password):
         self.driver.get(URL)
@@ -33,16 +34,17 @@ class LinkedinCrawler:
             ))
         )
         (ActionChains(self.driver)
-            .pause(0.5)
+            .pause(1.5)
             .click(login_btn)
         ).perform()
-
+        print("print1")
         uname_field = self.wdriver.until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 'input#username'
             ))
         )
+        print("print2")
         (ActionChains(self.driver)
             .pause(0.5)
             .send_keys(username)
@@ -92,23 +94,23 @@ class LinkedinCrawler:
 
         (ActionChains(self.driver)
             .click(search_box)
+            .pause(6)
             .send_keys(query)
             .pause(1)
-            .key_down(Keys.ARROW_DOWN)
-            .pause(0.01)
-            .key_up(Keys.ARROW_DOWN)
+            .send_keys(Keys.ARROW_DOWN)
             .pause(0.1)
-            .key_down(Keys.ENTER)
-            .pause(0.01)
-            .key_up(Keys.ENTER)
+            .send_keys(Keys.ENTER)
         ).perform()
 
+        print("print3")
         profile_bg = self.wdriver.until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR,
                 '.profile-background-image'
             ))
         )
+        print("print4")
+
 
         return self.driver.current_url
 
