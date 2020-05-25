@@ -71,12 +71,12 @@
      
                 <div class="row submit-button-container">
                   <div class="col-md-4">
-                    <button mat-raised-button class="delete-button" color="warn" type="button"
-                      (click)="anonymisation(exampleForm.value)">Supprimer mon compte</button>
-                  </div>
-                  <div class="">
                     <button mat-raised-button class="submit-button" color="primary" type="submit"
                       [disabled]="!exampleForm.valid">Enregistrer</button>
+                  </div>
+                  <div class="">
+                    <button mat-raised-button class="delete-button" color="warn" type="button"
+                      (click)="anonymisation()">Anonymiser mon compte</button>
                   </div>
                 </div>
               </form>

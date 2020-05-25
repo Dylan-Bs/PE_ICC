@@ -3,7 +3,7 @@ version: '3'
 services:
     mongodb:
         restart: always
-        image: mongo:latest        
+        image: mongo:4.2.6        
         container_name: mongo
         command: mongod --auth
         environment:
@@ -13,6 +13,7 @@ services:
         hostname: mongodb-server
         volumes:
             - ./PEBackend/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
             - data-volume:/data/db
         ports:
             - "27017:27017"

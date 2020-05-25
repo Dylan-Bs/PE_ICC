@@ -1,11 +1,23 @@
 <div>
-  <h1 mat-dialog-title>
+  <h1 mat-dialog-title class="green" *ngIf="data.state==StateEnum.confirm">
     <mat-icon>check_circle</mat-icon> Confirmation
   </h1>
+
+  <h1 mat-dialog-title class="orange" *ngIf="data.state==StateEnum.warning">
+    <mat-icon>error</mat-icon> Attention
+  </h1>
+  <h1 mat-dialog-title class="red" *ngIf="data.state==StateEnum.error">
+    <mat-icon>remove_circle</mat-icon> Erreur
+  </h1>
   <div mat-dialog-content>
-    <p>Les changements ont bien été sauvegardés.</p>
+    <p>{{data.text}}</p>
   </div>
-  <div mat-dialog-actions>
-    <button mat-button [mat-dialog-close]="" cdkFocusInitial>Ok</button>
+  <div mat-dialog-actions *ngIf="data.state==StateEnum.confirm || data.state==StateEnum.error">
+    <button mat-button [mat-dialog-close]="AnswerEnum.ok" cdkFocusInitial>Ok</button>
+  </div>
+
+  <div mat-dialog-actions *ngIf="data.state==StateEnum.warning">
+    <button mat-button (click)="onNoClick()">Non merci</button>
+    <button mat-button [mat-dialog-close]="AnswerEnum.yes" cdkFocusInitial>Oui</button>
   </div>
 </div>
