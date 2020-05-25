@@ -3,7 +3,7 @@
     <mat-icon>check_circle</mat-icon> Confirmation
   </h1>
 
-  <h1 mat-dialog-title class="orange" *ngIf="data.state==StateEnum.warning">
+  <h1 mat-dialog-title class="orange" *ngIf="data.state==StateEnum.warning || data.state==StateEnum.warning_suppr">
     <mat-icon>error</mat-icon> Attention
   </h1>
   <h1 mat-dialog-title class="red" *ngIf="data.state==StateEnum.error">
@@ -19,5 +19,10 @@
   <div mat-dialog-actions *ngIf="data.state==StateEnum.warning">
     <button mat-button (click)="onNoClick()">Non merci</button>
     <button mat-button [mat-dialog-close]="AnswerEnum.yes" cdkFocusInitial>Oui</button>
+  </div>
+  <div mat-dialog-actions *ngIf="data.state==StateEnum.warning_suppr">
+    <button mat-button (click)="onNoClick()">Annuler</button>
+    <button mat-button [mat-dialog-close]="AnswerEnum.anonym" cdkFocusInitial>Anonymiser</button>
+    <button mat-button [mat-dialog-close]="AnswerEnum.suppr">Supprimer</button>
   </div>
 </div>

@@ -128,7 +128,7 @@ export class EditUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result==ANSWER.yes){
-        this.api.deleteUser({"id":this.item.id})
+        this.api.deleteUserAdmin({"id":this.item.id})
         .subscribe(
           result => {
             this.openDialog({state:STATE.confirm,text:"Le compte a bien été supprimé."})

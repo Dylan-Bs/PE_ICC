@@ -119,14 +119,14 @@ export class EditionComponent implements OnInit {
     )
   }
 
-  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."}): void {
+  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."},width="300px"): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '300px',
+      width: width,
       data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result==ANSWER.yes){
+      if (result==ANSWER.anonym){
         this.api.anonymize()
         .subscribe(
           result => {
@@ -135,6 +135,17 @@ export class EditionComponent implements OnInit {
           },
           err=>{
             alert("Erreur lors de l'anonymisation");
+          }
+        )
+      }else if (result==ANSWER.suppr){
+        this.api.deleteUser()
+        .subscribe(
+          result => {
+            this.openDialog({state:STATE.confirm,text:"Votre compte a bien été supprimé."})
+            this.conne.deconnecte()
+          },
+          err=>{
+            alert("Erreur lors de la suppression");
           }
         )
       }else if (result==ANSWER.ok){
@@ -151,5 +162,9 @@ export class EditionComponent implements OnInit {
   anonymisation(){
     this.openDialog({state:STATE.warning,text:"Êtes-vous sur de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
     
+  }
+
+  supprimer(){
+    this.openDialog({state:STATE.warning_suppr,text:"Êtes-vous sur de vouloir supprimer votre compte et supprimer toutes vos données? A la place vous pouvez l'anonymiser, votre nom et votre prénom seront supprimés et dissociés de vos données."},"600px")
   }
 }

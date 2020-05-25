@@ -32,10 +32,14 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
   }
 
-  deleteUser(data) {
+  deleteUserAdmin(data) {
     var options=this.httpOptions
     options["body"]=JSON.stringify(data)
     return this.http.delete(`${this.apiUrl}/user`,options);
+  }
+
+  deleteUser() {
+    return this.http.delete(`${this.apiUrl}/user`,this.httpOptions);
   }
 
   uploadCSVFile( file) {

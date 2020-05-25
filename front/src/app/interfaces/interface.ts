@@ -1,13 +1,17 @@
 export enum STATE {
   confirm,
   warning,
-  error
+  error,
+  warning_suppr
 }
 
 export enum ANSWER {
   ok,
   yes,
-  no
+  no,
+  suppr,
+  anonym,
+  cancel
 }
 
 export interface Authentification {
