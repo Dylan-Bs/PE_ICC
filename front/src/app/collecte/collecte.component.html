@@ -9,7 +9,8 @@
               <ng-template matStepLabel>Informations personnelles</ng-template>
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput type="email" placeholder="Adresse électronique"
+                  <mat-label>Adresse électronique</mat-label>
+                  <input matInput type="email" placeholder="Ex. toto@eisti.eu"
                     formControlName="email" required>
                 </mat-form-field>
                 <ng-container *ngFor="let validation of validation_messages.email">
@@ -33,22 +34,22 @@
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Nom" formControlName="name" required>
+                  <input matInput placeholder="Nom" formControlName="last_name" required>
                 </mat-form-field>
-                <ng-container *ngFor="let validation of validation_messages.name">
+                <ng-container *ngFor="let validation of validation_messages.last_name">
                   <mat-error
-                    *ngIf="personalForm.get('name').hasError(validation.type) && (personalForm.get('name').dirty || personalForm.get('name').touched)">
+                    *ngIf="personalForm.get('last_name').hasError(validation.type) && (personalForm.get('last_name').dirty || personalForm.get('last_name').touched)">
                     {{validation.message}}</mat-error>
                 </ng-container>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Prénom" formControlName="surname" required>
+                  <input matInput placeholder="Prénom" formControlName="first_name" required>
                 </mat-form-field>
-                <ng-container *ngFor="let validation of validation_messages.surname">
+                <ng-container *ngFor="let validation of validation_messages.first_name">
                   <mat-error
-                    *ngIf="personalForm.get('surname').hasError(validation.type) && (personalForm.get('surname').dirty || personalForm.get('surname').touched)">
+                    *ngIf="personalForm.get('first_name').hasError(validation.type) && (personalForm.get('first_name').dirty || personalForm.get('first_name').touched)">
                     {{validation.message}}</mat-error>
                 </ng-container>
               </div>
@@ -98,19 +99,22 @@
               <ng-template matStepLabel>Information professionnelles</ng-template>
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Entreprise" formControlName="entreprise">
+                  <mat-label>Entreprise</mat-label>
+                  <input matInput placeholder="Ex: Total,Orange,Viveris" formControlName="entreprise">
                 </mat-form-field>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput placeholder="Ville travail" formControlName="ville">
+                  <mat-label>Ville de travail</mat-label>
+                  <input matInput placeholder="Ex: Paris;Toulouse;Novossibirsk" formControlName="ville">
                 </mat-form-field>
               </div>
     
               <div class="form-group">
                 <mat-form-field class="input-style">
-                  <input matInput type="number" placeholder="Salaire" formControlName="salaire">
+                  <mat-label>Salaire</mat-label>
+                  <input matInput type="number" placeholder="Salaire brut €/mois" formControlName="salaire">
                 </mat-form-field>
               </div>
               <div class="myButtonDiv">
@@ -129,16 +133,16 @@
                 J'autorise la collecte et mise à jour numérique des informations de ce formulaire
               </mat-checkbox>
             </div>
-            <div class="myButtonDiv">
+            <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner></div>
+            <div class="myButtonDiv" *ngIf="!loading">
               <button   mat-button matStepperPrevious>Précédent</button>
               <span class="spacer"></span>
               <button *ngIf="!loading" mat-raised-button class="submit-button myButton3" color="primary" type="button" (click)="onSubmit()"
             [disabled]="!validationForm.valid">Inscription</button>
               <span class="spacer"></span>
               <button  mat-button (click)="stepper.reset()">Réinitialisation</button>
-              <div ><mat-spinner *ngIf="loading" [diameter]="20" style="margin-left: 50%; margin-right: 50%;"></mat-spinner></div>
+              
             </div>
-            <div class="valid" *ngIf="conne.form_send">Vos données ont été transmises, merci pour votre coopération</div>
           </form>
           </mat-step>
         </mat-horizontal-stepper>

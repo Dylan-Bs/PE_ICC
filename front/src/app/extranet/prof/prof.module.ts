@@ -18,6 +18,7 @@ import { ViewDetailsResolver } from './view-details/view-details.resolver';
 import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTabsModule} from '@angular/material/tabs';
 import {  HighchartsChartModule } from 'highcharts-angular';
+import { StatsResolver } from './stats/stats.resolver';
 
 
 
@@ -43,6 +44,6 @@ import {  HighchartsChartModule } from 'highcharts-angular';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [ViewDetailsResolver],
+  providers: [ViewDetailsResolver,StatsResolver],
 })
 export class ProfModule { }

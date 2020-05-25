@@ -1,0 +1,84 @@
+<div>
+    <h1 mat-dialog-title>
+      Créer un compte professeur
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="teacherform">
+            <ng-template matStepLabel>Informations personnelles</ng-template>
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <mat-label>Adresse électronique</mat-label>
+                <input matInput type="email" placeholder="Ex. toto@eisti.eu"
+                  formControlName="email" required>
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.email">
+                <mat-error
+                  *ngIf="teacherform.get('email').hasError(validation.type) && (teacherform.get('email').dirty || teacherform.get('email').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+  
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <input matInput type="password" placeholder="Mot de passe" formControlName="password"
+                  required>
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.password">
+                <mat-error
+                  *ngIf="teacherform.get('password').hasError(validation.type) && (teacherform.get('password').dirty || teacherform.get('password').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+  
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <input matInput placeholder="Nom" formControlName="last_name" required>
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.last_name">
+                <mat-error
+                  *ngIf="teacherform.get('last_name').hasError(validation.type) && (teacherform.get('last_name').dirty || teacherform.get('last_name').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+  
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <input matInput placeholder="Prénom" formControlName="first_name" required>
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.first_name">
+                <mat-error
+                  *ngIf="teacherform.get('first_name').hasError(validation.type) && (teacherform.get('first_name').dirty || teacherform.get('first_name').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+            
+            
+  
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <mat-label>Option ING3</mat-label>
+                <mat-select formControlName="option" required>
+                  <mat-option>-- Aucun --</mat-option>
+                  <mat-optgroup *ngFor="let group of optionsIng3Groups" [label]="group.name">
+                    <mat-option *ngFor="let option of group.option" [value]="option.value">
+                      {{option.viewValue}}
+                    </mat-option>
+                  </mat-optgroup>
+                </mat-select>
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.optionsIng3Control">
+                <mat-error
+                  *ngIf="teacherform.get('option').hasError(validation.type) && (teacherform.get('option').dirty || teacherform.get('option').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+        </form>
+    </div>
+    <div>
+      <mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner>
+    </div>
+    <div mat-dialog-actions *ngIf="!loading">
+      <button mat-button (click)="onNoClick()">Annuler</button>
+      <button mat-button (click)="create_teacher()" cdkFocusInitial>Créer</button>
+    </div>
+  </div>

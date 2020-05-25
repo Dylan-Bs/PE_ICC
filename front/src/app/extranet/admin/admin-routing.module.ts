@@ -6,6 +6,7 @@ import { paths } from 'src/app/app-paths';
 import { AuthGuard } from 'src/app/services/auth.guard';
 import { AdminGuard } from 'src/app/services/admin.guard';
 import { EditUserResolver } from './edit-user/edit-user.resolver';
+import { ImportUsersComponent } from './import-users/import-users.component';
 
 const adminRoutes: Routes = [
   { path: paths.empty, canActivate: [AuthGuard, AdminGuard], component: GestionDesComptesComponent },

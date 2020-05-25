@@ -4,6 +4,7 @@ import * as Highcharts from 'highcharts';
 import { HighchartsService } from 'src/app/services/highcharts.service';
 import * as HighchartsMore from "highcharts/highcharts-more";
 import { Student } from 'src/app/interfaces/interface';
+import { ActivatedRoute } from '@angular/router';
 
 declare var require: any;
 require('highcharts/highcharts-more')(Highcharts);
@@ -23,23 +24,23 @@ export class StatsComponent implements OnInit {
     item:Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
 
   constructor(
-    public api: ApiService,public hc:HighchartsService
+    public api: ApiService,public hc:HighchartsService,private route: ActivatedRoute
   ) {
-
     
    }
 
-  ngOnInit() {
-    
-  }
+   ngOnInit() {
+    this.route.data.subscribe(routeData => {})
+   }
 
   ngAfterViewInit() {
+    
 
   }
 
   Highcharts: typeof Highcharts = Highcharts;
   chartConstructor = 'chart'; // optional string, defaults to 'chart'
-
+  chart
   option_option :Highcharts.Options = {
     chart: {
         backgroundColor: '#00000000',
@@ -49,7 +50,7 @@ export class StatsComponent implements OnInit {
       type: 'pie'
   },
   title: {
-      text: 'Proportion des étudiants par option'
+      text: 'Proportion des diplômés par option'
   },
   tooltip: {
       pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>'
@@ -70,7 +71,7 @@ export class StatsComponent implements OnInit {
       }
   },
   series: [{
-    name: 'Etudiants',
+    name: 'Diplômés',
     colorByPoint: true,
     data:this.hc.etu_options
   }] as Array<any>,
@@ -86,7 +87,7 @@ export class StatsComponent implements OnInit {
       type: 'column'
     },
     title: {
-      text: 'Etudiants par promotion'
+      text: 'Diplômés par promotion'
     },
     xAxis: {
       type: 'category'
@@ -94,7 +95,7 @@ export class StatsComponent implements OnInit {
     yAxis: {
         min: 0,
         title: {
-            text: "Nombres d'étudiants par promotion"
+            text: "Nombres de diplômés par promotion"
         },
         stackLabels: {
             enabled: true,
@@ -169,7 +170,7 @@ export class StatsComponent implements OnInit {
     }
     },
     title: {
-        text: 'Salaire par an des étudiants'
+        text: 'Salaire par an des diplômés'
     },
     xAxis: {
         type: 'category',
@@ -188,7 +189,7 @@ export class StatsComponent implements OnInit {
         },
         plotLines: [{
         label: {
-                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage(),
+                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage().toFixed(2),
                 align: 'left',
                 style: {
                     color: 'red',
@@ -205,9 +206,9 @@ export class StatsComponent implements OnInit {
         enabled: false
     },
     tooltip: {
-        pointFormat: 'Salaire: <b>{point.y:.1f} €</b>'
+        pointFormat: 'Salaire: <b>{point.y:.2f} €</b>'
     },
-    series: [{name: 'Etudiants',color : "#7cb5ec",
+    series: [{name: 'Diplômés',color : "#7cb5ec",
         data: this.hc.etu_wage,
         
         
@@ -216,7 +217,7 @@ export class StatsComponent implements OnInit {
             rotation: -90,
             color: '#FFFFFF',
             align: 'right',
-            format: '{point.y:.1f}', // one decimal
+            format: '{point.y:.2f}', // one decimal
             y: 10, // 10 pixels down from the top
             style: {
                 fontSize: '13px',
@@ -248,14 +249,14 @@ export class StatsComponent implements OnInit {
 
     },
     title: {
-      text: "Etudiants par entreprise"
+      text: "Diplômés par entreprise"
     },
     subtitle:{
         text:"Regroupé par ville"
     },
     tooltip: {
       useHTML: true,
-      pointFormat: '<b>{point.name}:</b> {point.value} Etudiants'
+      pointFormat: '<b>{point.name}:</b> {point.value} Diplômés'
     },
     plotOptions: {
       packedbubble: {
@@ -303,12 +304,13 @@ export class StatsComponent implements OnInit {
         
       }
 
-      console.log(this.hc.etu_company)
   }
   
 
-  chartCallback = function (chart) {  } // optional function, defaults to null
+  chartCallback = function (chart) {
+      console.log(chart)
+    } // optional function, defaults to null
   updateFlag = false; // optional boolean
-  oneToOneFlag = false; // optional boolean, defaults to false
+  oneToOneFlag = true; // optional boolean, defaults to false
 
 }

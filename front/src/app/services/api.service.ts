@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { ConnexionService } from './connexion.service';
 
 @Injectable({
   providedIn: 'root'
@@ -7,6 +8,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 export class ApiService {
 
   apiUrl:string="/api";
+
 
   httpOptions =
 {   
@@ -36,6 +38,13 @@ export class ApiService {
     return this.http.delete(`${this.apiUrl}/user`,options);
   }
 
+  uploadCSVFile( file) {
+    var options=this.httpOptions
+    options.headers=options.headers.set("Content-Type","text/csv");
+    return this.http.put(`${this.apiUrl}/import`, file, options)
+    
+}
+
   getUsers() {
     return this.http.get(`${this.apiUrl}/users`,this.httpOptions);
   }
@@ -54,8 +63,8 @@ export class ApiService {
     var info:object={
       "email": value.email,
       "password": value.password,
-      "first_name": value.name,
-      "last_name": value.surname,
+      "first_name": value.first_name,
+      "last_name": value.last_name,
       "promotion": parseInt(value.promo),
       "option": value.optionsIng3Control,
       "company": value.entreprise,
@@ -74,6 +83,7 @@ export class ApiService {
   //Students
 
   getEtudiant() {
+
     return this.http.get(`${this.apiUrl}/student`,this.httpOptions);
   }
 
@@ -99,13 +109,8 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/students?promotion=${promo}`);
   }
 
-  anonymiser(userKey, value) {
-    value.id=userKey;
-    value.email = 'anonymous';
-    value.password = '';//un mot de passe vide, empeche les gens de valider un formulaire de connexion 
-    value.first_name = 'anonymous';
-    value.last_name = 'anonymous';
-    return this.http.put(`${this.apiUrl}/anonymiser`,value);
+  anonymize() {
+    return this.http.post(`${this.apiUrl}/anonymize`,{},this.httpOptions);
   }
 
   //teacher
@@ -116,6 +121,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
   }
 
+  createTeacher(value){
+    return this.http.put(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
   clean(obj) {
     for (var propName in obj) { 
       if (obj[propName] === null || obj[propName] === undefined) {
@@ -123,5 +132,7 @@ export class ApiService {
       }
     }
   }
+
+ 
 
 }
