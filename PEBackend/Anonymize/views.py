@@ -13,19 +13,21 @@ import time
 class Anonymize(APIView):
 
     def post(self, request, *args, **kwargs):
-        if not request.data:
-            resp = JsonResponse({'Error': "Please provide username/password"}, status="400")
         try:
             if('Authorization' in request.headers):
                 token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = UserModel.objects.get(id = userid)
-                user.first_name = ''
-                user.last_name = ''
-                user.IsActive = False
-                student = Student.objects.get(id = userid)
-                resp = JsonResponse({'Success': "User deleted, anonymization completed"}, status = "200")
+                if user != None:
+                    user.first_name = ''
+                    user.last_name = ''
+                    user.IsActive = False
+                    resp = JsonResponse({'Success': "User anonymized, anonymization completed"}, status = "200")
+                else:
+                    resp = JsonResponse({'Bad Request': "authentication token invalid."}, status = "400")
+            else:
+                resp = JsonResponse({'Unauthorized': "An authentication is required to access this"}, status = "401")
         except UserModel.DoesNotExist:
             resp = JsonResponse({'NotFound': "User does not exist"}, status = "404")
         except Exception as e: 

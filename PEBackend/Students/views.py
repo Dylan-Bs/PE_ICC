@@ -48,14 +48,17 @@ class Students(views.APIView):
                     students = list(students)
                     for student in students:
                         tmp_user = User.objects.get(id = student.id)
-                        data.append({"id": str(student.id), "name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.email), "promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city), "linkedin_url": str(student.linkedin_url)})
+                        if(tmp_user != None):
+                            data.append({"name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.email), "promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city), "linkedin_url": str(student.linkedin_url)})
+                        else:
+                            data.append({"promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city), "linkedin_url": str(student.linkedin_url)})
                     resp = JsonResponse(data, safe = False)
                 else:
-                    resp = JsonResponse({"Access Denied": "No enough rights to achieve this"}, status = 400, safe = False)
+                    resp = JsonResponse({"Access Denied": "No enough rights to achieve this"}, status = 403, safe = False)
             else:  
                 resp = JsonResponse({"Access Denied": "Token invalid"}, status = 400, safe = False)
         else:
-            resp = JsonResponse({"Access Denied": "You must be authenticated"}, status = 400, safe = False)
+            resp = JsonResponse({"Access Denied": "You must be authenticated"}, status = 401, safe = False)
         resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         return resp

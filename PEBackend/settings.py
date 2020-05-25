@@ -45,7 +45,6 @@ INSTALLED_APPS = [
     'Student',
     'Students',
     'Teacher',
-    'VerifyAuthentication',
     'Anonymize',
     'Crawl',
     'User',

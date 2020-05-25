@@ -42,22 +42,24 @@ class User(views.APIView):
 
     def delete(self, request, *args, **kwargs):
         if request.data != None:
-            deleteId = request.data['id']
             if('Authorization' in request.headers):
                 token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 user = UserModel.objects.get(id = userid)
                 if(user.is_superuser):
+                    deleteId = request.data['id']
                     userToDelete = UserModel.objects.get(id = deleteId)
-                    if userToDelete != None:
-                        if not userToDelete.is_staff and not userToDelete.is_superuser:
-                            student = Student.objects.get(id=deleteId)
-                            student.delete()                        
-                        elif userToDelete.is_staff and not userToDelete.is_superuser:
-                            teacher = Teacher.objects.get(id=deleteId)
-                            teacher.delete()
-                        userToDelete.delete()
+                else:
+                    userToDelete = UserModel.objects.get(id = userid)
+                if userToDelete != None:
+                    if not userToDelete.is_staff and not userToDelete.is_superuser:
+                        student = Student.objects.get(id=userToDelete.id)
+                        student.delete()                        
+                    elif userToDelete.is_staff and not userToDelete.is_superuser:
+                        teacher = Teacher.objects.get(id=userToDelete.id)
+                        teacher.delete()
+                    userToDelete.delete()
                     resp = JsonResponse({"Success": "User deleted with success"}, status = 200)
                 else:
                     resp = JsonResponse({"Denied": "No enough rights to operate this"}, status = 403)
