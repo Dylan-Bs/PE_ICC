@@ -38,7 +38,7 @@ class Authenticate(APIView):
                         role = '0'
                     token = jwt.encode({'id':user.id,'username': user.username, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
                     resp = HttpResponse(
-                        json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.email), 'role': str(role), 'option': str(option)}),
+                        json.dumps({'token' : str(token), 'expiry': str(expiry), "first_name": str(user.first_name), "last_name": str(user.last_name), 'email': str(user.username), 'role': str(role), 'option': str(option)}),
                         status=200,
                         content_type="application/json",
                     )

@@ -23,4 +23,6 @@ RUN python ./manage.py collectstatic
 
 CMD python manage.py runserver 0.0.0.0:8000
 
+EXPOSE 25/tcp
+EXPOSE 587/tcp
 EXPOSE 8000

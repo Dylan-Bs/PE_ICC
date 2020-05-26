@@ -18,23 +18,35 @@ class ResetPassword(APIView):
         if not request.data:
             resp = JsonResponse({'Error': "No data provided"}, status="400")
         else:
-            email_r = request.data.get('email', '')
-            if email_r == '':
-                resp = JsonResponse({'Error': "Please provide "}, status="400")
+            session_r = request.data.get('session', '')
+            password = request.data.get('password', '')
+            if password == '' or session_r == 0:
+                resp = JsonResponse({'Error': "Invalid request data"}, status="400")
             else:
-                user = User.objects.filter(username = email_r)
-                if user and user.is_active:
-                    print(" ")
-                elif user and not user.is_active:
-                    resp = HttpResponse(
-                    json.dumps({'Forbidden': "You disabled your account, register again with the same email"}),
-                        status=403,
-                        content_type="application/json",
-                    )
+                payload = jwt.decode(session_r, 'peiccreset')
+                userid = payload['id']
+                session = payload['session']
+                expiry = payload['expiry']
+                if expiry < datetime.datetime.now():
+                    user = User.objects.get(id = userid)
+                    if user and session == user.email:
+                        user.set_password(password)
+                        user.save()
+                        resp = HttpResponse(
+                            json.dumps({'OK': "New password set"}),
+                            status=200,
+                            content_type="application/json",
+                        )
+                    else:
+                        resp = HttpResponse(
+                            json.dumps({'Error': "Invalid session"}),
+                            status=400,
+                            content_type="application/json",
+                        )
                 else:
                     resp = HttpResponse(
-                    json.dumps({'Error': "No user linked to this email"}),
-                        status=400,
+                        json.dumps({'Error': "Reset password session expired"}),
+                        status=408,
                         content_type="application/json",
                     )
         resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
