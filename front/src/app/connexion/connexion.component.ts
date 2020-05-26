@@ -137,6 +137,9 @@ export class ConnexionComponent implements OnInit {
             if (isNaN(this.item.wage)) {
               this.item.wage = "Non renseigné"
             }
+            if (this.item.linkedin_url == "") {
+              this.item.linkedin_url = "Non renseigné"
+            }
             this.conne.savedinfo=this.item
           },
           err => {

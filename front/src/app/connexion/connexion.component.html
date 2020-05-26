@@ -32,7 +32,7 @@
     <div *ngIf="conne.connecte">
       <mat-card-title>Bonjour {{item.first_name | titlecase }} {{item.last_name | uppercase }}</mat-card-title>
       <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
-        <span *ngIf="conne.role == 1"> de l'option {{options_bddtoview[conne.userOption] }}</span>.
+        <span *ngIf="conne.role == 1"> de l'option {{options_bddtoview[conne.userOption] }}.</span>
       </mat-card-content>
       <mat-card-content><button *ngIf="conne.role == 2" mat-raised-button class="buttonAdmin" color="accent" type="button"
         routerLink="/extranet/admin/edit"><i class="material-icons">edit</i>Editer mon profil</button></mat-card-content>
@@ -44,6 +44,7 @@
         <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
         <mat-card-content>Salaire : {{item.wage}}</mat-card-content>
+        <mat-card-content>URL LinkedIn : {{item.linkedin_url}}</mat-card-content>
         <button mat-raised-button class="return-button" color="accent" type="button"
       routerLink="/extranet/etudiant/edit/{{conne.route()}}"><i class="material-icons">edit</i>Editer mon profil</button>
       </div>
