@@ -20,6 +20,23 @@ export class EditionComponent implements OnInit {
 
   item: User={"id":0,"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","role":2};
 
+  validation_messages = {
+    'email': [
+      { type: 'required', message: 'L\' adresse mail est requise' },
+      { type: 'email', message: 'Entrez une adresse valide' }
+    ],
+    'password': [
+      { type: 'required', message: 'Le mot de passe est requis' },
+      { type: 'minlength', message: 'Le mot de passe doit faire minimum 7 caractères' }
+    ],
+    'last_name': [
+      { type: 'required', message: 'Le nom est requis' }
+    ],
+    'first_name': [
+      { type: 'required', message: 'Le prénom est requis' }
+    ],
+  };
+
   constructor(
     public api:ApiService,
     public conne: ConnexionService,
@@ -36,6 +53,8 @@ export class EditionComponent implements OnInit {
       console.log(this.conne.user);
       
       this.item.email = this.conne.user["email"]
+      this.item.last_name = this.conne.user["last_name"]
+      this.item.first_name = this.conne.user["first_name"]
       this.item.password = ''
       this.createForm()
       this.conne.savedinfo = this.item
@@ -49,7 +68,9 @@ export class EditionComponent implements OnInit {
   createForm() {
     this.exampleForm = this.fb.group({
       email: [this.item.email,[Validators.email, Validators.required]],
-      password: ['', [Validators.required, Validators.minLength(7)]],
+      password: [this.item.password, [Validators.required, Validators.minLength(7)]],
+      last_name: [this.item.last_name, Validators.required],
+      first_name: [this.item.first_name, Validators.required],
     });
   }
 
@@ -71,6 +92,12 @@ export class EditionComponent implements OnInit {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: width,
       data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result == ANSWER.ok) {
+        this.router.navigate(['connexion']);
+      }
     });
   }
 }

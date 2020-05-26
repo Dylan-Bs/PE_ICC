@@ -17,12 +17,44 @@
                             <input matInput type="email" placeholder="Adresse électronique" class="form-control"
                                 formControlName="email">
                         </mat-form-field>
+                        <ng-container *ngFor="let validation of validation_messages.email">
+                            <mat-error
+                                *ngIf="exampleForm.get('email').hasError(validation.type) && (exampleForm.get('email').dirty || exampleForm.get('email').touched)">
+                                {{validation.message}}</mat-error>
+                        </ng-container>
                     </div>
                     <div class="form-group">
                         <mat-form-field class="input-style">
                             <input matInput type="password" placeholder="Mot de Passe" class="form-control"
                                 formControlName="password">
                         </mat-form-field>
+                        <ng-container *ngFor="let validation of validation_messages.password">
+                            <mat-error
+                                *ngIf="exampleForm.get('password').hasError(validation.type) && (exampleForm.get('password').dirty || exampleForm.get('password').touched)">
+                                {{validation.message}}</mat-error>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="input-style">
+                            <input matInput placeholder="Nom" formControlName="last_name" required>
+                        </mat-form-field>
+                        <ng-container *ngFor="let validation of validation_messages.last_name">
+                            <mat-error
+                                *ngIf="exampleForm.get('last_name').hasError(validation.type) && (exampleForm.get('last_name').dirty || exampleForm.get('last_name').touched)">
+                                {{validation.message}}</mat-error>
+                        </ng-container>
+                    </div>
+
+                    <div class="form-group">
+                        <mat-form-field class="input-style">
+                            <input matInput placeholder="Prénom" formControlName="first_name" required>
+                        </mat-form-field>
+                        <ng-container *ngFor="let validation of validation_messages.first_name">
+                            <mat-error
+                                *ngIf="exampleForm.get('first_name').hasError(validation.type) && (exampleForm.get('first_name').dirty || exampleForm.get('first_name').touched)">
+                                {{validation.message}}</mat-error>
+                        </ng-container>
                     </div>
 
                     <div class="row submit-button-container">
