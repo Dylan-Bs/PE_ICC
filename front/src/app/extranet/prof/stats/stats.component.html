@@ -41,7 +41,7 @@
       ></highcharts-chart>
 
 
-      <mat-card style="margin: 20px;" *ngIf="item.option==this.conne.userOption && this.item.email!=''">
+      <mat-card style="margin: 20px;" *ngIf="check_detail(item)==1">
         <mat-card-title>Détails du profil de {{item.name}}</mat-card-title>
         <mat-card-content>Email : {{item.email}}</mat-card-content>
         <mat-card-content>Promotion : {{item.promotion}}</mat-card-content>
@@ -50,8 +50,11 @@
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
         <mat-card-content>Salaire : {{item.wage| currency:"EUR"}}</mat-card-content>
       </mat-card>
-      <mat-card style="margin: 20px;" *ngIf="item.option!=this.conne.userOption && this.item.email!=''">
+      <mat-card style="margin: 20px;" *ngIf="check_detail(item)==2">
         <mat-card-title>Vous ne pouvez pas voir le détail de ce diplomé car vos options sont différentes</mat-card-title>
+      </mat-card>
+      <mat-card style="margin: 20px;" *ngIf="check_detail(item)==0">
+        <mat-card-title>Vous ne pouvez pas voir le détail de ce diplomé car celui ci a voulu être anonyme</mat-card-title>
       </mat-card>
     </mat-tab>
     <mat-tab label="Entreprises">

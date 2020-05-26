@@ -85,10 +85,10 @@ export class ListeEtudComponent implements OnInit {
   }
 
   crawlStudent(id){
-    this.conne.crawlers[id]=false
+    
     this.api.crawlStudent(id).subscribe(
       result=>{
-        
+        this.conne.crawlers[id]=true
         this.openDialog()
       },err=>{
         alert(err)

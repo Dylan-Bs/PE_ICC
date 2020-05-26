@@ -99,7 +99,6 @@ export class HighchartsService {
       }
 
 
-      console.log(parseInt(data[k].wage))
       if (! isNaN(parseInt(data[k].wage))){
 
         for (let i=0;i<this.etu_wage_option.length;i++){
@@ -196,12 +195,10 @@ export class HighchartsService {
       if (iterator==0){
         //this.etu_wage_option[min_ids[0]]["data"][min_ids[1]].selected=true
       }
-      console.log(iterator)
       iterator+=1
       
     }
     
-    console.log(this.etu_wage_option)
 
     this.etu_wage[0].selected=true
 
