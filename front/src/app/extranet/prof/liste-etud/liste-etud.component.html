@@ -30,10 +30,13 @@
                 <h5 class="mb-1">{{item.name}}</h5>
                 <small>Promo: {{item.promotion}}</small>
             </div>
-            <div class="col col-md-2 actions-col">
+            <div>
                 <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
                         <i class="material-icons">search</i> Détails
                 </button>
+                <button class="buttonCrawler" mat-raised-button color="primary" (click)="crawlStudent(item,conne.user['token'])" type="button">
+                    <i class="material-icons">share</i> Actualiser
+            </button>
             </div>
         </div>
     </div>

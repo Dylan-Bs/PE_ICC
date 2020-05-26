@@ -106,7 +106,7 @@ export class ApiService {
   }
 
   getEtudByOption(optioning3) {
-    return this.http.get(`${this.apiUrl}/students?option=${optioning3}`);
+    return this.http.get(`${this.apiUrl}/students?option=${optioning3}`,this.httpOptions);
   }
 
   getEtudByPromo(promo) {
@@ -127,6 +127,17 @@ export class ApiService {
 
   createTeacher(value){
     return this.http.put(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
+  crawlStudent(id,tokenUser){
+    let headers = new HttpHeaders();
+    headers.append('Authorization', tokenUser);
+    let options = { headers: headers,withCredentials: true };
+    console.log("2 : "+tokenUser);
+    let tmp = this.http.get(`${this.apiUrl}/crawl?id=${id}`,options);
+    console.log("3 : "+tmp);
+
+    return tmp
   }
 
   clean(obj) {

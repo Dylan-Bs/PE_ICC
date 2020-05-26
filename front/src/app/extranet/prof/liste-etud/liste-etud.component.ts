@@ -36,7 +36,7 @@ export class ListeEtudComponent implements OnInit {
 
   getData(){
     this.loading=true
-    this.api.getEtudiants("?option="+this.conne.userOption)
+    this.api.getEtudByOption(this.conne.user["option"])
     .subscribe(result => {
       console.log(result)
       this.loading=false
@@ -79,5 +79,14 @@ export class ListeEtudComponent implements OnInit {
       });
     });
     return result;
+  }
+
+  crawlStudent(item,token){
+    
+    console.log("1 : "+item.id);
+
+    this.api.crawlStudent(item.id,token);
+
+    
   }
 }
