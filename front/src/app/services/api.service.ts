@@ -141,15 +141,9 @@ export class ApiService {
     return this.http.put(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
   }
 
-  crawlStudent(id,tokenUser){
-    let headers = new HttpHeaders();
-    headers.append('Authorization', tokenUser);
-    let options = { headers: headers,withCredentials: true };
-    console.log("2 : "+tokenUser);
-    let tmp = this.http.get(`${this.apiUrl}/crawl?id=${id}`,options);
-    console.log("3 : "+tmp);
+  crawlStudent(id){
 
-    return tmp
+    return this.http.get(`${this.apiUrl}/crawl?id=`+id,this.httpOptions)
   }
 
   clean(obj) {

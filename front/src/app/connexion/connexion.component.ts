@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Authentification } from '../interfaces/interface';
+import { Authentification, STATE } from '../interfaces/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
 import { Student } from 'src/app/interfaces/interface';
+import { MdpforgotDialogComponent } from '../mdpforgot-dialog/mdpforgot-dialog.component';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class ConnexionComponent implements OnInit {
 
   error: boolean = false
   errormsg: string
+
+  email:string=""
 
   loading: boolean = false
 
@@ -161,4 +164,26 @@ export class ConnexionComponent implements OnInit {
     }
 
   }
+
+
+  mdp_click(){
+    this.openDialogMdp()
+  }
+
+
+  openDialogMdp(): void {
+    const dialogRef = this.dialog.open(MdpforgotDialogComponent, {
+      width: '300px',
+      data: {"email":this.email}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+      }
+
+    });
+  }
+
+  
 }

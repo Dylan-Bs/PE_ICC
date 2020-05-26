@@ -52,5 +52,6 @@ export interface User{
   working_city:string;
   wage:string;
   role:number;
+  linkedin_url?:string;
 
 }

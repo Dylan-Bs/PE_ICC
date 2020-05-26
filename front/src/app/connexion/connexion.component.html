@@ -6,7 +6,7 @@
 
       <div class="form-group">
         <mat-form-field class="input-style">
-          <input matInput type="email" placeholder="Email" formControlName="email">
+          <input matInput type="email" placeholder="Email" formControlName="email" [(ngModel)]="email">
         </mat-form-field>
       </div>
 
@@ -20,7 +20,7 @@
 
       <button mat-raised-button class="submit-button" color="primary" type="submit" [disabled]="!connexionForm.valid" style="margin-right: 10px;"
         *ngIf="!loading">Connexion</button>
-        <a mat-raised-button class="submit-button atobutton" color="accent"
+        <a mat-raised-button class="submit-button atobutton" color="accent" (click)="mdp_click()"
         *ngIf="!loading">Mot de passe oublié</a>
       <div>
         <mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner>

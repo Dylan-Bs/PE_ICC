@@ -36,6 +36,7 @@ import { PathResolveService } from './path-resolve.service';
 import { FooterComponent } from './footer/footer.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ImportUsersComponent } from './extranet/admin/import-users/import-users.component';
+import { MdpforgotDialogComponent } from './mdpforgot-dialog/mdpforgot-dialog.component';
 
 
 
@@ -50,7 +51,8 @@ import { ImportUsersComponent } from './extranet/admin/import-users/import-users
     Erreur404Component,
     FooterComponent,
     ConfirmationDialogComponent,
-    ImportUsersComponent
+    ImportUsersComponent,
+    MdpforgotDialogComponent
   ],
   imports:[
     BrowserModule,
