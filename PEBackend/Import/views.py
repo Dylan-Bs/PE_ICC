@@ -19,7 +19,7 @@ class Import(APIView):
             data = []
             nbStudents = 0
             for filename, file in request.FILES.items():
-                if filename.endswith('.csv'):
+                if file.name.endswith('.csv'):
                     data_set = file.read().decode('UTF-8')
                     students = io.StringIO(data_set)
                     # On ignore la première ligne, correspondants aux headers
@@ -45,7 +45,7 @@ class Import(APIView):
                         tmp_student.wage = student[7]
                         tmp_student.save()
                         nbStudents += 1
-                elif filename.endswith('.json'):
+                elif file.name.endswith('.json'):
                     data = json.load(file)
                     students = data["students"]
                     for tmp_student in students:
@@ -71,8 +71,8 @@ class Import(APIView):
                     resp = JsonResponse({"Not Supported": "Not supported media"}, status = 415, safe = False)
             if nbStudents > 0:
                 resp = JsonResponse({"Success": str(nbStudents) + " users datas imported."}, status = 200, safe = False)
-            else:
-                resp = JsonResponse({"No data": "No users added from the files"}, status = 400, safe = False)
+            elif nbStudents == 0:
+                resp = JsonResponse({"No data": "No users added from the files" + filename}, status = 400, safe = False)
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         return resp

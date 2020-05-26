@@ -17,8 +17,8 @@ class Authenticate(APIView):
         if not request.data:
             resp = JsonResponse({'Error': "No data provided"}, status="400")
         else:
-            email_r = request.POST.get('email', '')
-            password_r = request.POST.get('password', '')
+            email_r = request.data.get('email', '')
+            password_r = request.data.get('password', '')
             if email_r == '' or password_r == '':
                 resp = JsonResponse({'Error': "Please provide email and password"}, status="400")
             else:
