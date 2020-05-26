@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "http://localhost:8000",
+        "target": "http://92f6009f.ngrok.io",
         "secure": false,
         "pathRewrite": {
           "^/api": ""

@@ -50,7 +50,7 @@ export class ListeEtudComponent implements OnInit {
   }
 
   viewDetails(item){
-    this.router.navigate(['extranet/prof/details/'+ item.id]);
+    this.router.navigate(['extranet/prof/details/'+ item.email]);
   }
 
   capitalizeFirstLetter(value){

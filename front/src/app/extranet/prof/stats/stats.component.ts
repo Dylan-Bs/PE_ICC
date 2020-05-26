@@ -22,6 +22,14 @@ require('highcharts/modules/funnel')(Highcharts);
 export class StatsComponent implements OnInit {
 
 
+  options_bddtoview:object={'icc': 'ICC',
+  'iapau': 'IA PAU',
+  'imsi': 'IMSI',
+'inem': 'INEM',
+  'iacergy': 'IA CERGY',
+  'vc': 'VC',
+  'fintech': 'FINTECH'}
+
     item:Student={"email":"","first_name":"","last_name":"","company":"","wage":"0","option":"","promotion":0,"working_city":"","linkedin_url":"..."};
 
   constructor(
@@ -164,7 +172,7 @@ export class StatsComponent implements OnInit {
           events: {
               click: function (e) {
                   const p = e.point
-                 this.get_detail(p["id"])
+                 this.get_detail(p["name"])
                   
               }.bind(this),
           }
@@ -278,13 +286,13 @@ export class StatsComponent implements OnInit {
       }
 }
 
-  get_detail(id){
-    this.item=this.hc.get_detail(id)
+  get_detail(email){
+    this.item=this.hc.get_detail(email)
   }
 
   tabchange($event){
       if($event.index==2 && this.item.email==""){
-        this.get_detail(this.hc.etu_wage[0].id)
+        //this.get_detail(this.hc.etu_wage[0].name)
         
       }
 

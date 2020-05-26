@@ -23,3 +23,8 @@ section {
 .buttonAdmin{
   margin-top: 3% !important;
 }
+
+a:hover{
+  color:white;
+  text-decoration: none;
+}

@@ -49,6 +49,7 @@ export class HighchartsService {
     this.etu_wage_option=[]
   
     this.etu_company=[]
+
     for (let k=0;k<data.length;k++){
       
       let id_promo=-1
@@ -98,7 +99,7 @@ export class HighchartsService {
       }
 
 
-
+      console.log(parseInt(data[k].wage))
       if (! isNaN(parseInt(data[k].wage))){
 
         for (let i=0;i<this.etu_wage_option.length;i++){
@@ -108,12 +109,12 @@ export class HighchartsService {
         }
 
         if (id_wage==-1){
-          this.etu_wage_option.push({"name":this.options_bddtoview[data[k].option],"data":[{x:-1,y:parseFloat(data[k].wage),"id":data[k].id,selected:false}]})
+          this.etu_wage_option.push({"name":this.options_bddtoview[data[k].option],"data":[{x:-1,y:parseFloat(data[k].wage),"name":data[k].email,selected:false}]})
         }else{
-          this.etu_wage_option[id_wage]["data"].push({x:-1,y:parseFloat(data[k].wage),"id":data[k].id,selected:false})
+          this.etu_wage_option[id_wage]["data"].push({x:-1,y:parseFloat(data[k].wage),"name":data[k].email,selected:false})
         }
 
-        this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id,currency:':val €'})
+        this.etu_wage.push({"name":data[k].email,"y":parseFloat(data[k].wage),selected:false,currency:':val €'})
       }
 
       
@@ -193,7 +194,7 @@ export class HighchartsService {
       }
       this.etu_wage_option[min_ids[0]]["data"][min_ids[1]].x=iterator
       if (iterator==0){
-        this.etu_wage_option[min_ids[0]]["data"][min_ids[1]].selected=true
+        //this.etu_wage_option[min_ids[0]]["data"][min_ids[1]].selected=true
       }
       console.log(iterator)
       iterator+=1
@@ -206,11 +207,11 @@ export class HighchartsService {
 
    }
 
-   get_detail(id){
+   get_detail(email){
      var index=0
     for (let i=0;i<this.data.length;i++){
       
-      if (this.data[i].id==id){
+      if (this.data[i].email==email){
         index=i
       }
    }

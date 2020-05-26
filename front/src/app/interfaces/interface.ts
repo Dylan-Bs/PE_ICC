@@ -14,6 +14,7 @@ export enum ANSWER {
   cancel
 }
 
+
 export interface Authentification {
     token :string;
     expiry : string;
@@ -36,7 +37,7 @@ export interface Student{
     company:string;
     working_city:string;
     wage:string;
-    linkedin_url:string;
+    linkedin_url?:string;
 }
 
 export interface User{
