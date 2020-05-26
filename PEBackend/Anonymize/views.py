@@ -23,6 +23,9 @@ class Anonymize(APIView):
                     user.first_name = ''
                     user.last_name = ''
                     user.IsActive = False
+                    student = Student.objects.get(id = user.id)
+                    student.linkedin_url = ""
+                    student.save()
                     resp = JsonResponse({'Success': "User anonymized, anonymization completed"}, status = "200")
                 else:
                     resp = JsonResponse({'Bad Request': "authentication token invalid."}, status = "400")

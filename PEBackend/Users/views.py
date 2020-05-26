@@ -30,7 +30,7 @@ class Users(views.APIView):
                     for user in users:
                         if(Student.objects.filter(id = user.id).exists()):
                             tmp_student = Student.objects.get(id = user.id)
-                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "role": "0"})
+                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "linkedin_url": str(user.linkedin_url), "role": "0"})
                         elif (Teacher.objects.filter(id = user.id).exists()):
                             tmp_teacher = Teacher.objects.get(id = user.id)
                             data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "1"})
@@ -41,10 +41,8 @@ class Users(views.APIView):
                 resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
         else:
             resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
-        resp["Access-Control-Allow-Origin"] = "*"
-        resp["Access-Control-Allow-Methods"] = "POST, OPTIONS"
+        resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp
 
     def delete(self, request, *args, **kwargs):
@@ -71,8 +69,6 @@ class Users(views.APIView):
                     resp = JsonResponse({"Denied": "No enough rights to operate this"}, status = 403)
         else:
             resp = JsonResponse({"Error": "No data provided"}, status = 400, safe = False)
-        resp["Access-Control-Allow-Origin"] = "*"
         resp["Access-Control-Allow-Methods"] = "DELETE, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
-        resp["Access-Control-Allow-Headers"] = "X-Requested-With, Content-Type"
         return resp

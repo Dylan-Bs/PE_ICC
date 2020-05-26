@@ -28,8 +28,12 @@ class User(views.APIView):
                 if(user != None):
                     email = request.data['email']
                     password = request.data['password']
+                    first_name = request.data['first_name']
+                    last_name = request.data['last_name']
                     user.username = email
                     user.email = email
+                    user.first_name = first_name
+                    user.last_name = last_name
                     user.set_password(password)
                     user.save()
                     resp = JsonResponse({'Modifications accepted': "User " + user.first_name + " " + user.last_name + " updated"}, status = "200")
