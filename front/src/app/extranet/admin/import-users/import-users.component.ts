@@ -16,6 +16,8 @@ export class ImportUsersComponent {
 
   files: any[] = [];
 
+  needupdate:boolean=false;
+
   constructor(public dialog: MatDialog,public api:ApiService,public dialogRef: MatDialogRef<ImportUsersComponent>,
     @Inject(MAT_DIALOG_DATA) public data: any,public conne:ConnexionService){
 
@@ -94,6 +96,7 @@ export class ImportUsersComponent {
       }*/
       this.api.uploadCSVFile(item,this.conne).subscribe(
         result => {
+          this.needupdate=true
           this.openDialog()
       },err=>{
         alert("Erreur lors de l'importation")

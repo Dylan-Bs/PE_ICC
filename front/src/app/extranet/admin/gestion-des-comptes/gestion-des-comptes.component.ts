@@ -139,7 +139,7 @@ export class GestionDesComptesComponent implements OnInit {
             console.log(err);
           }
         )
-      }else{
+      }else if (result==ANSWER.ok){
         this.getData()
       }
     });
@@ -152,7 +152,10 @@ export class GestionDesComptesComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      this.getData()
+      if (result){
+        this.getData()
+      }
+      
     });
 
   }
