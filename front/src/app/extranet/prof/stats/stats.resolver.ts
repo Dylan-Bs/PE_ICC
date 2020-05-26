@@ -14,7 +14,7 @@ export class StatsResolver implements Resolve<any> {
 
     return new Promise((resolve, reject) => {
         console.log(this.conne.userOption)
-        this.api.getEtudiants("?option="+this.conne.userOption)
+        this.api.getEtudiants()
         .subscribe(result => {
           var res=result as Array<any>
           if (res!=this.hc.data){

@@ -32,8 +32,7 @@
             </div>
             
         </div>
-
-<div class="list-group users-list">
+<div class="list-group users-list" *ngIf="!loading">
     <div *ngFor="let item of items_filtered_etu" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="row" >
             <div class="col col-md-8 text-col">
@@ -49,6 +48,7 @@
         </div>
     </div>
     </div>
+    
 </mat-tab>
 <mat-tab label="Professeurs">
 
@@ -71,8 +71,8 @@
 
 
 
-
-    <div class="list-group users-list">
+    
+    <div class="list-group users-list" *ngIf="!loading">
         <div *ngFor="let item of items_filtered_prof" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="row" >
                 <div class="col col-md-8 text-col">
@@ -88,10 +88,11 @@
             </div>
         </div>
         </div>
+        
 
 </mat-tab>
 
 
 </mat-tab-group>
-
 <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
+

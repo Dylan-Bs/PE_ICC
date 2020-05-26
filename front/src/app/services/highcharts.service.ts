@@ -94,12 +94,7 @@ export class HighchartsService {
 
 
       if (! isNaN(parseInt(data[k].wage))){
-        if (this.etu_wage.length==0){
-        
-          this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id})
-        }else{
-          this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id})
-        }
+        this.etu_wage.push({"name":data[k].name,"y":parseFloat(data[k].wage),selected:false,"id":data[k].id,currency:':val €'})
       }
 
       

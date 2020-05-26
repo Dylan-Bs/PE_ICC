@@ -1,4 +1,4 @@
-import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA,LOCALE_ID } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { StatsComponent } from './stats/stats.component';
 import { ListeEtudComponent } from './liste-etud/liste-etud.component';
@@ -44,6 +44,9 @@ import { StatsResolver } from './stats/stats.resolver';
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [ViewDetailsResolver,StatsResolver],
+  providers: [ViewDetailsResolver,StatsResolver,{
+    provide: LOCALE_ID,
+    useValue: 'fr-FR'
+  }],
 })
 export class ProfModule { }

@@ -4,6 +4,8 @@ import { STATE } from 'src/app/interfaces/interface';
 import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 import { MatDialog, MatDialogRef, MAT_DIALOG_DATA } from '@angular/material/dialog';
 import { saveAs } from 'file-saver';
+import { ConnexionService } from 'src/app/services/connexion.service';
+
 
 @Component({
   selector: 'app-import-users',
@@ -15,7 +17,7 @@ export class ImportUsersComponent {
   files: any[] = [];
 
   constructor(public dialog: MatDialog,public api:ApiService,public dialogRef: MatDialogRef<ImportUsersComponent>,
-    @Inject(MAT_DIALOG_DATA) public data: any){
+    @Inject(MAT_DIALOG_DATA) public data: any,public conne:ConnexionService){
 
   }
 
@@ -72,10 +74,11 @@ export class ImportUsersComponent {
    * @param files (Files List)
    */
   prepareFilesList(files: Array<any>) {
+    
     for (const item of files) {
       item.progress = 0;
       this.files.push(item);
-      let fileReader: FileReader = new FileReader();
+      /*let fileReader: FileReader = new FileReader();
       fileReader.readAsText(item);
       fileReader.onload = ev => {
         let csvdata = fileReader.result.toString();
@@ -86,9 +89,15 @@ export class ImportUsersComponent {
         },err=>{
           alert("Erreur lors de l'importation")
         })
+        
 
-      }
-      
+      }*/
+      this.api.uploadCSVFile(item,this.conne).subscribe(
+        result => {
+          this.openDialog()
+      },err=>{
+        alert("Erreur lors de l'importation")
+      })
     }
     
     this.uploadFilesSimulator(0);

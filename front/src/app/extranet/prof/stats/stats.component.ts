@@ -5,6 +5,7 @@ import { HighchartsService } from 'src/app/services/highcharts.service';
 import * as HighchartsMore from "highcharts/highcharts-more";
 import { Student } from 'src/app/interfaces/interface';
 import { ActivatedRoute } from '@angular/router';
+import { ConnexionService } from 'src/app/services/connexion.service';
 
 declare var require: any;
 require('highcharts/highcharts-more')(Highcharts);
@@ -21,10 +22,10 @@ require('highcharts/modules/funnel')(Highcharts);
 export class StatsComponent implements OnInit {
 
 
-    item:Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
+    item:Student={"email":"","first_name":"","last_name":"","company":"","wage":"0","option":"","promotion":0,"working_city":""};
 
   constructor(
-    public api: ApiService,public hc:HighchartsService,private route: ActivatedRoute
+    public api: ApiService,public hc:HighchartsService,private route: ActivatedRoute,public conne:ConnexionService
   ) {
     
    }
@@ -189,7 +190,7 @@ export class StatsComponent implements OnInit {
         },
         plotLines: [{
         label: {
-                text:'<b>Moyenne</b> '+this.hc.mean_etu_wage().toFixed(2),
+                text:'<b>Moyenne</b> '+(new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(this.hc.mean_etu_wage())),
                 align: 'left',
                 style: {
                     color: 'red',
@@ -206,7 +207,7 @@ export class StatsComponent implements OnInit {
         enabled: false
     },
     tooltip: {
-        pointFormat: 'Salaire: <b>{point.y:.2f} €</b>'
+        pointFormat: 'Salaire: <b>{point.y:,.2f} €</b>'
     },
     series: [{name: 'Diplômés',color : "#7cb5ec",
         data: this.hc.etu_wage,
@@ -263,7 +264,7 @@ export class StatsComponent implements OnInit {
         minSize: '10%',
         maxSize: '100%',
         zMin: 0,
-        zMax: 1000,
+        zMax: 10,
         layoutAlgorithm: {
           gravitationalConstant: 0.05,
           splitSeries: true,
@@ -299,7 +300,7 @@ export class StatsComponent implements OnInit {
   }
 
   tabchange($event){
-      if($event.index==2 && this.item.email=="..."){
+      if($event.index==2 && this.item.email==""){
         this.get_detail(this.hc.etu_wage[0].id)
         
       }
