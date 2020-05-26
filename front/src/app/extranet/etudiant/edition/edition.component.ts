@@ -98,9 +98,9 @@ export class EditionComponent implements OnInit {
       last_name: [this.item.last_name, Validators.required ],
       promotion: [this.item.promotion, Validators.required ],
       option: [this.item.option, Validators.required ],
-      company: [this.item.company, Validators.required ],
-      working_city: [this.item.working_city, Validators.required ],
-      wage: [this.item.wage, Validators.required ],
+      company: [this.item.company],
+      working_city: [this.item.working_city],
+      wage: [this.item.wage],
       role: [0, Validators.required ],
     });
   }
@@ -160,7 +160,7 @@ export class EditionComponent implements OnInit {
   }
 
   anonymisation(){
-    this.openDialog({state:STATE.warning,text:"Êtes-vous sur de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
+    this.openDialog({state:STATE.warning,text:"Êtes-vous sûr de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
     
   }
 
