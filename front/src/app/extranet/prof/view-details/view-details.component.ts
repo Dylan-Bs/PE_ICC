@@ -63,9 +63,9 @@ export class ViewDetailsComponent implements OnInit {
         if (this.item.working_city == "") {
           this.item.working_city = "Non renseigné"
         }
-        // if (this.item.linkedin_url == "") {
-        //   this.item.linkedin_url = "Non renseigné"
-        // }
+        if (this.item.linkedin_url == "") {
+          this.item.linkedin_url = "Non renseigné"
+        }
         if (isNaN(this.item.wage)) {
           this.item.wage = "Non renseigné"
         }
