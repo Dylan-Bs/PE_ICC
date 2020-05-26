@@ -92,6 +92,9 @@ export class EditionComponent implements OnInit {
   }
 
   createForm() {
+    if (this.item.linkedin_url == "Non renseigné") {
+      this.item.linkedin_url =''
+    }
     this.exampleForm = this.fb.group({
       email: [this.item.email,Validators.required],
       first_name: [this.item.first_name, Validators.required ],

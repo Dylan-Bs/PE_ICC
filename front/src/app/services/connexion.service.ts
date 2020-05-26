@@ -24,6 +24,8 @@ export class ConnexionService {
   date_expiration:Date
   savedinfo:any;
 
+  crawlers:object={}
+
   constructor(public router:Router, public api:ApiService, public hc:HighchartsService, public dialog:MatDialog) {
     this.connecte=false;
     this.form_send=false;

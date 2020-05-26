@@ -1,8 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ConnexionService } from '../../../services/connexion.service';
-import { Student } from 'src/app/interfaces/interface';
+import { Student, STATE } from 'src/app/interfaces/interface';
 import { ApiService } from 'src/app/services/api.service';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirmation-dialog.component';
 
 
 @Component({
@@ -27,7 +29,8 @@ export class ListeEtudComponent implements OnInit {
   constructor(
     public api : ApiService,
     private router: Router,
-    public conne:ConnexionService
+    public conne:ConnexionService,
+    public dialog:MatDialog
   ) { }
 
   ngOnInit() {
@@ -38,9 +41,9 @@ export class ListeEtudComponent implements OnInit {
     this.loading=true
     this.api.getEtudByOption(this.conne.user["option"])
     .subscribe(result => {
-      console.log(result)
       this.loading=false
       var res =result as Array<Student>
+      res=res.filter(item=>item.hasOwnProperty("id")==true)
       this.items = res;
       this.items_name_filtered = res;
       this.items_promo_filtered = res;
@@ -50,7 +53,7 @@ export class ListeEtudComponent implements OnInit {
   }
 
   viewDetails(item){
-    this.router.navigate(['extranet/prof/details/'+ item.email]);
+    this.router.navigate(['extranet/prof/details/'+ item.id]);
   }
 
   capitalizeFirstLetter(value){
@@ -81,12 +84,30 @@ export class ListeEtudComponent implements OnInit {
     return result;
   }
 
-  crawlStudent(item,token){
-    
-    console.log("1 : "+item.id);
+  crawlStudent(id){
+    this.conne.crawlers[id]=false
+    this.api.crawlStudent(id).subscribe(
+      result=>{
+        
+        this.openDialog()
+      },err=>{
+        alert(err)
+      }
+    );
 
-    this.api.crawlStudent(item.id,token);
-
     
+  }
+
+
+  openDialog(data={state:STATE.confirm,text:"La demande de mise à jour a été effectué avec succès."},width="300px"): void {
+    const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
+      width: width,
+      data: data
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      
+      
+    });
   }
 }
