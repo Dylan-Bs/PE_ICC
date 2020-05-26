@@ -33,13 +33,10 @@ export class CollecteComponent implements OnInit {
   professionalForm: FormGroup;
   validationForm: FormGroup;
 
-  loading:Boolean=false;
-  
-  
-  max:number=(new Date()).getFullYear();
-  promo_value:number=this.max;
-  
-  
+  loading: Boolean = false;
+
+  max: number = (new Date()).getFullYear();
+  promo_value: number = this.max;
 
   optionsIng3Groups: optionsIng3Group[] = [
     {
@@ -48,7 +45,7 @@ export class CollecteComponent implements OnInit {
         { value: 'icc', viewValue: 'Ingénierie Cloud Computing' },
         { value: 'iapau', viewValue: 'Intelligence Artificielle' },
         { value: 'imsi', viewValue: 'Ingénierie Mathématique et Simulation Numérique' },
-        { value: 'erp', viewValue: 'Intégration ERP'},
+        { value: 'erp', viewValue: 'Intégration ERP' },
       ]
     },
     {
@@ -58,17 +55,17 @@ export class CollecteComponent implements OnInit {
         { value: 'iacergy', viewValue: 'Intelligence Artificielle' },
         { value: 'vc', viewValue: 'Visual Computing' },
         { value: 'fintech', viewValue: 'Finance et Technologie' },
-        { value: 'ingfin', viewValue: 'Ingénierie Financière'},
-        { value: 'ds', viewValue: 'Data Science'},
-        { value: 'bi', viewValue: 'Business Intelligence & Analytics'},
-        { value: 'secu', viewValue: 'Cybersécurité'},
+        { value: 'ingfin', viewValue: 'Ingénierie Financière' },
+        { value: 'ds', viewValue: 'Data Science' },
+        { value: 'bi', viewValue: 'Business Intelligence & Analytics' },
+        { value: 'secu', viewValue: 'Cybersécurité' },
       ]
     },
   ];
 
-  indeterminate:boolean = false;
-  labelPosition:string = 'after';
-  disabled:boolean = false;
+  indeterminate: boolean = false;
+  labelPosition: string = 'after';
+  disabled: boolean = false;
 
   validation_messages = {
     'email': [
@@ -88,17 +85,17 @@ export class CollecteComponent implements OnInit {
     'optionsIng3Control': [
       { type: 'required', message: 'L\' option est requise' },
     ],
-    'promo' :[
+    'promo': [
       { type: 'required', message: 'L\' année de promotion est requise' },
       { type: 'promo', message: 'Entrez une année comprise entre 1990 et l\'année actuelle' }
     ]
   };
-  
+
 
   constructor(
     private fb: FormBuilder,
     public conne: ConnexionService,
-    public api:ApiService,
+    public api: ApiService,
     public dialog: MatDialog,
     private router: Router
   ) { }
@@ -114,11 +111,14 @@ export class CollecteComponent implements OnInit {
       last_name: ['', Validators.required],
       first_name: ['', Validators.required],
       promo: ['', [Validators.required, this.checkPromo]],
-      optionsIng3Control: ['', Validators.required]});
+      optionsIng3Control: ['', Validators.required]
+    });
     this.professionalForm = this.fb.group({
       entreprise: [''],
       ville: [''],
-      salaire: ['']});
+      salaire: [''],
+      linkedin_url: ['']
+    });
     this.validationForm = this.fb.group({
       autorisationCollecte: ['']
     });
@@ -132,11 +132,14 @@ export class CollecteComponent implements OnInit {
       last_name: new FormControl('', Validators.required),
       first_name: new FormControl('', Validators.required),
       promo: new FormControl('', [Validators.required, this.checkPromo]),
-      optionsIng3Control: new FormControl('', Validators.required)});
+      optionsIng3Control: new FormControl('', Validators.required)
+    });
     this.professionalForm = this.fb.group({
       entreprise: new FormControl(''),
       ville: new FormControl(''),
-      salaire: new FormControl('')});
+      salaire: new FormControl(''),
+      linkedin_url: new FormControl('')
+    });
     this.validationForm = this.fb.group({
       autorisationCollecte: new FormControl('')
     });
@@ -145,46 +148,46 @@ export class CollecteComponent implements OnInit {
 
   onSubmit() {
 
-    let a:Object=this.personalForm.value
-    let b:Object=this.professionalForm.value
+    let a: Object = this.personalForm.value
+    let b: Object = this.professionalForm.value
 
-    let value:Object=Object.assign({}, a, b);
-    this.loading=true
+    let value: Object = Object.assign({}, a, b);
+    this.loading = true
 
     console.log(value)
 
     this.api.createUser(value).subscribe(
-      result=>{
-        this.loading=false;
+      result => {
+        this.loading = false;
         this.resetFields();
         this.conne.form_send = true;
         this.openDialog()
       },
-      err=>{
+      err => {
         alert("Error")
       }
     )
 
   }
 
-  openDialog(data={state:STATE.confirm,text:"Vos données ont été transmises, merci pour votre coopération"}): void {
+  openDialog(data = { state: STATE.confirm, text: "Vos données ont été transmises, merci pour votre coopération" }): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
       data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result==ANSWER.ok){
+      if (result == ANSWER.ok) {
         this.router.navigate(['/connexion']);
       }
-      
+
     });
   }
 
   checkPromo(control: FormControl) {
-    let maxi:number;
+    let maxi: number;
     maxi = (new Date()).getFullYear();
-    return control.value >= 1990 && control.value <= maxi ? null : {'promo': true};
+    return control.value >= 1990 && control.value <= maxi ? null : { 'promo': true };
   }
 
 }

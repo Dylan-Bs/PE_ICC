@@ -84,7 +84,8 @@ export class ApiService {
       "option": value.optionsIng3Control,
       "company": value.entreprise,
       "working_city": value.ville,
-      "wage": parseInt(value.salaire)
+      "wage": parseInt(value.salaire),
+      "linkedin_url": value.linkedin_url
     }
     return this.http.put(`${this.apiUrl}/register`,info,this.httpOptions);
   }
