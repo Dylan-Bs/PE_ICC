@@ -144,102 +144,85 @@ export class StatsComponent implements OnInit {
   option_wage: Highcharts.Options = {
 
     chart: {
-        backgroundColor: '#00000000',
-        type: 'column'
+      backgroundColor: '#00000000',
+      type: 'column'
+  },
+  
+  plotOptions: {
+    column:{
+      allowPointSelect: true,
+      cursor: 'pointer',states: {
+              select: {
+                  color: "#DDDDDD"
+              }
+          }
     },
-    
-    plotOptions: {
-    	column:{
-      	allowPointSelect: true,
-        cursor: 'pointer',states: {
-                select: {
-                    color: "#a6cdf2"
-                }
-            }
-      },
-      series: {
-        cursor: 'pointer',
-        point: {
-            events: {
-                click: function (e) {
-                    const p = e.point
-                   
-                    this.get_detail(p["id"])
-                }.bind(this),
-            }
-        }
-    }
-    },
-    title: {
-        text: 'Salaire par an des diplômés'
-    },
-    xAxis: {
-        type: 'category',
-        labels: {
-            rotation: -45,
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        }
-    },
-    yAxis: {
-        min: 0,
-        title: {
-            text: 'Salaire par an (€)'
-        },
-        plotLines: [{
-        label: {
-                text:'<b>Moyenne</b> '+(new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(this.hc.mean_etu_wage())),
-                align: 'left',
-                style: {
-                    color: 'red',
-                    fontWeight: 'bold'
-                }
-            },
-        color: 'red',
-        value : this.hc.mean_etu_wage(),
-        zIndex: 5 // To not get stuck below the regular plot lines
-    }]
-    },
-    
-    legend: {
-        enabled: false
-    },
-    tooltip: {
-        pointFormat: 'Salaire: <b>{point.y:,.2f} €</b>'
-    },
-    series: [{name: 'Diplômés',color : "#7cb5ec",
-        data: this.hc.etu_wage,
-        
-        
-        dataLabels: {
-            enabled: true,
-            rotation: -90,
-            color: '#FFFFFF',
-            align: 'right',
-            format: '{point.y:.2f}', // one decimal
-            y: 10, // 10 pixels down from the top
-            style: {
-                fontSize: '13px',
-                fontFamily: 'Verdana, sans-serif'
-            }
-        },
-        point: {
-                events: {
-                    select: function(event) {
-
-                    },
-                    unselect: function(event) {
-                        event.preventDefault();
-                    }
-                }
-            }
-        
-    }] as Array<any>
-    ,credits:{
-        enabled:false
+    series: {
+      stacking: 'normal',
+      cursor: 'pointer',
+      point: {
+          events: {
+              click: function (e) {
+                  const p = e.point
+                 this.get_detail(p["id"])
+                  
+              }.bind(this),
+          }
       }
+  }
+  },
+  title: {
+      text: 'Salaire par an des diplômés'
+  },
+  xAxis: {
+      type: 'category',
+      title: {
+          text: 'Diplomés'
+      },
+      labels: {
+          enabled:false
+      }
+  },
+  legend: {
+      layout: 'vertical',
+      align: 'right',
+      verticalAlign: 'top',
+      x: -40,
+      y: 80,
+      floating: true,
+      borderWidth: 1,
+      backgroundColor:
+          Highcharts.defaultOptions.legend.backgroundColor || '#FFFFFF',
+      shadow: true
+  },
+  yAxis: {
+      min: 0,
+      title: {
+          text: 'Salaire par an (€)'
+      },
+      plotLines: [{
+      label: {
+              text:'<b>Moyenne</b> '+(new Intl.NumberFormat('fr-FR', { style: 'currency', currency: 'EUR' }).format(this.hc.mean_etu_wage())),
+              align: 'left',
+              style: {
+                  color: 'red',
+                  fontWeight: 'bold'
+              }
+          },
+      color: 'red',
+      value : this.hc.mean_etu_wage(),
+      zIndex: 5 // To not get stuck below the regular plot lines
+  }]
+  },
+  tooltip: {
+      headerFormat: "Cliquez pour plus d'informations",
+      pointFormat: '<br>Salaire: <b>{point.y:,.2f} €</b>'
+  },
+  series: this.hc.etu_wage_option
+  ,credits:{
+      enabled:false
+    }
+
 
   }
 

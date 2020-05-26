@@ -1,6 +1,6 @@
 {
     "/api/*": {
-        "target": "http://92f6009f.ngrok.io",
+        "target": "http://peicc.bersans.eu:8000",
         "secure": false,
         "pathRewrite": {
           "^/api": ""

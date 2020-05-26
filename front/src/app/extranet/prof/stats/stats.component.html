@@ -50,6 +50,9 @@
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
         <mat-card-content>Salaire : {{item.wage| currency:"EUR"}}</mat-card-content>
       </mat-card>
+      <mat-card style="margin: 20px;" *ngIf="item.option!=this.conne.userOption">
+        <mat-card-title>Vous ne pouvez pas voir le détail de ce diplomé car vos options sont différentes</mat-card-title>
+      </mat-card>
     </mat-tab>
     <mat-tab label="Entreprises">
       <highcharts-chart 

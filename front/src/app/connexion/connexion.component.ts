@@ -73,7 +73,6 @@ export class ConnexionComponent implements OnInit {
     this.loading = true
     this.error = false
 
-
     this.api.connect(value).subscribe(
       result => {
         this.loading = false
