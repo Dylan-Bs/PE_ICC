@@ -13,5 +13,7 @@ urlpatterns = [
     url(r'^user', include('User.urls'), name="user"),
     url(r'^users', include('Users.urls'), name="users"),
     url(r'^import', include('Import.urls'), name="import"),    
+    url(r'^forgottenpassword', include('ForgottenPassword.urls'), name="forgottenpassword"),    
+    url(r'^resetpassword', include('ResetPassword.urls'), name="resetpassword"),    
     url(r'^admin', admin.site.urls, name="admin")
 ]

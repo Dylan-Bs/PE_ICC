@@ -28,6 +28,7 @@ class User(views.APIView):
                 if(user != None):
                     email = request.data['email']
                     password = request.data['password']
+                    user.username = email
                     user.email = email
                     user.set_password(password)
                     user.save()
