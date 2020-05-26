@@ -27,6 +27,8 @@ export class GestionDesComptesComponent implements OnInit {
   items_filtered_prof : Array<User>;
   items_filtered_etu : Array<User>;
 
+  idtodelete:number=-1
+
   options_bddtoview: object = {
     'icc': 'Ingénierie Cloud Computing',
     'iapau': 'Intelligence Artificielle à Pau',
@@ -118,7 +120,7 @@ export class GestionDesComptesComponent implements OnInit {
 
 
   openDialog(data={state:STATE.confirm,text:"Le compte professeur a bien été créé"}): void {
-    this.getData()
+    
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: '300px',
       data: data
@@ -126,6 +128,20 @@ export class GestionDesComptesComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       
+      if (result==ANSWER.yes){
+        this.api.deleteUserAdmin({"id":this.idtodelete})
+        .subscribe(
+          result => {
+            this.idtodelete=-1
+            this.openDialog({state:STATE.confirm,text:"Le compte a bien été supprimé."})
+          },
+          err => {
+            console.log(err);
+          }
+        )
+      }else{
+        this.getData()
+      }
     });
   }
 
@@ -153,6 +169,13 @@ export class GestionDesComptesComponent implements OnInit {
       }
       
     });
+
+    
+  }
+  delete(id){
+      this.idtodelete=id
+      this.openDialog({state:STATE.warning,text:"Etes vous sur de supprimer ce compte et ainsi perdre toutes ses données."})
+    
   }
 
 }

@@ -40,10 +40,13 @@
                 <small *ngIf="item.promotion>1970">Promo: {{item.promotion}}</small>
                 <!--<small *ngIf="item.role==1">Option: {{item.option}}</small>-->
             </div>
-            <div class="col col-md-2 actions-col">
-                <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
-                        <i class="material-icons">edit</i> Edit
+            <div class="col flex actions-col">
+                <button mat-raised-button color="primary" (click)="viewDetails(item)" type="button">
+                        <i class="material-icons">edit</i> Editer
                 </button>
+                <button mat-raised-button color="warn" (click)="delete(item.id)" type="button">
+                    <i class="material-icons">delete</i> Supprimer
+            </button>
             </div>
         </div>
     </div>
@@ -80,10 +83,13 @@
                     <small>Option: {{options_bddtoview[item.option]}}</small>
                     <!--<small *ngIf="item.role==1">Option: {{item.option}}</small>-->
                 </div>
-                <div class="col col-md-2 actions-col">
-                    <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
-                            <i class="material-icons">edit</i> Edit
+                <div class="col flex actions-col">
+                    <button mat-raised-button color="primary" (click)="viewDetails(item)" type="button">
+                            <i class="material-icons">edit</i> Editer
                     </button>
+                    <button mat-raised-button color="warn" (click)="delete(item.id)" type="button">
+                        <i class="material-icons">delete</i> Supprimer
+                </button>
                 </div>
             </div>
         </div>
