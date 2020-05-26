@@ -5,11 +5,9 @@ import pika
 import pymongo
 from queue import Queue
 import json
+from datetime import datetime, timedelta
 from functools import partial
 from os import environ
-
-# TODO: dockerfile
-# TODO: handle duplicate requests
 
 mongo = pymongo.MongoClient(
     f"mongodb://{environ['MONGO_USER']}:{environ['MONGO_PASS']}@mongo"
@@ -31,25 +29,53 @@ def commit(student_id, changes):
 
 def crawl_one(delivery_tag, student_id, url, first_name, last_name):
     try:
-        if not url:
-            url = crawler.find_user_url(f'{first_name} {last_name}')
+        now = datetime.now()
 
-        res = crawler.crawl_page(url)
+        old = db.tasks.find_one(
+            {'id': student_id},
+            sort=[('date', -1)]
+        )
 
-        if res:
-            changes = {}
-            if res['company'] != None:
-                changes['company'] = res['company']
-            if res['work_place'] != None:
-                changes['working_city'] = res['work_place']
-
-            retry(2, pymongo.errors.AutoReconnect,
-                partial(commit, student_id, changes), None,
-                'Connection to mongo lost. Retrying...'
+        if old and old['status'] == 'doing':
+            print(f'Already crawling {student_id}: skipping')
+        elif old and old['status'] == 'done' and old['date'] > now - timedelta(seconds=2):
+            print(f'Already crawled {student_id} less than 2 seconds ago: skipping')
+        else:
+            db.tasks.replace_one(
+                {'id': student_id},
+                {
+                    'id': student_id,
+                    'date': now,
+                    'status': 'doing',
+                },
+                upsert=True
             )
 
-            rmq_conn.add_callback_threadsafe(
-                partial(channel.basic_ack, delivery_tag)
+            if not url:
+                url = crawler.find_user_url(f'{first_name} {last_name}')
+
+            res = crawler.crawl_page(url)
+
+            if res:
+                changes = {}
+                if res['company'] != None:
+                    changes['company'] = res['company']
+                if res['work_place'] != None:
+                    changes['working_city'] = res['work_place']
+
+                retry(2, pymongo.errors.AutoReconnect,
+                    partial(commit, student_id, changes), None,
+                    'Connection to mongo lost. Retrying...'
+                )
+
+            db.tasks.replace_one(
+                {'id': student_id},
+                {
+                    'id': student_id,
+                    'date': datetime.now(),
+                    'status': 'done',
+                },
+                upsert=True
             )
     except:
         rmq_conn.add_callback_threadsafe(
@@ -57,6 +83,11 @@ def crawl_one(delivery_tag, student_id, url, first_name, last_name):
         )
 
         raise
+
+    rmq_conn.add_callback_threadsafe(
+        partial(channel.basic_ack, delivery_tag)
+    )
+
 
 queue = Queue(1)
 
@@ -77,6 +108,7 @@ rmq_conn = pika.BlockingConnection(
 ))
 
 channel = rmq_conn.channel()
+channel.basic_qos(prefetch_count=1)
 channel.queue_declare(queue='crawl')
 
 channel.basic_consume(
