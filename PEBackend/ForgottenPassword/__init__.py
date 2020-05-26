@@ -1,3 +1,3 @@
 """
-Package for Authenticate.
+Package for ForgottenPassword.
 """

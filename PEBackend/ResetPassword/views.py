@@ -9,12 +9,10 @@ from django.http import JsonResponse
 from django.core.mail import send_mail
 from Teacher.models import Teacher
 from Student.models import Student
-import jwt
 import datetime
 import time
-import uuid;
 
-class ForgottenPassword(APIView):
+class ResetPassword(APIView):
 
     def post(self, request, *args, **kwargs):
         if not request.data:
@@ -22,20 +20,11 @@ class ForgottenPassword(APIView):
         else:
             email_r = request.data.get('email', '')
             if email_r == '':
-                resp = JsonResponse({'Error': "Please provide email"}, status="400")
-            else: 
-                user = User.objects.get(username = email_r)
+                resp = JsonResponse({'Error': "Please provide "}, status="400")
+            else:
+                user = User.objects.filter(username = email_r)
                 if user and user.is_active:
-                    session = uuid.uuid4()
-                    expiry = datetime.now() + datetime.timedelta(hours=1)
-                    token = jwt.encode({'id':user.id,'session': session, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
-                    send_mail(
-                        'Réinitialisation du mot de passe',
-                        'Pour rénitialiser votre mot de passe veuillez cliquer sur le lien ci-dessous: \n https://c81fbd85.ngrok.io/',
-                        'no-reply@peicc.com',
-                        [user.username],
-                        fail_silently=False,
-                    )
+                    print(" ")
                 elif user and not user.is_active:
                     resp = HttpResponse(
                     json.dumps({'Forbidden': "You disabled your account, register again with the same email"}),
