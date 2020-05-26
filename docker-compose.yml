@@ -19,6 +19,27 @@ services:
             - "27017:27017"
         networks:
             - backend
+    
+    rabbitmq:
+        image: rabbitmq:3.8-management
+        container_name: rabbitmq
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: dockerpswd
+        ports:
+            - "15672:15672"
+        networks:
+            - backend
+
+    spotlight:
+        image: dbpedia/spotlight-french
+        ports:
+            - "2225:80"
+        command: "spotlight.sh"
+        environment:
+            JAVA_OPTS: -Xmx8g
+        networks:
+            - backend
 
     migration:
         build: ./PEBackend
@@ -50,6 +71,9 @@ services:
             context: ./PEBackend/ 
             dockerfile: Dockerfile   
         container_name: django
+        environment:
+            RMQ_USER: admin
+            RMQ_PASS: dockerpswd
         volumes:
             - web-django:/usr/src/PEBackend
             - web-static:/usr/src/static
@@ -57,17 +81,21 @@ services:
             - "8000:8000"
         depends_on:
             - migration
-        networks: 
+        networks:
             - backend
             - frontend
 
-    spotlight:
-        image: dbpedia/spotlight-french
-        ports:
-            - "2225:80"
-        command: "spotlight.sh"
+    linkedin_crawler:
+        build: ./workers/
         environment:
-            JAVA_OPTS: -Xmx8g
+            PROVIDER: linkedin
+
+            MONGO_USER: admin
+            MONGO_PASS: dockerpswd
+            RMQ_USER: admin
+            RMQ_PASS: dockerpswd
+        depends_on:
+            - rabbitmq
         networks:
             - backend
 

@@ -7,9 +7,10 @@ from selenium.webdriver.support import expected_conditions as EC
 
 from selenium.common.exceptions import TimeoutException, WebDriverException
 
-from .spotlight import annotate
+from services.spotlight import annotate
 
 from functools import partial
+import json
 
 URL = "https://www.linkedin.com/"
 
@@ -22,9 +23,11 @@ class LinkedinCrawler:
         opts.add_argument('--lang=fr')
         opts.add_argument('--no-sandbox')
         self.driver = webdriver.Chrome(options=opts)
-        self.wdriver = WebDriverWait(self.driver, 120)
+        self.wdriver = WebDriverWait(self.driver, 30)
 
     def login(self, username, password):
+        print('Crawler logging in...')
+
         self.driver.get(URL)
 
         login_btn = self.wdriver.until(
@@ -37,14 +40,14 @@ class LinkedinCrawler:
             .pause(1.5)
             .click(login_btn)
         ).perform()
-        print("print1")
+
         uname_field = self.wdriver.until(
             EC.element_to_be_clickable((
                 By.CSS_SELECTOR,
                 'input#username'
             ))
         )
-        print("print2")
+
         (ActionChains(self.driver)
             .pause(0.5)
             .send_keys(username)
@@ -77,8 +80,11 @@ class LinkedinCrawler:
                 'launchpad-wormhole'
             ))
         )
-    
+
+        print('Crawler logged in!')
+
     def find_user_url(self, query):
+        print(f'Crawler finding URL for {query}...')
         self.driver.get(f'{URL}/feed/')
 
         profile_bg = self.wdriver.until(
@@ -102,19 +108,19 @@ class LinkedinCrawler:
             .send_keys(Keys.ENTER)
         ).perform()
 
-        print("print3")
         profile_bg = self.wdriver.until(
             EC.presence_of_element_located((
                 By.CSS_SELECTOR,
                 '.profile-background-image'
             ))
         )
-        print("print4")
 
 
+        print(f'Crawler found URL for {query}: {self.driver.current_url}')
         return self.driver.current_url
 
     def crawl_page(self, url):
+        print(f'Crawler crawling page {url} ...')
         self.driver.get(url)
 
         profile_bg = self.wdriver.until(
@@ -137,7 +143,7 @@ class LinkedinCrawler:
                 '.pv-top-card--list-bullet li:first-child'
             )
 
-            return {
+            res = {
                 'company': company_box.text,
                 'work_place': location_box.text
             }
@@ -145,62 +151,44 @@ class LinkedinCrawler:
             print('Could not extract specific DOM elements', e)
             print('Falling back to more general analysis...')
 
-        try:
-            big_box = self.driver.find_element_by_css_selector(
-                'main.core-rail'
-            )
+            try:
+                big_box = self.driver.find_element_by_css_selector(
+                    'main.core-rail'
+                )
 
-            top_box = self.driver.find_element_by_css_selector(
-                '.pv-top-card > .ph5.pb5 > .mt2'
-            )
+                top_box = self.driver.find_element_by_css_selector(
+                    '.pv-top-card > .ph5.pb5 > .mt2'
+                )
 
-            bg_box = self.driver.find_element_by_id('oc-background-section')
+                bg_box = self.driver.find_element_by_id('oc-background-section')
 
-            texts = (
-                top_box.text,
-                bg_box.text,
-                big_box.text
-            )
-        except WebDriverException as e:
-            print('Could not extract general web elements', e)
-            return None
-        
-        company_candidates  = annotate(texts, ['dbo:Company', 'DBpedia:Company', 'DBpedia:Organisation'])
-        place_candidates = annotate(texts, ['DBpedia:Location', 'DBpedia:Place'])
-        
-        if not company_candidates and not place_candidates:
-            print('Nothing interesting could be annotated')
-            return None
-        
-        def get_result(candidates):
-            if not candidates: return None
-            candidate = candidates.pop(0)
-            uri = candidate['@URI']
-            return ' '.join(uri.split('/')[-1].split('_'))
+                texts = (
+                    top_box.text,
+                    bg_box.text,
+                    big_box.text
+                )
+            except WebDriverException as e:
+                print('Could not extract general web elements', e)
+                return None
+            
+            company_candidates  = annotate(texts, ['dbo:Company', 'DBpedia:Company', 'DBpedia:Organisation'])
+            place_candidates = annotate(texts, ['DBpedia:Location', 'DBpedia:Place'])
+            
+            if not company_candidates and not place_candidates:
+                print('Nothing interesting could be annotated')
+                return None
+            
+            def get_result(candidates):
+                if not candidates: return None
+                candidate = candidates.pop(0)
+                uri = candidate['@URI']
+                return ' '.join(uri.split('/')[-1].split('_'))
 
-        return {
-            'company': get_result(company_candidates),
-            'work_place': get_result(place_candidates)
-        }
+            res = {
+                'company': get_result(company_candidates),
+                'work_place': get_result(place_candidates)
+            }
 
-
-if __name__ == '__main__':
-    print('`sudo apt install chromium-driver` to use selenium')
-    print('Use LinkedinCrawler(headless=True) to hide browser')
-
-    crawler = LinkedinCrawler(headless=False)
-    try:
-        crawler.login('angivare-bot@yahoo.com', 'CODE_COM1')
-        url = crawler.find_user_url('Wassila Sabbagh')
-        ret = crawler.crawl_page(url)
-
-        if ret is None:
-            print('No results')
-            exit(1)
-
-        for key in ret:
-            print(f'{key.upper()}:')
-            print(ret[key])
-            print('---------------')
-    finally:
-        crawler.driver.quit()
+        print(f'Crawler crawled page {url}')
+        print(f'Response: {json.dumps(res, indent=4)}')
+        return res

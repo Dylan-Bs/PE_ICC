@@ -11,9 +11,6 @@ ENV DATABASE_PORT 27017
 RUN mkdir /src
 WORKDIR /src
 
-RUN apt update &&\
-    apt install -y chromium chromium-driver
-
 RUN pip install --upgrade pip
 
 ADD requirements.txt /src
