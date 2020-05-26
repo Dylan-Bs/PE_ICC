@@ -19,11 +19,12 @@ import { DndDirective } from './import-users/dnd.directive';
 import {  MatDialogModule } from '@angular/material/dialog';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { CreateTeacherComponent } from './create-teacher/create-teacher.component';
+import { EditionComponent } from './edition/edition.component';
 
 
 
 @NgModule({
-  declarations: [GestionDesComptesComponent, EditUserComponent, DndDirective, CreateTeacherComponent],
+  declarations: [GestionDesComptesComponent, EditUserComponent, DndDirective, CreateTeacherComponent, EditionComponent],
   imports: [
     CommonModule,
     AdminRoutingModule,

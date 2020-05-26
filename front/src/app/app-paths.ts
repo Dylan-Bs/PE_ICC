@@ -11,6 +11,7 @@ export const paths = {
   prof: 'prof',
   //path in admin
   import : 'import',
+  edition_ad: 'edit',
   details_ad: 'details/:id',
   //path in etudiant
   details_et: 'edit/:id',

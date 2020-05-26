@@ -34,6 +34,8 @@
       <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
         <span *ngIf="conne.role == 1"> de l'option {{options_bddtoview[conne.userOption] }}</span>.
       </mat-card-content>
+      <mat-card-content><button *ngIf="conne.role == 2" mat-raised-button class="buttonAdmin" color="accent" type="button"
+        routerLink="/extranet/admin/edit"><i class="material-icons">edit</i>Editer mon profil</button></mat-card-content>
       <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
       <div *ngIf="conne.role == 0 && !loading">
         <mat-card-content>Email : {{item.email}}</mat-card-content>
