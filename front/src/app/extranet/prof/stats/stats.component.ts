@@ -22,7 +22,7 @@ require('highcharts/modules/funnel')(Highcharts);
 export class StatsComponent implements OnInit {
 
 
-    item:Student={"email":"","first_name":"","last_name":"","company":"","wage":"0","option":"","promotion":0,"working_city":""};
+    item:Student={"email":"","first_name":"","last_name":"","company":"","wage":"0","option":"","promotion":0,"working_city":"","linkedin_url":"..."};
 
   constructor(
     public api: ApiService,public hc:HighchartsService,private route: ActivatedRoute,public conne:ConnexionService

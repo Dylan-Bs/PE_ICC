@@ -36,7 +36,7 @@ export interface Student{
     company:string;
     working_city:string;
     wage:string;
-
+    linkedin_url:string;
 }
 
 export interface User{

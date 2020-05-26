@@ -53,7 +53,7 @@ export class EditionComponent implements OnInit {
       ]
     },
   ];
-  item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
+  item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","linkedin_url":"..."};
 
   constructor(
     public api:ApiService,
@@ -101,6 +101,7 @@ export class EditionComponent implements OnInit {
       company: [this.item.company],
       working_city: [this.item.working_city],
       wage: [this.item.wage],
+      linkedin_url: [this.item.linkedin_url],
       role: [0, Validators.required ],
     });
   }
