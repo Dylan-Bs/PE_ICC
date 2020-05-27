@@ -37,6 +37,8 @@ import { FooterComponent } from './footer/footer.component';
 import { ConfirmationDialogComponent } from './confirmation-dialog/confirmation-dialog.component';
 import { ImportUsersComponent } from './extranet/admin/import-users/import-users.component';
 import { MdpforgotDialogComponent } from './mdpforgot-dialog/mdpforgot-dialog.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordResolver } from './reset-password/reset-password.resolver';
 
 
 
@@ -52,7 +54,8 @@ import { MdpforgotDialogComponent } from './mdpforgot-dialog/mdpforgot-dialog.co
     FooterComponent,
     ConfirmationDialogComponent,
     ImportUsersComponent,
-    MdpforgotDialogComponent
+    MdpforgotDialogComponent,
+    ResetPasswordComponent
   ],
   imports:[
     BrowserModule,
@@ -81,6 +84,6 @@ import { MdpforgotDialogComponent } from './mdpforgot-dialog/mdpforgot-dialog.co
   schemas: [
     CUSTOM_ELEMENTS_SCHEMA
   ],
-  providers: [PathResolveService]
+  providers: [PathResolveService,ResetPasswordResolver]
 })
 export class AppModule { }

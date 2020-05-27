@@ -10,8 +10,11 @@ import { Erreur404Component } from './erreur404/erreur404.component';
 import { AuthGuard } from './services/auth.guard';
 import { AdminGuard } from './services/admin.guard';
 import { ProfGuard } from './services/prof.guard';
+
 import { paths } from './app-paths';
 import { PathResolveService } from './path-resolve.service';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
+import { ResetPasswordResolver } from './reset-password/reset-password.resolver';
 
 
 const routes: Routes = [
@@ -20,6 +23,7 @@ const routes: Routes = [
   { path: paths.formulaire, component: CollecteComponent },
   { path: paths.rgpd, component: RgpdComponent },
   { path: paths.connexion, component: ConnexionComponent },
+  { path:paths.resetpassword, resolve: { data: ResetPasswordResolver },component:ResetPasswordComponent},
   { path: paths.extranet, loadChildren: () => import('./extranet/extranet.module').then(m => m.ExtranetModule) },
   { path: '**', resolve: { path: PathResolveService }, component: Erreur404Component }
 ];

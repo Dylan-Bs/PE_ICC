@@ -99,6 +99,8 @@ export class ConnexionComponent implements OnInit {
         } else if (err.status == 400) {
           this.errormsg = "Identifiant et/ou mot de passse incorrect(s)."
 
+        }else{
+          this.errormsg = "Connexion impossible avec le serveur."
         }
       }
     )
