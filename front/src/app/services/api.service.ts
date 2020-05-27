@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ConnexionService } from './connexion.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -32,16 +32,31 @@ export class ApiService {
     return this.http.get(`${this.apiUrl}/users?id=`+idstring,this.httpOptions);
   }
 
-  deleteUser(data) {
+  deleteUserAdmin(data) {
     var options=this.httpOptions
     options["body"]=JSON.stringify(data)
     return this.http.delete(`${this.apiUrl}/user`,options);
   }
 
-  uploadCSVFile( file) {
+  deleteUser() {
+    return this.http.delete(`${this.apiUrl}/user`,this.httpOptions);
+  }
+
+  uploadCSVFile( file,token) {
+    /*
     var options=this.httpOptions
-    options.headers=options.headers.set("Content-Type","text/csv");
-    return this.http.put(`${this.apiUrl}/import`, file, options)
+    //options.headers=options.headers.set("Content-Type","text/csv");
+    return this.http.put(`${this.apiUrl}/import`, file, options)*/
+
+    let formData:FormData = new FormData();
+    formData.append('uploadFile', file, file.name);
+    let headers = new HttpHeaders();
+    /** In Angular 5, including the header Content-Type can invalidate your request */
+    headers.append('Content-Type', 'multipart/form-data');
+    headers.append('Accept', 'application/json');
+    headers.append('Authorization', token);
+    let options = { headers: headers,withCredentials: true };
+    return this.http.put(`${this.apiUrl}/import`, formData, options)
     
 }
 
@@ -69,7 +84,8 @@ export class ApiService {
       "option": value.optionsIng3Control,
       "company": value.entreprise,
       "working_city": value.ville,
-      "wage": parseInt(value.salaire)
+      "wage": parseInt(value.salaire),
+      "linkedin_url": value.linkedin_url
     }
     return this.http.put(`${this.apiUrl}/register`,info,this.httpOptions);
   }
@@ -78,6 +94,14 @@ export class ApiService {
 
   connect(value) {
     return this.http.post(`${this.apiUrl}/authenticate`,JSON.stringify(value),this.httpOptions);
+  }
+
+  forgottenpassword(value){
+    return this.http.post(`${this.apiUrl}/forgottenpassword`,JSON.stringify(value),this.httpOptions);
+  }
+
+  resetpassword(value,token){
+    return this.http.post(`${this.apiUrl}/resetpassword`,JSON.stringify({"password":value,"session":token}),this.httpOptions);
   }
 
   //Students
@@ -97,12 +121,12 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/student`,JSON.stringify(value),this.httpOptions);
   }
 
-  getEtudiants() {
-    return this.http.get(`${this.apiUrl}/students`,this.httpOptions);
+  getEtudiants(filter:string="") {
+    return this.http.get(`${this.apiUrl}/students`+filter,this.httpOptions);
   }
 
   getEtudByOption(optioning3) {
-    return this.http.get(`${this.apiUrl}/students?option=${optioning3}`);
+    return this.http.get(`${this.apiUrl}/students?option=${optioning3}`,this.httpOptions);
   }
 
   getEtudByPromo(promo) {
@@ -123,6 +147,11 @@ export class ApiService {
 
   createTeacher(value){
     return this.http.put(`${this.apiUrl}/teacher`,JSON.stringify(value),this.httpOptions);
+  }
+
+  crawlStudent(id){
+
+    return this.http.get(`${this.apiUrl}/crawl?id=`+id,this.httpOptions)
   }
 
   clean(obj) {

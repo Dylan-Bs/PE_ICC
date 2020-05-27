@@ -19,3 +19,12 @@ section {
   margin-bottom: 3%;
   color: red;
 }
+
+.buttonAdmin{
+  margin-top: 3% !important;
+}
+
+.atobutton:hover{
+  color:white;
+  text-decoration: none;
+}

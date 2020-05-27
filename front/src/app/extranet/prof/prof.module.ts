@@ -19,11 +19,12 @@ import {  MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import {MatTabsModule} from '@angular/material/tabs';
 import {  HighchartsChartModule } from 'highcharts-angular';
 import { StatsResolver } from './stats/stats.resolver';
+import { EditionProfComponent } from './edition-prof/edition-prof.component';
 
 
 
 @NgModule({
-  declarations: [StatsComponent, ListeEtudComponent, ViewDetailsComponent],
+  declarations: [StatsComponent, ListeEtudComponent, ViewDetailsComponent, EditionProfComponent],
   imports: [
     CommonModule,
     ProfRoutingModule,

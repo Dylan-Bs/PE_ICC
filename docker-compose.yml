@@ -43,7 +43,7 @@ services:
 
     migration:
         build: ./PEBackend
-        command: bash -c " sleep 12 &&
+        command: bash -c " sleep 30&&
             python manage.py makemigrations &&
             python manage.py migrate"
         volumes:
@@ -55,7 +55,7 @@ services:
 
     initialization:
         build: ./PEBackend
-        command: bash -c " sleep 20 &&
+        command: bash -c " sleep 50 &&
             python manage.py runscript populate-Database"
         volumes:
             - ./PEBackend:/web-django
@@ -109,7 +109,6 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./front:/PE_ICC/front
-            - '/PE_ICC/front/node_modules'
         ports:
             - "80:4200"
         networks:

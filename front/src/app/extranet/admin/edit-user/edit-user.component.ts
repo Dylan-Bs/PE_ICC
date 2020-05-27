@@ -52,7 +52,7 @@ export class EditUserComponent implements OnInit {
       ]
     },
   ];
-  item: User={"id":0,"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","role":0};
+  item: User={"id":0,"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","linkedin_url":"...","role":0};
   loading:boolean=false;
   role:number=1
 
@@ -81,6 +81,9 @@ export class EditUserComponent implements OnInit {
   }
 
   createForm() {
+    if (this.item.linkedin_url == "Non renseigné") {
+      this.item.linkedin_url =''
+    }
     this.exampleForm = this.fb.group({
       email: [this.item.email],
       password: [this.item.password],
@@ -91,6 +94,7 @@ export class EditUserComponent implements OnInit {
       company: [this.item.company],
       working_city: [this.item.working_city],
       wage: [this.item.wage],
+      linkedin_url: [this.item.linkedin_url],
       role: [this.item.role],
     });
   }
@@ -128,7 +132,7 @@ export class EditUserComponent implements OnInit {
 
     dialogRef.afterClosed().subscribe(result => {
       if (result==ANSWER.yes){
-        this.api.deleteUser({"id":this.item.id})
+        this.api.deleteUserAdmin({"id":this.item.id})
         .subscribe(
           result => {
             this.openDialog({state:STATE.confirm,text:"Le compte a bien été supprimé."})

@@ -13,10 +13,11 @@ export class StatsResolver implements Resolve<any> {
   resolve(route: ActivatedRouteSnapshot,) {
 
     return new Promise((resolve, reject) => {
-        
+        console.log(this.conne.userOption)
         this.api.getEtudiants()
         .subscribe(result => {
           var res=result as Array<any>
+          console.log(result)
           if (res!=this.hc.data){
             this.hc.data=res
             this.hc.update_graph_data(this.hc.data)

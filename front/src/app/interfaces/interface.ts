@@ -1,14 +1,19 @@
 export enum STATE {
   confirm,
   warning,
-  error
+  error,
+  warning_suppr
 }
 
 export enum ANSWER {
   ok,
   yes,
-  no
+  no,
+  suppr,
+  anonym,
+  cancel
 }
+
 
 export interface Authentification {
     token :string;
@@ -17,6 +22,7 @@ export interface Authentification {
     last_name: string;
     email : string;
     role: number;
+    option:string;
   }
 
 export interface Student{
@@ -31,7 +37,7 @@ export interface Student{
     company:string;
     working_city:string;
     wage:string;
-
+    linkedin_url?:string;
 }
 
 export interface User{
@@ -46,5 +52,5 @@ export interface User{
   working_city:string;
   wage:string;
   role:number;
-
+  linkedin_url?:string;
 }

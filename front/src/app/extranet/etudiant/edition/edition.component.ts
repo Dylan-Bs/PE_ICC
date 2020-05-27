@@ -53,7 +53,7 @@ export class EditionComponent implements OnInit {
       ]
     },
   ];
-  item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"..."};
+  item: Student={"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","linkedin_url":"..."};
 
   constructor(
     public api:ApiService,
@@ -87,20 +87,39 @@ export class EditionComponent implements OnInit {
     }else{
       this.item=this.conne.savedinfo;
       this.createForm();
+      this.api.getEtudiant().subscribe(
+        result => {
+
+          var res=result as Student
+
+          this.item=res;
+          this.conne.savedinfo=this.item;
+          this.createForm()
+          
+          
+        },
+        err=>{
+          alert("Error");
+        }
+      )
     }
     
   }
 
   createForm() {
+    if (this.item.linkedin_url == "Non renseigné") {
+      this.item.linkedin_url =''
+    }
     this.exampleForm = this.fb.group({
       email: [this.item.email,Validators.required],
       first_name: [this.item.first_name, Validators.required ],
       last_name: [this.item.last_name, Validators.required ],
       promotion: [this.item.promotion, Validators.required ],
       option: [this.item.option, Validators.required ],
-      company: [this.item.company, Validators.required ],
-      working_city: [this.item.working_city, Validators.required ],
-      wage: [this.item.wage, Validators.required ],
+      company: [this.item.company],
+      working_city: [this.item.working_city],
+      wage: [this.item.wage],
+      linkedin_url: [this.item.linkedin_url],
       role: [0, Validators.required ],
     });
   }
@@ -119,14 +138,14 @@ export class EditionComponent implements OnInit {
     )
   }
 
-  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."}): void {
+  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."},width="300px"): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
-      width: '300px',
+      width: width,
       data: data
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      if (result==ANSWER.yes){
+      if (result==ANSWER.anonym){
         this.api.anonymize()
         .subscribe(
           result => {
@@ -135,6 +154,17 @@ export class EditionComponent implements OnInit {
           },
           err=>{
             alert("Erreur lors de l'anonymisation");
+          }
+        )
+      }else if (result==ANSWER.suppr){
+        this.api.deleteUser()
+        .subscribe(
+          result => {
+            this.openDialog({state:STATE.confirm,text:"Votre compte a bien été supprimé."})
+            this.conne.deconnecte()
+          },
+          err=>{
+            alert("Erreur lors de la suppression");
           }
         )
       }else if (result==ANSWER.ok){
@@ -149,7 +179,11 @@ export class EditionComponent implements OnInit {
   }
 
   anonymisation(){
-    this.openDialog({state:STATE.warning,text:"Êtes-vous sur de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
+    this.openDialog({state:STATE.warning,text:"Êtes-vous sûr de vouloir anonymiser votre compte? Votre nom et votre prénom seront supprimés et dissociés de vos données."})
     
+  }
+
+  supprimer(){
+    this.openDialog({state:STATE.warning_suppr,text:"Êtes-vous sur de vouloir supprimer votre compte et supprimer toutes vos données? A la place vous pouvez l'anonymiser, votre nom et votre prénom seront supprimés et dissociés de vos données."},"600px")
   }
 }
