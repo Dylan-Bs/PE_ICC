@@ -110,48 +110,49 @@ export class ConnexionComponent implements OnInit {
     this.item.first_name = this.conne.user["first_name"]
     
     if (this.conne.role == 0) {
-      this.loading = true
+      
       console.log(this.conne.savedinfo)
       if (this.conne.savedinfo===undefined){
-        console.log(this.conne.savedinfo)
-        this.api.getEtudiant().subscribe(
-          result => {
-            this.loading = false
-            var res = result as Student
-  
-            this.item = res;
-            console.log(this.item)
-            if (this.item.email == "") {
-              this.item.email = "Non renseigné"
-            }
-            if (this.item.promotion == "") {
-              this.item.promotion = "Non renseigné"
-            }
-            if (this.item.option == "") {
-              this.item.option = "Non renseigné"
-            }
-            if (this.item.company == "") {
-              this.item.company = "Non renseigné"
-            }
-            if (this.item.working_city == "") {
-              this.item.working_city = "Non renseigné"
-            }
-            if (isNaN(this.item.wage)) {
-              this.item.wage = "Non renseigné"
-            }
-            if (this.item.linkedin_url == "") {
-              this.item.linkedin_url = "Non renseigné"
-            }
-            this.conne.savedinfo=this.item
-          },
-          err => {
-            alert("Erreur lors du chargement des données du profil");
-          }
-        )
+        this.loading = true
       }else{
         this.loading = false
         this.item=this.conne.savedinfo
       }
+
+      this.api.getEtudiant().subscribe(
+        result => {
+          this.loading = false
+          var res = result as Student
+
+          this.item = res;
+          console.log(this.item)
+          if (this.item.email == "") {
+            this.item.email = "Non renseigné"
+          }
+          if (this.item.promotion == "") {
+            this.item.promotion = "Non renseigné"
+          }
+          if (this.item.option == "") {
+            this.item.option = "Non renseigné"
+          }
+          if (this.item.company == "") {
+            this.item.company = "Non renseigné"
+          }
+          if (this.item.working_city == "") {
+            this.item.working_city = "Non renseigné"
+          }
+          if (isNaN(this.item.wage)) {
+            this.item.wage = "Non renseigné"
+          }
+          if (this.item.linkedin_url == "") {
+            this.item.linkedin_url = "Non renseigné"
+          }
+          this.conne.savedinfo=this.item
+        },
+        err => {
+          alert("Erreur lors du chargement des données du profil");
+        }
+      )
       
       this.role = "Diplômé"
     } else if (this.conne.role == 1) {
@@ -161,6 +162,13 @@ export class ConnexionComponent implements OnInit {
 
     else if (this.conne.role == 2) {
       this.role = "Administrateur"
+    }
+
+    if (this.conne.savedinfo===undefined){
+      
+    }else{
+      
+      this.item=this.conne.savedinfo
     }
 
   }
