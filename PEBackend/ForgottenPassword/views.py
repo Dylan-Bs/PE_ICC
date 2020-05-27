@@ -34,7 +34,7 @@ class ForgottenPassword(APIView):
                     user.save()
                     send_mail(
                         'Réinitialisation du mot de passe',
-                        'Vous avez demandé une rénitialisation de votre mot de passe? Votre ancien mot de passe a été désactivé par précaution.\nVeuillez cliquer sur le lien ci-dessous afin de le réinitialiser: \n http://c81fbd85.ngrok.io/resetpassword?session='+ str(token),
+                        'Vous avez demandé une rénitialisation de votre mot de passe? Votre ancien mot de passe a été désactivé par précaution.\nVeuillez cliquer sur le lien ci-dessous afin de le réinitialiser: \n http://localhost:4200/#/resetpassword/'+ str(token),
                         'pebackendicc@gmail.com',
                         [user.username],
                         fail_silently=False,
