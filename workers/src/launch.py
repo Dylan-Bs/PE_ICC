@@ -1,7 +1,9 @@
 from argparse import ArgumentParser
 from importlib import import_module
 from os import environ
+import time
 
+time.sleep(120)
 parser = ArgumentParser()
 parser.add_argument(
     '-p', '--provider', type=str,
