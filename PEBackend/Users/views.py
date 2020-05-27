@@ -30,10 +30,10 @@ class Users(views.APIView):
                     for user in users:
                         if(Student.objects.filter(id = user.id).exists()):
                             tmp_student = Student.objects.get(id = user.id)
-                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "linkedin_url": str(tmp_student.linkedin_url), "role": "0"})
+                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.username), "promotion": str(tmp_student.promotion), "option": str(tmp_student.option), "company": str(tmp_student.company), "wage" : str(tmp_student.wage), "working_city": str(tmp_student.working_city), "linkedin_url": str(tmp_student.linkedin_url), "role": "0"})
                         elif (Teacher.objects.filter(id = user.id).exists()):
                             tmp_teacher = Teacher.objects.get(id = user.id)
-                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.email), "option": str(tmp_teacher.option), "role": "1"})
+                            data.append({"id": str(user.id), "first_name": str(user.first_name), "last_name": str(user.last_name), "email": str(user.username), "option": str(tmp_teacher.option), "role": "1"})
                     resp = JsonResponse(data, safe = False)
                 else:
                     resp = JsonResponse({'Access Denied': "No enough rights to achieve this"}, status = "403")

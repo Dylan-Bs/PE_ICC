@@ -2,6 +2,7 @@ from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
 
+
 urlpatterns = [
     url(r'^register', include('Register.urls'), name='register'),
     url(r'^authenticate', include('Authenticate.urls'), name='authenticate'),

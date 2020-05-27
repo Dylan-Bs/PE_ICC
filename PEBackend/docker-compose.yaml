@@ -13,15 +13,19 @@ services:
         command: python /src/manage.py runserver 0.0.0.0:8000
         ports:
             - "8000:8000"
+            - "587:587"
+            - "25:25"
         depends_on:
             - migration
         networks: 
             - api
+        dns:
+            - 8.8.8.8
+            - 8.8.4.4
 
     mongodb:
         restart: always
         image: mongo:latest
-        
         container_name: mongo
         command: mongod --auth
         environment:

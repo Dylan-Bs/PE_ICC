@@ -47,7 +47,7 @@ class Register(APIView):
                     student.wage = wage
                     student.linkedin_url = linkedin_url
                     student.save()
-                    resp = JsonResponse({'Created': 'Successfully registered', 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "201")
+                    resp = JsonResponse({'Created': 'Successfully registered', 'id':str(res.id), "email":res.username,"first_name":res.first_name}, status = "201")
         resp["Access-Control-Allow-Methods"] = "PUT, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         return resp

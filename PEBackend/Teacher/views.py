@@ -28,7 +28,6 @@ class Teacher(views.APIView):
                         password = request.data['password']
                         first_name = request.data['first_name']
                         last_name = request.data['last_name']
-                        email = request.data['email']
                         option = request.data['option']
                         if User.objects.filter(username=userlogin).exists():
                             resp = JsonResponse({'Error': "Already registered"}, status = "409")
@@ -36,7 +35,7 @@ class Teacher(views.APIView):
                             user = User.objects.create_user(userlogin,userlogin, password)
                             user.first_name = first_name
                             user.last_name = last_name
-                            user.email = email
+                            user.email = userlogin
                             user.is_active = True
                             user.is_staff = True
                             user.is_superuser = False
@@ -46,7 +45,7 @@ class Teacher(views.APIView):
                             teacher.id = str(res.id)
                             teacher.option = option
                             teacher.save()
-                            resp = JsonResponse({"Created": "Teacher succesfully created.", 'id':str(res.id), "email":res.email,"first_name":res.first_name}, status = "201")
+                            resp = JsonResponse({"Created": "Teacher succesfully created.", 'id':str(res.id), "email":res.username,"first_name":res.first_name, "last_name":res.last_name}, status = "201")
                 else:
                     resp = JsonResponse({'Access Denied': "No enough rights to achieve this"}, status = "403")
 

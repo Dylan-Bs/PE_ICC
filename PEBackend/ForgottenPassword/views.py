@@ -13,6 +13,7 @@ import jwt
 import datetime
 import time
 import uuid;
+import PEBackend.settings
 
 class ForgottenPassword(APIView):
 
@@ -26,15 +27,22 @@ class ForgottenPassword(APIView):
             else: 
                 user = User.objects.get(username = email_r)
                 if user and user.is_active:
-                    session = uuid.uuid4()
-                    expiry = datetime.now() + datetime.timedelta(hours=1)
-                    token = jwt.encode({'id':user.id,'session': session, 'expiry':expiry.__str__()}, 'PCSK',  algorithm='HS256').decode('utf-8')    
+                    session = str(uuid.uuid4())
+                    expiry = datetime.datetime.now() + datetime.timedelta(hours=1)
+                    token = jwt.encode({'id':user.id,'session': session, 'expiry':expiry.__str__()}, 'peiccreset',  algorithm='HS256').decode('utf-8')
+                    user.email = session    
+                    user.save()
                     send_mail(
                         'Réinitialisation du mot de passe',
-                        'Pour rénitialiser votre mot de passe veuillez cliquer sur le lien ci-dessous: \n https://c81fbd85.ngrok.io/',
-                        'no-reply@peicc.com',
+                        'Vous avez demandé une rénitialisation de votre mot de passe? Votre ancien mot de passe a été désactivé par précaution.\nVeuillez cliquer sur le lien ci-dessous afin de le réinitialiser: \n http://c81fbd85.ngrok.io/resetpassword?session='+ str(token),
+                        'pebackendicc@gmail.com',
                         [user.username],
                         fail_silently=False,
+                    )
+                    resp = HttpResponse(
+                        json.dumps({"OK": "Resetting passworkd link sent to" + str(email_r)}),
+                        status=200,
+                        content_type="application/json",
                     )
                 elif user and not user.is_active:
                     resp = HttpResponse(

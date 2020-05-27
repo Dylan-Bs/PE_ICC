@@ -22,7 +22,7 @@ class Student(views.APIView):
             if(user != None):
                 res = User.objects.get(id=userid)
                 student = StudentModel.objects.get(id= res.id)
-                resp = JsonResponse({"first_name": res.first_name, "last_name": res.last_name, "email": res.email, "promotion": student.promotion, "option": student.option, "company": student.company, "working_city": student.working_city, "wage": student.wage, "linkedin_url": str(student.linkedin_url)}, status = "200")
+                resp = JsonResponse({"first_name": res.first_name, "last_name": res.last_name, "email": res.username, "promotion": student.promotion, "option": student.option, "company": student.company, "working_city": student.working_city, "wage": student.wage, "linkedin_url": str(student.linkedin_url)}, status = "200")
             else:
                 resp = JsonResponse({'Access Denied': "Token invalid"}, status = "403")
         else:
@@ -52,8 +52,10 @@ class Student(views.APIView):
                     company = request.data['company']
                     wage = request.data['wage']
                     working_city = request.data['working_city']
+                    linkedin_url = request.data['linkedin_url']
                     user.first_name = first_name
                     user.last_name = last_name
+                    user.username = email
                     user.email = email
                     user.save()
                     res = User.objects.get(id=userid)
@@ -62,6 +64,7 @@ class Student(views.APIView):
                     student.option = option
                     student.company = company
                     student.working_city = working_city
+                    student.linkedin_url = linkedin_url
                     student.wage = wage
                     student.save()
                     resp = JsonResponse({'Modifications accepted': "Student " + res.first_name + " " + res.last_name + " updated"}, status = "200")

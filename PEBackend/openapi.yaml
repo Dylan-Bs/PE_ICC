@@ -1,0 +1,604 @@
+openapi: 3.0.0
+info:
+  title: Projet Entreprise ICC Backend
+  description: 'Cette API permet de gérer le backend, du site de rencensement et de
+    statistiques des informations des élèves diplômés de l''école. Elle a été développée
+    à l''aide du Framework Django en python. '
+  contact:
+    name: LAURENCET Fabien
+    email: laurencetf@eisti.eu
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  version: 1.0.0
+servers:
+- url: https://virtserver.swaggerhub.com/laurencetf/PEBackendICC/1.0.0
+  description: SwaggerHub API Auto Mocking
+tags:
+- name: Administrateur
+  description: Accès en écriture et lecture à toutes les données
+- name: Professeur
+  description: Accès en écriture à ses propres données et en lecture à toute les données
+    des élèves
+- name: Élève
+  description: Accès en écriture et en lecture à ses propres données uniquement
+paths:
+  /register:
+    put:
+      tags:
+      - Élève
+      summary: Permet à un élève de s'inscrire sur la plateforme
+      description: En passant les différents paramètres, permet à un élève de s'inscrire
+        et de fournir les différentes informations attendues pour pouvoir effectuer
+        des statistiques
+      operationId: register
+      requestBody:
+        description: Paramètres d'inscription pour un élève.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body'
+        required: true
+      responses:
+        "201":
+          description: Confirmation de l'inscription
+        "400":
+          description: Données requises absentes ou invalides
+        "409":
+          description: Utilisateur déjà enregsitré
+  /teacher:
+    put:
+      tags:
+      - Administrateur
+      summary: Permet à un administrateur d'enregistrer un nouveau professeur.
+      description: En passant les différents paramètres, permet à un administrateur
+        d'inscrire un nouveau professeur.
+      operationId: CreateTeacher
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Paramètres d'inscription pour un professeur.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_1'
+        required: true
+      responses:
+        "201":
+          description: Confirmation de l'inscription du professeur.
+        "400":
+          description: Token présent dans les headers invalide.
+        "401":
+          description: Authentification nécessaire pour accéder à ce point de terminaison.
+        "403":
+          description: Droits insuffisants pour accéder à ces fonctionnalités.
+        "409":
+          description: Professeur déjà inscrit
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      summary: Modification des données d'un professeur par un administrateur ou par
+        le professeur lui-même.
+      description: En passant les différents paramètres, permet à un administrateur
+        ou au professeur lui-même de modifier les données d'un professeur.
+      operationId: ModifyTeacher
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Paramètres d'un professeur à modifer.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_2'
+        required: true
+      responses:
+        "201":
+          description: Confirmation de l'inscription du professeur.
+        "400":
+          description: Token présent dans les headers invalide.
+        "401":
+          description: Authentification nécessaire pour accéder à ce point de terminaison.
+        "403":
+          description: Droits insuffisants pour accéder à ces fonctionnalités.
+  /authenticate:
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Permet l'authentification d'un utilisateur
+      description: En passant les différents paramètres nécessaires à l'authentification,
+        l'API retourne un json web token chiffré permettant l'accès de l'user aux
+        différentes parties du site auxquelles il a accès.
+      operationId: authenticate
+      requestBody:
+        description: Paramètres d'authentification d'un utilisateur
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_3'
+        required: true
+      responses:
+        "200":
+          description: OK, authentification réussie
+        "400":
+          description: Erreur, requête invalide, indentifiant invalides
+  /user:
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Modification des données de connexion
+      description: En passant les différents paramètres, permet à un utilisateur de
+        modifier ses données de connexions
+      operationId: ModifyUserData
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Paramètres d'authentification d'un utilisateur
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_4'
+        required: true
+      responses:
+        "200":
+          description: OK, Modification acceptée et effectuée
+        "400":
+          description: Erreur, token d'authentification invalide
+        "401":
+          description: Non autorisé, une authentification est nécéssaire
+    delete:
+      tags:
+      - Administrateur
+      summary: Suppression d'un utilisateur
+      description: En passant les différents paramètres, permet à un administrateur
+        de supprimer un utilisateur.
+      operationId: DeleteUser
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Paramètre néccesaire pour la suppression d'un utilisateur
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_5'
+        required: true
+      responses:
+        "200":
+          description: Ok, utilisateur supprimé.
+        "400":
+          description: Erreur de requête,token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+        "403":
+          description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+  /users:
+    get:
+      tags:
+      - Administrateur
+      summary: Récupération des données de tous les utilisateurs
+      description: Permet à l'administrateur de récuopérer les données de tous les
+        utilisateurs.
+      operationId: GetUsers
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok, renvoie la liste des utilisateurs.
+        "400":
+          description: Erreur de requête,token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+        "403":
+          description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+  /students:
+    get:
+      tags:
+      - Administrateur
+      - Professeur
+      summary: Récupération des données de tous les étudiants(données professionelles
+        uniquement)
+      description: Permet aux personnes disposant des droits adaptés de récupérer
+        les données de tous les étudiants(données professionelles uniquement)
+      operationId: GetStudents
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok, renvoie la liste des étudiants et leurs données professionnelles.
+        "400":
+          description: Erreur de requête, token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+        "403":
+          description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+  /student:
+    get:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Récupération des données d'un étudiant par lui-même ou bien un administrateur.
+      description: Permet aux personnes disposant des droits adaptés de récupérer
+        les données d'un étudiant.
+      operationId: GetStudent
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok, renvoie les données d'un étudiant
+        "400":
+          description: Erreur de requête, token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Modification des données d'un étudiant par lui-même ou bien un administrateur.
+      description: Permet aux personnes disposant des droits adaptés de modifier les
+        données d'un étudiant.
+      operationId: ModifyStudent
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: Paramètres d'inscription pour un élève.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_6'
+        required: true
+      responses:
+        "200":
+          description: Ok, les données de l'étudiant ont été modifiées.
+        "400":
+          description: Erreur de requête, token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+  /anonymize:
+    post:
+      tags:
+      - Élève
+      summary: Anonymisation des données d'un étudiant, à sa demande uniquement.
+      description: Permet à un étudiant de supprimer ses données personnelles et donc
+        d'anonymiser ses données professionn
+      operationId: AnonymizeStudent
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok, les données personnelles de l'étudiant ont bien été supprimées.
+        "400":
+          description: Erreur de requête,token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+  /import:
+    put:
+      tags:
+      - Administrateur
+      - Élève
+      summary: Permet à un administrateur ou un professeur d'ajouter de nombreux étudiant
+        en important leurs données depuis un fichier csv.
+      description: En passant les différents paramètres, permet à un administrateur
+        d'inscrire un nouveau professeur.
+      operationId: ImportData
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      requestBody:
+        description: fichier csv ou json contenant les données des étudiants.
+        content:
+          text/csv:
+            schema:
+              example: fichier.csv
+        required: true
+      responses:
+        "201":
+          description: Confirmation de l'import des données.
+        "400":
+          description: Token présent dans les headers invalide.
+        "401":
+          description: Authentification nécessaire pour accéder à ce point de terminaison.
+        "403":
+          description: Droits insuffisants pour accéder à ces fonctionnalités.
+  /crawl:
+    get:
+      tags:
+      - Administrateur
+      - Professeur
+      summary: Récupération des données d'un étudiant présentes sur linkedin.
+      description: Permet aux personnes disposant des droits adaptés de récupérer
+        les données d'un étudiant depuis internet (linkedin).
+      operationId: Crawl
+      parameters:
+      - name: Authorization
+        in: header
+        description: Json web token permettant la vérification de l'authentification.
+        required: true
+        style: simple
+        explode: false
+        schema:
+          type: string
+      - name: first_name
+        in: query
+        description: Prénom de l'utilisateur que l'on souhaite rechercher sur internet
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      - name: last_name
+        in: query
+        description: Nom de famille de l'utilisateur que l'on souhaite rechercher
+          sur internet
+        required: true
+        style: form
+        explode: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Ok, renvoie les données d'un étudiant
+        "400":
+          description: Erreur de requête, token présent dans les headers invalide.
+        "401":
+          description: Accès refusé, Authentification nécessaire pour accéder à ce
+            point de terminaison.
+  /forgottenpassword:
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Récupération de l'adresse email d'un étudiant pour effectuer la réinitialisation
+        du mot de passe.
+      description: Permet à un utilisateur de récupérer son mot de passe si il a été
+        oublié.
+      operationId: forgottenpassword
+      requestBody:
+        description: Paramètres nécessaires à la réinitialisation du mot de passe.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_7'
+        required: true
+      responses:
+        "200":
+          description: Ok, un lien sera prochainement envoyé à l'adresse fournie.
+        "400":
+          description: Erreur de requête, aucun compte associé à cette adresse email.
+  /resetpassword:
+    post:
+      tags:
+      - Administrateur
+      - Professeur
+      - Élève
+      summary: Réinitialisation du mot passe.
+      description: Permet à un utilisateur de récupérer son mot de passe si il a été
+        oublié.
+      operationId: ResetPassword
+      requestBody:
+        description: Paramètres nécessaires à la réinitialisation du mot de passe.
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/body_8'
+        required: true
+      responses:
+        "200":
+          description: Ok, un lien sera prochainement envoyé à l'adresse fournie.
+        "400":
+          description: Erreur de requête, aucun compte associé à cette adresse email.
+components:
+  schemas:
+    body:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+          example: '********'
+        first_name:
+          type: string
+          example: Prenom
+        last_name:
+          type: string
+          example: NomDeFamille
+        promotion:
+          type: string
+          example: "2020"
+        option:
+          type: string
+          example: icc
+        company:
+          type: string
+          example: Entreprise
+        working_city:
+          type: string
+          example: VilleDuTravail
+        wage:
+          type: string
+          example: Salaire
+    body_1:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+          example: '********'
+        first_name:
+          type: string
+          example: Prenom
+        last_name:
+          type: string
+          example: NomDeFamille
+        option:
+          type: string
+          example: icc
+    body_2:
+      type: object
+      properties:
+        id:
+          type: string
+          description: Uniquement en tant qu'administateur
+          example: "12"
+        first_name:
+          type: string
+          example: Prenom
+        last_name:
+          type: string
+          example: NomDeFamille
+        option:
+          type: string
+          example: icc
+    body_3:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+          example: '********'
+    body_4:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+        password:
+          type: string
+          example: '********'
+    body_5:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "12"
+    body_6:
+      type: object
+      properties:
+        id:
+          type: string
+          example: "12"
+        first_name:
+          type: string
+          example: Prenom
+        last_name:
+          type: string
+          example: NomDeFamille
+        promotion:
+          type: string
+          example: "2020"
+        option:
+          type: string
+          example: icc
+        company:
+          type: string
+          example: Entreprise
+        working_city:
+          type: string
+          example: VilleDuTravail
+        wage:
+          type: string
+          example: Salaire
+    body_7:
+      type: object
+      properties:
+        email:
+          type: string
+          example: test@test.com
+    body_8:
+      type: object
+      properties:
+        session:
+          type: string
+          description: Token à récupérer dans l'URL envoyé dans le mail de réinitialisation
+            du mot de passe.
+          example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQsInNlc3Npb24iOiI1MmVmOWMxMS0zZmE1LTRhZDYtYjQzNC1hM2QwNjg2YmYzZTUiLCJleHBpcnkiOiIyMDIwLTA1LTI3IDAxOjQ0OjI0LjYxNTI5MSJ9.LksnC0xO7x36PNNDEi0Yv7z6V-vSqO4SulHiPZAOCTk
+        password:
+          type: string
+          example: '********'

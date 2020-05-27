@@ -49,7 +49,7 @@ class Students(views.APIView):
                     for student in students:
                         tmp_user = User.objects.get(id = student.id)
                         if tmp_user != None and tmp_user.is_active:
-                            data.append({"id": str(tmp_user.id), "name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.email), "promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city), "linkedin_url": str(student.linkedin_url)})
+                            data.append({"id": str(user.id), "name": str(tmp_user.first_name)+" "+str(tmp_user.last_name), "email": str(tmp_user.username), "promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city), "linkedin_url": str(student.linkedin_url)})
                         else:
                             data.append({"promotion": str(student.promotion), "option": str(student.option),"company": str(student.company), "wage" : str(student.wage), "working_city": str(student.working_city)})
                     resp = JsonResponse(data, safe = False)
