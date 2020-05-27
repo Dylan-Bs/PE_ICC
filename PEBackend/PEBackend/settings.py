@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'corsheaders',
     'rest_framework',
+    # 'rest_framework_swagger',
     'Authenticate',
     'Register',
     'Student',
@@ -77,7 +78,12 @@ TEMPLATES = [{
         },
     },]
 
-REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
+# REST_FRAMEWORK = {
+#     'DEFAULT_METADATA_CLASS': 'rest_framework.metadata.SimpleMetadata',
+#     'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' 
+# }
+
+
 # REST_FRAMEWORK = {
 #     'DEFAULT_PERMISSION_CLASSES': (
 #         'rest_framework.permissions.IsAuthenticated',
@@ -132,12 +138,21 @@ CORS_ALLOW_HEADERS = list(default_headers) + [
 ]
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
-EMAIL_HOST = 'smtp.gmail.com'
-EMAIL_PORT = 587
-EMAIL_HOST_USER = 'pebackendicc@gmail.com'
-EMAIL_HOST_PASSWORD = 'yefmxlheqpntlrtc' 
+EMAIL_HOST = 'mail1.netim.hosting'
+EMAIL_PORT = 465
+EMAIL_HOST_USER = 'peicc@bersans.eu'
+EMAIL_HOST_PASSWORD = 'zQKT5@787RjK' 
 DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
-EMAIL_USE_TLS = True
+EMAIL_USE_TLS = False
+EMAIL_USE_SSL = True
+
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+# EMAIL_HOST = 'smtp.gmail.com'
+# EMAIL_PORT = 587
+# EMAIL_HOST_USER = 'pebackendicc@gmail.com'
+# EMAIL_HOST_PASSWORD = 'yefmxlheqpntlrtc' 
+# DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+# EMAIL_USE_TLS = True
 # EMAIL_USE_SSL = False
 
 # Internationalization
