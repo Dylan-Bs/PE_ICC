@@ -17,5 +17,6 @@ export const paths = {
   details_et: 'edit/:id',
   //path in prof
   stats:'stats',
+  edition_pr: 'edit',
   details_pr: 'details/:id',
 };

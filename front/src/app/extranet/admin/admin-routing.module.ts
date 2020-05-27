@@ -11,7 +11,7 @@ import { EditionComponent } from './edition/edition.component';
 
 const adminRoutes: Routes = [
   { path: paths.empty, canActivate: [AuthGuard, AdminGuard], component: GestionDesComptesComponent },
-  { path: paths.edition_ad, canActivate: [AuthGuard],  component: EditionComponent },
+  { path: paths.edition_ad, canActivate: [AuthGuard, AdminGuard],  component: EditionComponent },
   { path: paths.details_ad, canActivate: [AuthGuard, AdminGuard], component: EditUserComponent, resolve: { data: EditUserResolver } }
 ];
 

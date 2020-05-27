@@ -8,17 +8,17 @@ import { ConfirmationDialogComponent } from 'src/app/confirmation-dialog/confirm
 import { ApiService } from 'src/app/services/api.service';
 import { User, STATE, ANSWER } from 'src/app/interfaces/interface';
 
+
 @Component({
-  selector: 'app-edition',
-  templateUrl: './edition.component.html',
-  styleUrls: ['./edition.component.scss']
+  selector: 'app-edition-prof',
+  templateUrl: './edition-prof.component.html',
+  styleUrls: ['./edition-prof.component.scss']
 })
-export class EditionComponent implements OnInit {
-
+export class EditionProfComponent implements OnInit {
   exampleForm: FormGroup;
-  loading:boolean=false;
+  loading: boolean = false;
 
-  item: User={"id":0,"email":"...","first_name":"...","last_name":"...","company":"...","wage":"...","option":"...","promotion":0,"working_city":"...","role":2};
+  item: User = { "id": 0, "email": "...", "first_name": "...", "last_name": "...", "company": "...", "wage": "...", "option": "...", "promotion": 0, "working_city": "...", "role": 2 };
 
   validation_messages = {
     'email': [
@@ -38,7 +38,7 @@ export class EditionComponent implements OnInit {
   };
 
   constructor(
-    public api:ApiService,
+    public api: ApiService,
     public conne: ConnexionService,
     private route: ActivatedRoute,
     private fb: FormBuilder,
@@ -47,19 +47,19 @@ export class EditionComponent implements OnInit {
   ) { }
 
   ngOnInit() {
-    if (this.conne.savedinfo === undefined){
-      this.loading=true;
+    if (this.conne.savedinfo === undefined) {
+      this.loading = true;
       this.createForm()
       console.log(this.conne.user);
-      
+
       this.item.email = this.conne.user["email"]
       this.item.last_name = this.conne.user["last_name"]
       this.item.first_name = this.conne.user["first_name"]
       this.item.password = ''
       this.createForm()
       this.conne.savedinfo = this.item
-      this.loading=false;
-    }else{
+      this.loading = false;
+    } else {
       this.item = this.conne.savedinfo
       this.createForm();
     }
@@ -67,28 +67,28 @@ export class EditionComponent implements OnInit {
 
   createForm() {
     this.exampleForm = this.fb.group({
-      email: [this.item.email,[Validators.email, Validators.required]],
+      email: [this.item.email, [Validators.email, Validators.required]],
       password: [this.item.password, [Validators.required, Validators.minLength(7)]],
       last_name: [this.item.last_name, Validators.required],
       first_name: [this.item.first_name, Validators.required],
     });
   }
 
-  onSubmit(value){
-    
+  onSubmit(value) {
+
     this.api.updateUser(value)
-    .subscribe(
-      result => {
-        this.conne.savedinfo=value
-        this.openDialog()
-      },
-      err=>{
-        alert("Erreur lors de l'update");
-      }
-    )
+      .subscribe(
+        result => {
+          this.conne.savedinfo = value
+          this.openDialog()
+        },
+        err => {
+          alert("Erreur lors de l'update");
+        }
+      )
   }
 
-  openDialog(data={state:STATE.confirm,text:"Vos changements ont bien été sauvegardés."},width="300px"): void {
+  openDialog(data = { state: STATE.confirm, text: "Vos changements ont bien été sauvegardés." }, width = "300px"): void {
     const dialogRef = this.dialog.open(ConfirmationDialogComponent, {
       width: width,
       data: data

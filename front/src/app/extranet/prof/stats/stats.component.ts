@@ -305,4 +305,17 @@ export class StatsComponent implements OnInit {
   updateFlag = false; // optional boolean
   oneToOneFlag = true; // optional boolean, defaults to false
 
+
+check_detail(item){
+  let type=0
+  if (item.hasOwnProperty("id") && item.name!=undefined && this.item.email!=''){
+    if (item.option==this.conne.userOption){
+      type=1
+    }else{
+      type=2
+    }
+  }
+   return type
+}
+
 }
