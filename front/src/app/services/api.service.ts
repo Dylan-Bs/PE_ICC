@@ -100,6 +100,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/forgottenpassword`,JSON.stringify(value),this.httpOptions);
   }
 
+  resetpassword(value,token){
+    return this.http.post(`${this.apiUrl}/resetpassword`,JSON.stringify({"password":value,"session":token}),this.httpOptions);
+  }
+
   //Students
 
   getEtudiant() {

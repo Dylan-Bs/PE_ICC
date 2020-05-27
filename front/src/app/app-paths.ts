@@ -4,6 +4,7 @@ export const paths = {
   formulaire: 'formulaire',
   rgpd: 'rgpd',
   connexion: 'connexion',
+  resetpassword: 'resetpassword/:token',
   extranet: 'extranet',
   //path in extranet
   admin: 'admin',
