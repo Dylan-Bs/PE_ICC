@@ -33,7 +33,9 @@
 
     <div *ngIf="conne.connecte">
       <mat-card-title>Bonjour {{item.first_name | titlecase }} {{item.last_name | uppercase }}</mat-card-title>
-      <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
+      <mat-card-content>Vous êtes bien connecté avec le role: 
+        <br>
+        <span>{{role}}</span>
         <span *ngIf="conne.role == 1"> de l'option {{options_bddtoview[conne.userOption] }}.</span>
       </mat-card-content>
       <mat-card-content><button *ngIf="conne.role == 2" mat-raised-button class="buttonAdmin" color="accent"

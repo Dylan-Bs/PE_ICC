@@ -40,7 +40,18 @@ export class MdpforgotDialogComponent implements OnInit {
   }
 
   envoie(){
-      this.openDialog()
+      this.api.forgottenpassword(this.data).subscribe(
+        result=>{
+          this.openDialog()
+        },err=>{
+          if (err.status == 500){
+            this.openDialog({ state: STATE.error, text: "Aucun utilisateur possède cet email." })
+          }else{
+            this.openDialog({ state: STATE.error, text: "L'envoie de l'email a échoué." })
+          }
+        }
+      )
+      
     }
 
     openDialog(data = { state: STATE.confirm, text: "Un email à "+this.data["email"]+" a été envoyé avec un lien pour reinitialiser le mot de passe." }): void {

@@ -96,6 +96,10 @@ export class ApiService {
     return this.http.post(`${this.apiUrl}/authenticate`,JSON.stringify(value),this.httpOptions);
   }
 
+  forgottenpassword(value){
+    return this.http.post(`${this.apiUrl}/forgottenpassword`,JSON.stringify(value),this.httpOptions);
+  }
+
   //Students
 
   getEtudiant() {
