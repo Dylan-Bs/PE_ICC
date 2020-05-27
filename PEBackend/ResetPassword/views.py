@@ -27,10 +27,11 @@ class ResetPassword(APIView):
                 userid = payload['id']
                 session = payload['session']
                 expiry = payload['expiry']
-                if expiry < datetime.datetime.now():
+                if datetime.datetime.strptime(expiry, '%Y-%m-%d %H:%M:%S.%f') > datetime.datetime.now():
                     user = User.objects.get(id = userid)
                     if user and session == user.email:
                         user.set_password(password)
+                        user.email = user.username
                         user.save()
                         resp = HttpResponse(
                             json.dumps({'OK': "New password set"}),
