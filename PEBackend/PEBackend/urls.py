@@ -1,9 +1,12 @@
 from django.conf.urls import include, url
 from django.contrib import admin
 from rest_framework.routers import DefaultRouter
+from rest_framework_swagger.views import get_swagger_view
 
+schema_view = get_swagger_view(title='Project Enterprise : Backend')
 
 urlpatterns = [
+    url(r'^', schema_view, name='documentation'),
     url(r'^register', include('Register.urls'), name='register'),
     url(r'^authenticate', include('Authenticate.urls'), name='authenticate'),
     url(r'^students', include('Students.urls'),name="students"),

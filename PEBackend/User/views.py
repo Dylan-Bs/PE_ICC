@@ -26,15 +26,19 @@ class User(views.APIView):
                 userid = payload['id']
                 user = UserModel.objects.get(id=userid)
                 if(user != None):
-                    email = request.data['email']
-                    password = request.data['password']
-                    first_name = request.data['first_name']
-                    last_name = request.data['last_name']
-                    user.username = email
-                    user.email = email
-                    user.first_name = first_name
-                    user.last_name = last_name
-                    user.set_password(password)
+                    email = request.data.get('email', '')
+                    password = request.data.get('password', '')
+                    first_name = request.data.get('first_name', '')
+                    last_name = request.data.get('last_name', '')
+                    if email != '':
+                        user.username = email
+                        user.email = email
+                    if password != '':
+                        user.set_password(password)
+                    if first_name != '':
+                        user.first_name = first_name
+                    if last_name != '':
+                        user.last_name = last_name
                     user.save()
                     resp = JsonResponse({'Modifications accepted': "User " + user.first_name + " " + user.last_name + " updated"}, status = "200")
                 else:
