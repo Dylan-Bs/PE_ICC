@@ -87,6 +87,21 @@ export class EditionComponent implements OnInit {
     }else{
       this.item=this.conne.savedinfo;
       this.createForm();
+      this.api.getEtudiant().subscribe(
+        result => {
+
+          var res=result as Student
+
+          this.item=res;
+          this.conne.savedinfo=this.item;
+          this.createForm()
+          
+          
+        },
+        err=>{
+          alert("Error");
+        }
+      )
     }
     
   }

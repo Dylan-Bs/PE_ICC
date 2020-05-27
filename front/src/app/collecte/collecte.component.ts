@@ -164,6 +164,7 @@ export class CollecteComponent implements OnInit {
         this.openDialog()
       },
       err => {
+        this.loading = false;
         alert("Error")
       }
     )
