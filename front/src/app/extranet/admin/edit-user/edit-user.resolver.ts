@@ -13,7 +13,7 @@ export class EditUserResolver implements Resolve<any> {
     return new Promise((resolve, reject) => {
       let userId = route.paramMap.get('id');
       
-      resolve(this.conne.savedinfo.filter(etudiant=>etudiant.id==userId.toString()).pop())
+      resolve(this.conne.userssavedinfo.filter(etudiant=>etudiant.id==userId.toString()).pop())
     })
   }
 }

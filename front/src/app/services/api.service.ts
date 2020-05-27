@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { ConnexionService } from './connexion.service';
+
 
 @Injectable({
   providedIn: 'root'
@@ -94,6 +94,10 @@ export class ApiService {
 
   connect(value) {
     return this.http.post(`${this.apiUrl}/authenticate`,JSON.stringify(value),this.httpOptions);
+  }
+
+  forgottenpassword(value){
+    return this.http.post(`${this.apiUrl}/forgottenpassword`,JSON.stringify(value),this.httpOptions);
   }
 
   //Students

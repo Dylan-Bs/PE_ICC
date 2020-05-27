@@ -23,6 +23,7 @@ export class ConnexionService {
   userOption:string;
   date_expiration:Date
   savedinfo:any;
+  userssavedinfo:any;
 
   crawlers:object={}
 
@@ -57,6 +58,7 @@ export class ConnexionService {
    deconnecte(){
      this.connecte=false;
      this.savedinfo=undefined;
+     this.userssavedinfo=undefined;
      this.router.navigateByUrl("/")
 
    }

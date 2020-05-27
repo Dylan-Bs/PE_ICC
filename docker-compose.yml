@@ -12,32 +12,53 @@ services:
             MONGO_INITDB_DATABASE: pe_database
         hostname: mongodb-server
         volumes:
-            - ./back/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+            - ./PEBackend/init-mongo.js:/docker-entrypoint-initdb.d/init-mongo.js:ro
+
             - data-volume:/data/db
         ports:
             - "27017:27017"
         networks:
             - backend
+    
+    rabbitmq:
+        image: rabbitmq:3.8-management
+        container_name: rabbitmq
+        environment:
+            RABBITMQ_DEFAULT_USER: admin
+            RABBITMQ_DEFAULT_PASS: dockerpswd
+        ports:
+            - "15672:15672"
+        networks:
+            - backend
+
+    spotlight:
+        image: dbpedia/spotlight-french
+        ports:
+            - "2225:80"
+        command: "spotlight.sh"
+        environment:
+            JAVA_OPTS: -Xmx8g
+        networks:
+            - backend
 
     migration:
-        build: ./back
-        command: bash -c "
+        build: ./PEBackend
+        command: bash -c " sleep 30&&
             python manage.py makemigrations &&
             python manage.py migrate"
         volumes:
-            - ./back/:/web-django
+            - ./PEBackend:/web-django
         depends_on:
             - mongodb
         networks:
             - backend
 
     initialization:
-        build: ./back
-        command: bash -c "
-            python manage.py runscript create-SuperUser &&
+        build: ./PEBackend
+        command: bash -c " sleep 50 &&
             python manage.py runscript populate-Database"
         volumes:
-            - ./back/:/web-django
+            - ./PEBackend:/web-django
         depends_on:
             - mongodb
             - migration
@@ -47,9 +68,12 @@ services:
     api:
         restart: always
         build: 
-            context: ./back/ 
+            context: ./PEBackend/ 
             dockerfile: Dockerfile   
         container_name: django
+        environment:
+            RMQ_USER: admin
+            RMQ_PASS: dockerpswd
         volumes:
             - web-django:/usr/src/PEBackend
             - web-static:/usr/src/static
@@ -57,9 +81,23 @@ services:
             - "8000:8000"
         depends_on:
             - migration
-        networks: 
+        networks:
             - backend
             - frontend
+
+    linkedin_crawler:
+        build: ./workers/
+        environment:
+            PROVIDER: linkedin
+
+            MONGO_USER: admin
+            MONGO_PASS: dockerpswd
+            RMQ_USER: admin
+            RMQ_PASS: dockerpswd
+        depends_on:
+            - rabbitmq
+        networks:
+            - backend
 
     front:
         restart: always
@@ -71,7 +109,6 @@ services:
             dockerfile: Dockerfile
         volumes:
             - ./front:/PE_ICC/front
-            - '/PE_ICC/front/node_modules'
         ports:
             - "80:4200"
         networks:

@@ -8,7 +8,7 @@
               <mat-form-field class="input-style">
                 <mat-label>Adresse électronique</mat-label>
                 <input matInput type="email" placeholder="Ex. toto@eisti.eu"
-                  formControlName="email" required>
+                  formControlName="email" required [(ngModel)]="this.data['email']">
               </mat-form-field>
               <ng-container *ngFor="let validation of validation_messages.email">
                 <mat-error

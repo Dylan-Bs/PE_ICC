@@ -48,7 +48,7 @@ export class ListeEtudComponent implements OnInit {
       this.items_name_filtered = res;
       this.items_promo_filtered = res;
       this.items_filtered=res;
-      this.conne.savedinfo=res;
+      this.conne.userssavedinfo=res;
     })
   }
 

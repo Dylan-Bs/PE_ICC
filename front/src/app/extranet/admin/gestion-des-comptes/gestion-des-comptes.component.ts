@@ -67,7 +67,7 @@ export class GestionDesComptesComponent implements OnInit {
       this.items_name_filtered = res;
       this.items_promo_filtered = res;
       this.set_items_filtered()
-      this.conne.savedinfo=res;
+      this.conne.userssavedinfo=res;
     })
   }
 
