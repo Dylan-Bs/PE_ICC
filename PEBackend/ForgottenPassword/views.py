@@ -13,7 +13,7 @@ import jwt
 import datetime
 import time
 import uuid;
-import settings
+import PEBackend.settings
 
 class ForgottenPassword(APIView):
 
@@ -35,7 +35,7 @@ class ForgottenPassword(APIView):
                     send_mail(
                         'Réinitialisation du mot de passe',
                         'Vous avez demandé une rénitialisation de votre mot de passe? Votre ancien mot de passe a été désactivé par précaution.\nVeuillez cliquer sur le lien ci-dessous afin de le réinitialiser: \n http://c81fbd85.ngrok.io/resetpassword?session='+ str(token),
-                        settings.EMAIL_HOST_USER,
+                        'pebackendicc@gmail.com',
                         [user.username],
                         fail_silently=False,
                     )

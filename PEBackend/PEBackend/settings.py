@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django_extensions',
-    'rest_framework_swagger',
     'corsheaders',
     'rest_framework',
     'Authenticate',
@@ -50,9 +49,7 @@ INSTALLED_APPS = [
     'Crawl',
     'User',
     'Users',
-    'Import',
-    'ForgottenPassword',
-    'ResetPassword'
+    'Import'
 ]
 
 MIDDLEWARE = [
@@ -78,14 +75,24 @@ TEMPLATES = [{
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',],
         },
-    },
-]
+    },]
+
+# REST_FRAMEWORK = {
+#     'DEFAULT_PERMISSION_CLASSES': (
+#         'rest_framework.permissions.IsAuthenticated',
+#     ),
+#     'DEFAULT_AUTHENTICATION_CLASSES': (
+#         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
+#         'rest_framework.authentication.SessionAuthentication',
+#         'rest_framework.authentication.BasicAuthentication',
+#     ),
+# }
 
 WSGI_APPLICATION = 'PEBackend.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'djongo',
-        'ENFORCE_SCHEMA': True,
+        'ENFORCE_SCHEMA': False,
         'NAME': os.getenv('DATABASE_NAME'),
         'AUTH_SOURCE': 'admin',
         'AUTH_MECHANISM': 'SCRAM-SHA-1',
@@ -94,6 +101,7 @@ DATABASES = {
             'port': int(os.getenv('DATABASE_PORT')),
             'username': os.getenv('DATABASE_USER'),
             'password': os.getenv('DATABASE_PASSWORD'),
+            # Or an IP Address that your DB is hosted on
         }
     }
 }
@@ -121,6 +129,15 @@ CORS_ORIGIN_ALLOW_ALL = True
 CORS_ALLOW_HEADERS = list(default_headers) + [
     'Authorization',
 ]
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT = 587
+EMAIL_HOST_USER = 'pebackendicc@gmail.com'
+EMAIL_HOST_PASSWORD = 'yefmxlheqpntlrtc' 
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+EMAIL_USE_TLS = True
+# EMAIL_USE_SSL = False
 
 # Internationalization
 # https://docs.djangoproject.com/en/1.9/topics/i18n/
