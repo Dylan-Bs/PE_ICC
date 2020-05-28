@@ -1,9 +1,9 @@
 openapi: 3.0.0
 info:
   title: Projet Entreprise ICC Backend
-  description: 'Cette API permet de gérer le backend, du site de rencensement et de
+  description: 'Cette API permet de gérer le backend, du site de recensement et de
     statistiques des informations des élèves diplômés de l''école. Elle a été développée
-    à l''aide du Framework Django en python. '
+    à l''aide du Framework Django en python.'
   contact:
     name: LAURENCET Fabien
     email: laurencetf@eisti.eu
@@ -45,7 +45,7 @@ paths:
         "400":
           description: Données requises absentes ou invalides
         "409":
-          description: Utilisateur déjà enregsitré
+          description: Utilisateur déjà enregistré
   /teacher:
     put:
       tags:
@@ -100,7 +100,7 @@ paths:
         schema:
           type: string
       requestBody:
-        description: Paramètres d'un professeur à modifer.
+        description: Paramètres d'un professeur à modifier.
         content:
           application/json:
             schema:
@@ -137,7 +137,7 @@ paths:
         "200":
           description: OK, authentification réussie
         "400":
-          description: Erreur, requête invalide, indentifiant invalides
+          description: Erreur, requête invalide, identifiants invalides
   /user:
     post:
       tags:
@@ -170,7 +170,7 @@ paths:
         "400":
           description: Erreur, token d'authentification invalide
         "401":
-          description: Non autorisé, une authentification est nécéssaire
+          description: Non autorisé, une authentification est nécessaire
     delete:
       tags:
       - Administrateur
@@ -188,7 +188,7 @@ paths:
         schema:
           type: string
       requestBody:
-        description: Paramètre néccesaire pour la suppression d'un utilisateur
+        description: Paramètre nécessaire pour la suppression d'un utilisateur
         content:
           application/json:
             schema:
@@ -198,7 +198,7 @@ paths:
         "200":
           description: Ok, utilisateur supprimé.
         "400":
-          description: Erreur de requête,token présent dans les headers invalide.
+          description: Erreur de requête, token présent dans les headers invalide.
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
@@ -209,7 +209,7 @@ paths:
       tags:
       - Administrateur
       summary: Récupération des données de tous les utilisateurs
-      description: Permet à l'administrateur de récuopérer les données de tous les
+      description: Permet à l'administrateur de récupérer les données de tous les
         utilisateurs.
       operationId: GetUsers
       parameters:
@@ -225,7 +225,7 @@ paths:
         "200":
           description: Ok, renvoie la liste des utilisateurs.
         "400":
-          description: Erreur de requête,token présent dans les headers invalide.
+          description: Erreur de requête, token présent dans les headers invalide.
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
@@ -236,10 +236,10 @@ paths:
       tags:
       - Administrateur
       - Professeur
-      summary: Récupération des données de tous les étudiants(données professionelles
+      summary: Récupération des données de tous les étudiants(données professionnelles
         uniquement)
       description: Permet aux personnes disposant des droits adaptés de récupérer
-        les données de tous les étudiants(données professionelles uniquement)
+        les données de tous les étudiants(données professionnelles uniquement)
       operationId: GetStudents
       parameters:
       - name: Authorization
@@ -326,7 +326,7 @@ paths:
       - Élève
       summary: Anonymisation des données d'un étudiant, à sa demande uniquement.
       description: Permet à un étudiant de supprimer ses données personnelles et donc
-        d'anonymiser ses données professionn
+        d'anonymiser ses données professionnelles
       operationId: AnonymizeStudent
       parameters:
       - name: Authorization
@@ -341,7 +341,7 @@ paths:
         "200":
           description: Ok, les données personnelles de l'étudiant ont bien été supprimées.
         "400":
-          description: Erreur de requête,token présent dans les headers invalide.
+          description: Erreur de requête, token présent dans les headers invalide.
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
@@ -385,9 +385,9 @@ paths:
       tags:
       - Administrateur
       - Professeur
-      summary: Récupération des données d'un étudiant présentes sur linkedin.
+      summary: Récupération des données d'un étudiant présentes sur LinkedIn.
       description: Permet aux personnes disposant des droits adaptés de récupérer
-        les données d'un étudiant depuis internet (linkedin).
+        les données d'un étudiant depuis internet (LinkedIn).
       operationId: Crawl
       parameters:
       - name: Authorization
@@ -496,7 +496,7 @@ components:
           example: Entreprise
         working_city:
           type: string
-          example: VilleDuTravail
+          example: VilleDeTravail
         wage:
           type: string
           example: Salaire
@@ -523,7 +523,7 @@ components:
       properties:
         id:
           type: string
-          description: Uniquement en tant qu'administateur
+          description: Uniquement en tant qu'administrateur
           example: "12"
         first_name:
           type: string
@@ -581,7 +581,7 @@ components:
           example: Entreprise
         working_city:
           type: string
-          example: VilleDuTravail
+          example: VilleDeTravail
         wage:
           type: string
           example: Salaire
