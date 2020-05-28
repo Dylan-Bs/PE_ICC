@@ -37,5 +37,14 @@
             "wage": "67000",
             "linkedin_url": ""
         }
+    ],
+    "teachers" : [
+        {
+            "email": "fraçoisbayrou@test.com",
+            "password": "testpswd",
+            "first_name": "François",
+            "last_name": "Bayrou",
+            "option": "iapau"
+        }
     ]
 }
