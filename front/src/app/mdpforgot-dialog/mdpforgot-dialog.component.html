@@ -1,0 +1,28 @@
+<div>
+    <h1 mat-dialog-title>
+      Mot de passe oublié
+    </h1>
+    <div mat-dialog-content>
+        <form [formGroup]="mdpform">
+            <div class="form-group">
+              <mat-form-field class="input-style">
+                <mat-label>Adresse électronique</mat-label>
+                <input matInput type="email" placeholder="Ex. toto@eisti.eu"
+                  formControlName="email" required [(ngModel)]="this.data['email']">
+              </mat-form-field>
+              <ng-container *ngFor="let validation of validation_messages.email">
+                <mat-error
+                  *ngIf="mdpform.get('email').hasError(validation.type) && (mdpform.get('email').dirty || mdpform.get('email').touched)">
+                  {{validation.message}}</mat-error>
+              </ng-container>
+            </div>
+        </form>
+    </div>
+    <div>
+      <mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner>
+    </div>
+    <div mat-dialog-actions *ngIf="!loading">
+      <button mat-button (click)="onNoClick()">Annuler</button>
+      <button mat-button (click)="envoie()" [disabled]="!mdpform.valid" cdkFocusInitial>Envoyer</button>
+    </div>
+  </div>

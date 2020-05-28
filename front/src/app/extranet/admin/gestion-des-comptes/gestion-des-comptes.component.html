@@ -6,7 +6,7 @@
 <mat-tab-group (selectedTabChange)="tabchange($event)" animationDuration="0ms">
     <mat-tab label="Diplômés">
 
-        <br>
+        
         <div class="flex">
             
             <div>
@@ -15,7 +15,7 @@
                         placeholder="Recherche par nom..." (keyup)="searchByName()">
                 </div>
             </div>
-            <div class="breadcrumb" style="margin: 0px;">
+            <div class="breadcrumb">
                 <div class="flexnowrap">
                     <span class='bold'>De</span>
                     
@@ -27,10 +27,12 @@
                     
                 </div>
             </div>
-            <button mat-raised-button color="accent" (click)="open_import()">Importer des élèves</button>
+            <div style="text-align: center;">
+                <button mat-raised-button color="accent" (click)="open_import()">Importer des diplomés</button>
+            </div>
+            
         </div>
-
-<div class="list-group users-list">
+<div class="list-group users-list" *ngIf="!loading">
     <div *ngFor="let item of items_filtered_etu" class="list-group-item list-group-item-action flex-column align-items-start">
         <div class="row" >
             <div class="col col-md-8 text-col">
@@ -38,36 +40,42 @@
                 <small *ngIf="item.promotion>1970">Promo: {{item.promotion}}</small>
                 <!--<small *ngIf="item.role==1">Option: {{item.option}}</small>-->
             </div>
-            <div class="col col-md-2 actions-col">
-                <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
-                        <i class="material-icons">edit</i> Edit
+            <div class="col flex actions-col">
+                <button mat-raised-button color="primary" (click)="viewDetails(item)" type="button">
+                        <i class="material-icons">edit</i> Editer
                 </button>
+                <button mat-raised-button color="warn" (click)="delete(item.id)" type="button">
+                    <i class="material-icons">delete</i> Supprimer
+            </button>
             </div>
         </div>
     </div>
     </div>
+    
 </mat-tab>
 <mat-tab label="Professeurs">
 
 
 
-    <br>
-    <div class="row" style="width: 100%;">
-        
-        <div class="col-md-4 offset-md-1">
+    <div class="flex">
+            
+        <div>
             <div class="input-group">
                 <input type="text" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
                     placeholder="Recherche par nom..." (keyup)="searchByName()">
             </div>
+        </div>
+        <div style="text-align: center;">
             <button mat-raised-button color="accent" (click)="create_teacher()">Créer un compte professeur</button>
         </div>
+        
     </div>
 
 
 
 
-
-    <div class="list-group users-list">
+    
+    <div class="list-group users-list" *ngIf="!loading">
         <div *ngFor="let item of items_filtered_prof" class="list-group-item list-group-item-action flex-column align-items-start">
             <div class="row" >
                 <div class="col col-md-8 text-col">
@@ -75,18 +83,22 @@
                     <small>Option: {{options_bddtoview[item.option]}}</small>
                     <!--<small *ngIf="item.role==1">Option: {{item.option}}</small>-->
                 </div>
-                <div class="col col-md-2 actions-col">
-                    <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
-                            <i class="material-icons">edit</i> Edit
+                <div class="col flex actions-col">
+                    <button mat-raised-button color="primary" (click)="viewDetails(item)" type="button">
+                            <i class="material-icons">edit</i> Editer
                     </button>
+                    <button mat-raised-button color="warn" (click)="delete(item.id)" type="button">
+                        <i class="material-icons">delete</i> Supprimer
+                </button>
                 </div>
             </div>
         </div>
         </div>
+        
 
 </mat-tab>
 
 
 </mat-tab-group>
-
 <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
+

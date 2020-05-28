@@ -1,10 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Authentification } from '../interfaces/interface';
+import { Authentification, STATE } from '../interfaces/interface';
 import { MatDialog } from '@angular/material/dialog';
 import { ConnexionService } from '../services/connexion.service';
 import { ApiService } from '../services/api.service';
 import { Student } from 'src/app/interfaces/interface';
+import { MdpforgotDialogComponent } from '../mdpforgot-dialog/mdpforgot-dialog.component';
 
 
 @Component({
@@ -23,6 +24,8 @@ export class ConnexionComponent implements OnInit {
 
   error: boolean = false
   errormsg: string
+
+  email:string=""
 
   loading: boolean = false
 
@@ -73,7 +76,6 @@ export class ConnexionComponent implements OnInit {
     this.loading = true
     this.error = false
 
-
     this.api.connect(value).subscribe(
       result => {
         this.loading = false
@@ -97,6 +99,8 @@ export class ConnexionComponent implements OnInit {
         } else if (err.status == 400) {
           this.errormsg = "Identifiant et/ou mot de passse incorrect(s)."
 
+        }else{
+          this.errormsg = "Connexion impossible avec le serveur."
         }
       }
     )
@@ -108,50 +112,53 @@ export class ConnexionComponent implements OnInit {
     this.item.first_name = this.conne.user["first_name"]
     
     if (this.conne.role == 0) {
-      this.loading = true
+      
       console.log(this.conne.savedinfo)
       if (this.conne.savedinfo===undefined){
-        console.log(this.conne.savedinfo)
-        this.api.getEtudiant().subscribe(
-          result => {
-            this.loading = false
-            var res = result as Student
-  
-            this.item = res;
-            console.log(this.item)
-            if (this.item.email == "") {
-              this.item.email = "Non renseigné"
-            }
-            if (this.item.promotion == "") {
-              this.item.promotion = "Non renseigné"
-            }
-            if (this.item.option == "") {
-              this.item.option = "Non renseigné"
-            }
-            if (this.item.company == "") {
-              this.item.company = "Non renseigné"
-            }
-            if (this.item.working_city == "") {
-              this.item.working_city = "Non renseigné"
-            }
-            if (isNaN(this.item.wage)) {
-              this.item.wage = "Non renseigné"
-            }
-            this.conne.savedinfo=this.item
-          },
-          err => {
-            alert("Erreur lors du chargement des données du profil");
-          }
-        )
+        this.loading = true
       }else{
         this.loading = false
         this.item=this.conne.savedinfo
       }
+
+      this.api.getEtudiant().subscribe(
+        result => {
+          this.loading = false
+          var res = result as Student
+
+          this.item = res;
+          console.log(this.item)
+          if (this.item.email == "") {
+            this.item.email = "Non renseigné"
+          }
+          if (this.item.promotion == "") {
+            this.item.promotion = "Non renseigné"
+          }
+          if (this.item.option == "") {
+            this.item.option = "Non renseigné"
+          }
+          if (this.item.company == "") {
+            this.item.company = "Non renseigné"
+          }
+          if (this.item.working_city == "") {
+            this.item.working_city = "Non renseigné"
+          }
+          if (isNaN(this.item.wage)) {
+            this.item.wage = "Non renseigné"
+          }
+          if (this.item.linkedin_url == "") {
+            this.item.linkedin_url = "Non renseigné"
+          }
+          this.conne.savedinfo=this.item
+        },
+        err => {
+          alert("Erreur lors du chargement des données du profil");
+        }
+      )
       
       this.role = "Diplômé"
     } else if (this.conne.role == 1) {
       this.role = "Professseur"
-      this.conne.userOption = this.options_bddtoview[this.conne.user["option"]]
     }
 
 
@@ -159,5 +166,34 @@ export class ConnexionComponent implements OnInit {
       this.role = "Administrateur"
     }
 
+    if (this.conne.savedinfo===undefined){
+      
+    }else{
+      
+      this.item=this.conne.savedinfo
+    }
+
   }
+
+
+  mdp_click(){
+    this.openDialogMdp()
+  }
+
+
+  openDialogMdp(): void {
+    const dialogRef = this.dialog.open(MdpforgotDialogComponent, {
+      width: '300px',
+      data: {"email":this.email}
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) {
+        
+      }
+
+    });
+  }
+
+  
 }

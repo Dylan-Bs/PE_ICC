@@ -1,26 +1,26 @@
-<br />
-<div class="row">
-    <div class="col-md-4 offset-md-1">
+<div class="flex">
+            
+    <div>
         <div class="input-group">
             <input type="text" class="form-control" [(ngModel)]="searchValue" [ngModelOptions]="{standalone: true}"
-                placeholder="Recherche par nom..." (keyup)="searchByName()" >
+                placeholder="Recherche par nom..." (keyup)="searchByName()">
         </div>
     </div>
-    <div class="col-md-6 filter-by-promo">
-        <div class="row">
-            <div class="col-md-auto title">
-                <span>Filtre par promo (older than):</span>
-            </div>
-            <div class="col">
-                <span>1970 </span>
-                <mat-slider class="promo-slider" [max]="max" min="1970" step="1" thumbLabel="true" [(ngModel)]="promoValue"
-                    (change)="rangeChange($event)">
-                </mat-slider>
-                <span>{{max}}</span>
-            </div>
+    <div class="breadcrumb">
+        <div class="flexnowrap">
+            <span class='bold'>De</span>
+            
+            <input class="text-center" matInput type="number" tickInterval="1" [min]="min" [max]="promo_max_value" [(ngModel)]="promo_min_value" (change)="promofilter_change($event)"/>
+
+            <span class='bold'>à</span>
+
+            <input class="text-center" matInput type="number" tickInterval="1" [min]="promo_min_value" [max]="max" [(ngModel)]="promo_max_value" (change)="promofilter_change($event)"/>
+            
         </div>
     </div>
+    
 </div>
+
 <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
 <!-- Liste des utilisateurs dans la bdd -->
 <div class="list-group users-list">
@@ -30,10 +30,13 @@
                 <h5 class="mb-1">{{item.name}}</h5>
                 <small>Promo: {{item.promotion}}</small>
             </div>
-            <div class="col col-md-2 actions-col">
+            <div class="col actions-col flex">
                 <button mat-raised-button color="accent" (click)="viewDetails(item)" type="button">
                         <i class="material-icons">search</i> Détails
                 </button>
+                <button class="buttonCrawler" mat-raised-button color="primary" [disabled]="conne.crawlers[item.id]" (click)="crawlStudent(item.id)" type="button">
+                    <i class="material-icons">share</i> Actualiser
+            </button>
             </div>
         </div>
     </div>

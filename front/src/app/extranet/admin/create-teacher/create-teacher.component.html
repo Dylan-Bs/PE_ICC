@@ -79,6 +79,6 @@
     </div>
     <div mat-dialog-actions *ngIf="!loading">
       <button mat-button (click)="onNoClick()">Annuler</button>
-      <button mat-button (click)="create_teacher()" cdkFocusInitial>Créer</button>
+      <button mat-button (click)="create_teacher()" [disabled]="!teacherform.valid" cdkFocusInitial>Créer</button>
     </div>
   </div>

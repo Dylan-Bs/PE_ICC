@@ -6,7 +6,7 @@
 
       <div class="form-group">
         <mat-form-field class="input-style">
-          <input matInput type="email" placeholder="Email" formControlName="email">
+          <input matInput type="email" placeholder="Email" formControlName="email" [(ngModel)]="email">
         </mat-form-field>
       </div>
 
@@ -19,7 +19,9 @@
       <div class="error" *ngIf="error">{{errormsg}}</div>
 
       <button mat-raised-button class="submit-button" color="primary" type="submit" [disabled]="!connexionForm.valid"
-        *ngIf="!loading">Connexion</button>
+        style="margin-right: 10px;" *ngIf="!loading">Connexion</button>
+      <a mat-raised-button class="submit-button atobutton" color="accent" (click)="mdp_click()" *ngIf="!loading">Mot de
+        passe oublié</a>
       <div>
         <mat-spinner *ngIf="loading" [diameter]="20" style="margin:0 auto;"></mat-spinner>
       </div>
@@ -31,10 +33,20 @@
 
     <div *ngIf="conne.connecte">
       <mat-card-title>Bonjour {{item.first_name | titlecase }} {{item.last_name | uppercase }}</mat-card-title>
-      <mat-card-content>Vous êtes bien connecté avec le role: {{role}}
-        <span *ngIf="conne.role == 1"> de l'option {{conne.userOption }}</span>.
+      <mat-card-content>Vous êtes bien connecté avec le role: 
+        <br>
+        <span>{{role}}</span>
+        <span *ngIf="conne.role == 1"> de l'option {{options_bddtoview[conne.userOption] }}.</span>
       </mat-card-content>
-      <div ><mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner></div>
+      <mat-card-content><button *ngIf="conne.role == 2" mat-raised-button class="buttonAdmin" color="accent"
+          type="button" routerLink="/extranet/admin/edit"><i class="material-icons">edit</i>Editer mon profil</button>
+      </mat-card-content>
+      <mat-card-content><button *ngIf="conne.role == 1" mat-raised-button class="buttonAdmin" color="accent"
+          type="button" routerLink="/extranet/prof/edit"><i class="material-icons">edit</i>Editer mon profil</button>
+      </mat-card-content>
+      <div>
+        <mat-spinner *ngIf="loading" diameter="100" style="margin:0 auto;"></mat-spinner>
+      </div>
       <div *ngIf="conne.role == 0 && !loading">
         <mat-card-content>Email : {{item.email}}</mat-card-content>
         <mat-card-content>Promotion : {{item.promotion}}</mat-card-content>
@@ -42,8 +54,17 @@
         <mat-card-content>Entreprise : {{item.company}}</mat-card-content>
         <mat-card-content>Ville de travail : {{item.working_city}}</mat-card-content>
         <mat-card-content>Salaire : {{item.wage}}</mat-card-content>
+        <mat-card-content>URL LinkedIn :
+          <span *ngIf="item.linkedin_url=='Non renseigné';else link">
+            {{item.linkedin_url}}
+          </span>
+          <ng-template #link>
+            <a href="{{item.linkedin_url}}">{{item.linkedin_url}}</a>
+          </ng-template>
+        </mat-card-content>
         <button mat-raised-button class="return-button" color="accent" type="button"
-      routerLink="/extranet/etudiant/edit/{{conne.route()}}"><i class="material-icons">edit</i>Editer mon profil</button>
+          routerLink="/extranet/etudiant/edit/{{conne.route()}}"><i class="material-icons">edit</i>Editer mon
+          profil</button>
       </div>
     </div>
   </mat-card>

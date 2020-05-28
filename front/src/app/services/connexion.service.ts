@@ -23,6 +23,9 @@ export class ConnexionService {
   userOption:string;
   date_expiration:Date
   savedinfo:any;
+  userssavedinfo:any;
+
+  crawlers:object={}
 
   constructor(public router:Router, public api:ApiService, public hc:HighchartsService, public dialog:MatDialog) {
     this.connecte=false;
@@ -43,10 +46,8 @@ export class ConnexionService {
     this.role =res.role;
     this.token= res.token;
     this.email=res.email;
+    this.userOption=res.option
     this.api.httpOptions.headers=this.api.httpOptions.headers.set("Authorization",this.token);
-    if (this.role==1){
-      this.hc.maj_students()
-    }
    }
    
 
@@ -57,6 +58,7 @@ export class ConnexionService {
    deconnecte(){
      this.connecte=false;
      this.savedinfo=undefined;
+     this.userssavedinfo=undefined;
      this.router.navigateByUrl("/")
 
    }

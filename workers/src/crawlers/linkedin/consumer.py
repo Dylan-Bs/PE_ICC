@@ -51,6 +51,7 @@ def crawl_one(delivery_tag, student_id, url, first_name, last_name):
                 upsert=True
             )
 
+            old_url = url
             if not url:
                 url = crawler.find_user_url(f'{first_name} {last_name}')
 
@@ -62,6 +63,8 @@ def crawl_one(delivery_tag, student_id, url, first_name, last_name):
                     changes['company'] = res['company']
                 if res['work_place'] != None:
                     changes['working_city'] = res['work_place']
+                if not old_url and url:
+                    changes['linkedin_url'] = url
 
                 retry(2, pymongo.errors.AutoReconnect,
                     partial(commit, student_id, changes), None,
