@@ -25,6 +25,7 @@ class Anonymize(APIView):
                         user.first_name = ''
                         user.last_name = ''
                         user.IsActive = False
+                        user.save()
                         student = Student.objects.get(id = user.id)
                         student.linkedin_url = ""
                         student.save()
