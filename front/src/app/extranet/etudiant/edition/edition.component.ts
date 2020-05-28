@@ -150,7 +150,7 @@ export class EditionComponent implements OnInit {
         .subscribe(
           result => {
             this.openDialog({state:STATE.confirm,text:"Votre compte a bien été anonymisé."})
-            //this.conne.deconnecte()
+            this.conne.deconnecte()
           },
           err=>{
             alert("Erreur lors de l'anonymisation");
