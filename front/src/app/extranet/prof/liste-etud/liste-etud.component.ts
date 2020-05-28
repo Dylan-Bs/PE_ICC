@@ -91,7 +91,7 @@ export class ListeEtudComponent implements OnInit {
         this.conne.crawlers[id]=true
         this.openDialog()
       },err=>{
-        alert(err)
+        alert("La demande d'actualisation a échoué")
       }
     );
 
