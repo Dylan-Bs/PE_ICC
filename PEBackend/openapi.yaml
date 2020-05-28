@@ -12,8 +12,8 @@ info:
     url: http://www.apache.org/licenses/LICENSE-2.0.html
   version: 1.0.0
 servers:
-- url: https://virtserver.swaggerhub.com/laurencetf/PEBackendICC/1.0.0
-  description: SwaggerHub API Auto Mocking
+- description: Serveur plateforme
+  url: http://peicc.bersans.eu/api/
 tags:
 - name: Administrateur
   description: Accès en écriture et lecture à toutes les données
@@ -55,14 +55,15 @@ paths:
         d'inscrire un nouveau professeur.
       operationId: CreateTeacher
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: Paramètres d'inscription pour un professeur.
         content:
@@ -79,6 +80,8 @@ paths:
           description: Authentification nécessaire pour accéder à ce point de terminaison.
         "403":
           description: Droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
         "409":
           description: Professeur déjà inscrit
     post:
@@ -91,14 +94,15 @@ paths:
         ou au professeur lui-même de modifier les données d'un professeur.
       operationId: ModifyTeacher
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: Paramètres d'un professeur à modifier.
         content:
@@ -115,6 +119,8 @@ paths:
           description: Authentification nécessaire pour accéder à ce point de terminaison.
         "403":
           description: Droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
   /authenticate:
     post:
       tags:
@@ -149,14 +155,15 @@ paths:
         modifier ses données de connexions
       operationId: ModifyUserData
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: Paramètres d'authentification d'un utilisateur
         content:
@@ -171,6 +178,8 @@ paths:
           description: Erreur, token d'authentification invalide
         "401":
           description: Non autorisé, une authentification est nécessaire
+        "408":
+          description: Token d'authentification expiré.
     delete:
       tags:
       - Administrateur
@@ -179,14 +188,15 @@ paths:
         de supprimer un utilisateur.
       operationId: DeleteUser
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: Paramètre nécessaire pour la suppression d'un utilisateur
         content:
@@ -204,6 +214,8 @@ paths:
             point de terminaison.
         "403":
           description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
   /users:
     get:
       tags:
@@ -213,14 +225,15 @@ paths:
         utilisateurs.
       operationId: GetUsers
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       responses:
         "200":
           description: Ok, renvoie la liste des utilisateurs.
@@ -231,6 +244,8 @@ paths:
             point de terminaison.
         "403":
           description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
   /students:
     get:
       tags:
@@ -242,14 +257,15 @@ paths:
         les données de tous les étudiants(données professionnelles uniquement)
       operationId: GetStudents
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       responses:
         "200":
           description: Ok, renvoie la liste des étudiants et leurs données professionnelles.
@@ -260,6 +276,8 @@ paths:
             point de terminaison.
         "403":
           description: Accès interdit, droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
   /student:
     get:
       tags:
@@ -271,14 +289,15 @@ paths:
         les données d'un étudiant.
       operationId: GetStudent
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       responses:
         "200":
           description: Ok, renvoie les données d'un étudiant
@@ -287,6 +306,8 @@ paths:
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
+        "408":
+          description: Token d'authentification expiré.
     post:
       tags:
       - Administrateur
@@ -297,14 +318,15 @@ paths:
         données d'un étudiant.
       operationId: ModifyStudent
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: Paramètres d'inscription pour un élève.
         content:
@@ -320,6 +342,8 @@ paths:
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
+        "408":
+          description: Token d'authentification expiré.
   /anonymize:
     post:
       tags:
@@ -329,14 +353,15 @@ paths:
         d'anonymiser ses données professionnelles
       operationId: AnonymizeStudent
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       responses:
         "200":
           description: Ok, les données personnelles de l'étudiant ont bien été supprimées.
@@ -345,25 +370,28 @@ paths:
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
+        "408":
+          description: Token d'authentification expiré.
   /import:
     put:
       tags:
       - Administrateur
-      - Élève
+      - Professeur
       summary: Permet à un administrateur ou un professeur d'ajouter de nombreux étudiant
         en important leurs données depuis un fichier csv.
       description: En passant les différents paramètres, permet à un administrateur
         d'inscrire un nouveau professeur.
       operationId: ImportData
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       requestBody:
         description: fichier csv ou json contenant les données des étudiants.
         content:
@@ -380,6 +408,8 @@ paths:
           description: Authentification nécessaire pour accéder à ce point de terminaison.
         "403":
           description: Droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
   /crawl:
     get:
       tags:
@@ -390,14 +420,15 @@ paths:
         les données d'un étudiant depuis internet (LinkedIn).
       operationId: Crawl
       parameters:
-      - name: Authorization
-        in: header
-        description: Json web token permettant la vérification de l'authentification.
-        required: true
-        style: simple
-        explode: false
-        schema:
-          type: string
+      securityDefinitions:
+        Bearer:
+          type: apiKey
+          name: Authorization
+          in: header
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
       - name: first_name
         in: query
         description: Prénom de l'utilisateur que l'on souhaite rechercher sur internet
@@ -423,6 +454,11 @@ paths:
         "401":
           description: Accès refusé, Authentification nécessaire pour accéder à ce
             point de terminaison.
+        "403":
+          description: Droits insuffisants pour accéder à ces fonctionnalités.
+        "408":
+          description: Token d'authentification expiré.
+            
   /forgottenpassword:
     post:
       tags:
@@ -468,6 +504,8 @@ paths:
           description: Ok, un lien sera prochainement envoyé à l'adresse fournie.
         "400":
           description: Erreur de requête, aucun compte associé à cette adresse email.
+        "408":
+          description: Token de session expiré.
 components:
   schemas:
     body:
@@ -475,46 +513,46 @@ components:
       properties:
         email:
           type: string
-          example: test@test.com
+          example: edouardphilippe@test.com
         password:
           type: string
-          example: '********'
+          example: 'testpswd'
         first_name:
           type: string
-          example: Prenom
+          example: Edouard
         last_name:
           type: string
-          example: NomDeFamille
+          example: Philippe
         promotion:
           type: string
-          example: "2020"
+          example: "2019"
         option:
           type: string
           example: icc
         company:
           type: string
-          example: Entreprise
+          example: Total
         working_city:
           type: string
-          example: VilleDeTravail
+          example: Pau
         wage:
           type: string
-          example: Salaire
+          example: 40000
     body_1:
       type: object
       properties:
         email:
           type: string
-          example: test@test.com
+          example: françoisbayrou@test.com
         password:
           type: string
-          example: '********'
+          example: 'testpswd'
         first_name:
           type: string
-          example: Prenom
+          example: François
         last_name:
           type: string
-          example: NomDeFamille
+          example: Bayrou
         option:
           type: string
           example: icc
@@ -524,52 +562,58 @@ components:
         id:
           type: string
           description: Uniquement en tant qu'administrateur
-          example: "12"
+          example: "2"
         first_name:
           type: string
-          example: Prenom
+          example: François
         last_name:
           type: string
-          example: NomDeFamille
+          example: Bayrou
         option:
           type: string
-          example: icc
+          example: iapau
     body_3:
       type: object
       properties:
         email:
           type: string
-          example: test@test.com
+          example: jeanlasalle@test.com
         password:
           type: string
-          example: '********'
+          example: 'testpswd'
     body_4:
       type: object
       properties:
         email:
           type: string
-          example: test@test.com
+          example: edouardphilippe@test.com
         password:
           type: string
-          example: '********'
+          example: 'testpswd'
+        first_name:
+          type: string
+          example: 'Edouard'
+        last_name:
+          type: string
+          example: 'Philippe'
     body_5:
       type: object
       properties:
         id:
           type: string
-          example: "12"
+          example: "2"
     body_6:
       type: object
       properties:
         id:
           type: string
-          example: "12"
+          example: "2"
         first_name:
           type: string
-          example: Prenom
+          example: Edouard
         last_name:
           type: string
-          example: NomDeFamille
+          example: Philippe
         promotion:
           type: string
           example: "2020"
@@ -578,13 +622,13 @@ components:
           example: icc
         company:
           type: string
-          example: Entreprise
+          example: Capgemini
         working_city:
           type: string
-          example: VilleDeTravail
+          example: Toulouse
         wage:
           type: string
-          example: Salaire
+          example: 65000
     body_7:
       type: object
       properties:
@@ -601,4 +645,4 @@ components:
           example: eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpZCI6NTQsInNlc3Npb24iOiI1MmVmOWMxMS0zZmE1LTRhZDYtYjQzNC1hM2QwNjg2YmYzZTUiLCJleHBpcnkiOiIyMDIwLTA1LTI3IDAxOjQ0OjI0LjYxNTI5MSJ9.LksnC0xO7x36PNNDEi0Yv7z6V-vSqO4SulHiPZAOCTk
         password:
           type: string
-          example: '********'
+          example: 'newpswd'

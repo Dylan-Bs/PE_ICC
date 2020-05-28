@@ -1,5 +1,6 @@
 from django.contrib.auth.models import User
 from Student.models import Student
+from Teacher.models import Teacher
 import json
  
 def run():
@@ -32,3 +33,17 @@ def run():
             student.working_city = tmp_student['working_city']
             student.wage = tmp_student['wage']
             student.save()
+    teachers = data["teachers"]
+    for tmp_teacher in teachers:
+            if not User.objects.filter(username=tmp_teacher['email']).exists():
+                print("adding user " + tmp_teacher['first_name'] + " " + tmp_teacher['last_name'])
+                user = User.objects.create_user(tmp_teacher['email'], tmp_teacher['email'], tmp_teacher['password'])
+                user.first_name = tmp_teacher['first_name']
+                user.last_name = tmp_teacher['last_name']
+                user.is_staff = True
+                user.is_superuser = False
+                user.save()
+                teacher = Teacher()
+                teacher.id = user.id
+                teacher.option = tmp_teacher['option']
+                teacher.save()
