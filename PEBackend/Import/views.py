@@ -32,11 +32,13 @@ class Import(APIView):
                             if file.name.endswith('.csv'):
                                 data_set = file.read().decode('UTF-8')
                                 students = io.StringIO(data_set)
+                                first_student = next(students)
+                                first_student = first_student.replace('\n','')
+                                first_student = first_student.split(',')
                                 # On ignore la première ligne, correspondants aux headers
-                                if (students[0][0]== "email" and students[0][1]== "first_name" and students[0][2]== "last_name" 
-                                and students[0][3]== "promotion" and students[0][4]== "option" and students[0][5]== "company" 
-                                and students[0][6]== "working_city" and students[0][7]== "wage"):
-                                    next(students)
+                                if (first_student[0]== "email" and first_student[1]== "first_name" and first_student[2]== "last_name" 
+                                and first_student[3]== "promotion" and first_student[4]== "option" and first_student[5]== "company" 
+                                and first_student[6]== "working_city" and first_student[7]== "wage"):
                                     for student in csv.reader(students, delimiter=',', quotechar="|"):
                                         if(not UserModel.objects.filter(username = student[0]).exists()):
                                             user = UserModel.objects.create_user(student[0], student[0], str(uuid.uuid4()))
@@ -87,7 +89,7 @@ class Import(APIView):
                         if nbStudents > 0:
                             resp = JsonResponse({"Success": str(nbStudents) + " users datas imported."}, status = 200, safe = False)
                         elif nbStudents == 0:
-                            resp = JsonResponse({"No data": "No users added from the files" + filename}, status = 400, safe = False)
+                            resp = JsonResponse({"No data": "No users added from the files" + first_student[7]}, status = 400, safe = False)
                     else:
                         resp = JsonResponse({"Forbidden": "No enough rights to access"}, status = 403)
                 else:
