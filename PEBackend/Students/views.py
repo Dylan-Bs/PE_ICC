@@ -22,7 +22,7 @@ class Students(views.APIView):
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             expiry = payload['expiry']
-            if datetime.datetime.strptime(expiry, '%Y-%m-%d %H:%M:%S.%f') > datetime.datetime.now():
+            if datetime.datetime.strptime(expiry, '%Y-%m-%d') > datetime.datetime.now():
                 user = User.objects.get(id=userid)
                 if(user != None):
                     if user.is_staff:
@@ -63,7 +63,7 @@ class Students(views.APIView):
             else:
                 resp = JsonResponse({'TokenExpired': "You must authenticate again"}, status = "408")
         else:
-            resp = JsonResponse({"Access Denied": "You must be authenticated"}, status = 401, safe = False)
+            resp = JsonResponse({"AccessDenied": "You must be authenticated"}, status = 401, safe = False)
         resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         resp["Access-Control-Max-Age"] = "1000"
         return resp

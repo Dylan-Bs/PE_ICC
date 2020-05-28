@@ -19,7 +19,7 @@ class Anonymize(APIView):
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
                 expiry = payload['expiry']
-                if datetime.datetime.strptime(expiry, '%Y-%m-%d %H:%M:%S.%f') > datetime.datetime.now():
+                if datetime.datetime.strptime(expiry, '%Y-%m-%d') > datetime.datetime.now():
                     user = UserModel.objects.get(id = userid)
                     if user != None:
                         user.first_name = ''

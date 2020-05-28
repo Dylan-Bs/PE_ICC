@@ -6,7 +6,7 @@ from django.views.generic.base import RedirectView
 
 
 urlpatterns = [
-    path('', RedirectView.as_view(url="https://app.swaggerhub.com/apis-docs/laurencetf/PEBackendICC/1.0.0#", permanent = False), name='documentation'),
+    re_path(r'^$', RedirectView.as_view(url="https://app.swaggerhub.com/apis-docs/laurencetf/PEBackendICC/1.0.0#", permanent = False), name='documentation'),
     re_path(r'^register', include('Register.urls'), name='register'),
     re_path(r'^authenticate', include('Authenticate.urls'), name='authenticate'),
     re_path(r'^students', include('Students.urls'),name="students"),

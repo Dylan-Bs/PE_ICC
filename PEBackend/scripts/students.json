@@ -40,7 +40,7 @@
     ],
     "teachers" : [
         {
-            "email": "fraçoisbayrou@test.com",
+            "email": "françoisbayrou@test.com",
             "password": "testpswd",
             "first_name": "François",
             "last_name": "Bayrou",

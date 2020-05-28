@@ -63,7 +63,7 @@ class Crawl(APIView):
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
             expiry = payload['expiry']
-            if datetime.datetime.strptime(expiry, '%Y-%m-%d %H:%M:%S.%f') > datetime.datetime.now():
+            if datetime.datetime.strptime(expiry, '%Y-%m-%d') > datetime.datetime.now():
                 user = User.objects.get(id = userid)
                 if user != None and (user.is_staff or user.is_superuser):
                     studentId = request.GET.get('id', '')
