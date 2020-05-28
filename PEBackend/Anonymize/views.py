@@ -18,17 +18,21 @@ class Anonymize(APIView):
                 token = request.headers['Authorization']
                 payload = jwt.decode(token, "PCSK")
                 userid = payload['id']
-                user = UserModel.objects.get(id = userid)
-                if user != None:
-                    user.first_name = ''
-                    user.last_name = ''
-                    user.IsActive = False
-                    student = Student.objects.get(id = user.id)
-                    student.linkedin_url = ""
-                    student.save()
-                    resp = JsonResponse({'Success': "User anonymized, anonymization completed"}, status = "200")
-                else:
-                    resp = JsonResponse({'Bad Request': "authentication token invalid."}, status = "400")
+                expiry = payload['expiry']
+                if datetime.datetime.strptime(expiry, '%Y-%m-%d') > datetime.datetime.now():
+                    user = UserModel.objects.get(id = userid)
+                    if user != None:
+                        user.first_name = ''
+                        user.last_name = ''
+                        user.IsActive = False
+                        student = Student.objects.get(id = user.id)
+                        student.linkedin_url = ""
+                        student.save()
+                        resp = JsonResponse({'Success': "User anonymized, anonymization completed"}, status = "200")
+                    else:
+                        resp = JsonResponse({'BadRequest': "authentication token invalid."}, status = "400")
+                else: 
+                    resp = JsonResponse({'TokenExpired': "You must authenticate again"}, status = "408")
             else:
                 resp = JsonResponse({'Unauthorized': "An authentication is required to access this"}, status = "401")
         except UserModel.DoesNotExist:

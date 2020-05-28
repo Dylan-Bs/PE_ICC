@@ -62,42 +62,46 @@ class Crawl(APIView):
             token = request.headers['Authorization']
             payload = jwt.decode(token, "PCSK")
             userid = payload['id']
-            user = User.objects.get(id = userid)
-            if user != None and (user.is_staff or user.is_superuser):
-                studentId = request.GET.get('id', '')
-                student = Student.objects.get(id=studentId)
-                user = User.objects.get(id=studentId)
+            expiry = payload['expiry']
+            if datetime.datetime.strptime(expiry, '%Y-%m-%d') > datetime.datetime.now():
+                user = User.objects.get(id = userid)
+                if user != None and (user.is_staff or user.is_superuser):
+                    studentId = request.GET.get('id', '')
+                    student = Student.objects.get(id=studentId)
+                    user = User.objects.get(id=studentId)
 
-                for retry_count in range(2):
-                    try:
-                        self.channel.basic_publish(
-                            exchange='',
-                            routing_key='crawl',
-                            body=json.dumps({
-                                'student_id': studentId,
-                                'url': student.linkedin_url,
-                                'first_name': user.first_name,
-                                'last_name': user.last_name
-                            }),
-                            properties=pika.BasicProperties(
-                                content_type='application/json',
-                                delivery_mode=1
+                    for retry_count in range(2):
+                        try:
+                            self.channel.basic_publish(
+                                exchange='',
+                                routing_key='crawl',
+                                body=json.dumps({
+                                    'student_id': studentId,
+                                    'url': student.linkedin_url,
+                                    'first_name': user.first_name,
+                                    'last_name': user.last_name
+                                }),
+                                properties=pika.BasicProperties(
+                                    content_type='application/json',
+                                    delivery_mode=1
+                                )
                             )
-                        )
 
-                        break
-                    except pika.exceptions.NackError:
-                        resp = JsonResponse({'message': "Broker could not register task"}, status = "500")
-                    except pika.exceptions.AMQPError:
-                        if not self.connected:
-                            self._disconnect()
-                        
-                        if retry_count == 2:
-                            raise
-
-                resp = JsonResponse({'message': "Task registered"}, status = "200")
+                            break
+                        except pika.exceptions.NackError:
+                            resp = JsonResponse({'message': "Broker could not register task"}, status = "500")
+                        except pika.exceptions.AMQPError:
+                            if not self.connected:
+                                self._disconnect()
+                            
+                            if retry_count == 2:
+                                raise
+                    resp = JsonResponse({'message': "Task registered"}, status = "200")
+                else:
+                    resp = JsonResponse({'TokenExpired': "You must authenticate again"}, status = "408")
             else:
                 resp = JsonResponse({'Access Denied': "You must be authenticated"}, status = "403")
-
+        else:
+            resp = JsonResponse({'Unauthorized': "An authentication is required to access this"}, status = "401")
         resp["Access-Control-Allow-Methods"] = "GET, OPTIONS"
         return resp
