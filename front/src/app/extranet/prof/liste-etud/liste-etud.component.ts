@@ -95,7 +95,7 @@ export class ListeEtudComponent implements OnInit {
       }
     );
 
-    
+    setTimeout(()=>{ this.conne.crawlers[id]=false }, 30000)
   }
 
 
@@ -106,7 +106,6 @@ export class ListeEtudComponent implements OnInit {
     });
 
     dialogRef.afterClosed().subscribe(result => {
-      
       
     });
   }
