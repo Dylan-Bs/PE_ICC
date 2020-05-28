@@ -32,7 +32,7 @@ services:
             - backend
 
     spotlight:
-        image: dbpedia/spotlight-french
+        image: dbpedia/spotlight-french:0.7.1
         ports:
             - "2225:80"
         command: "spotlight.sh"
