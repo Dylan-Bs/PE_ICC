@@ -2,10 +2,10 @@
     "students" : 
     [
         {
-            "email": "jeanlasalle@test.com",
+            "email": "jeanlassalle@test.com",
             "password": "testpswd",
             "first_name": "Jean",
-            "last_name": "Lasalle",
+            "last_name": "Lassalle",
             "promotion": "2020",
             "option": "iapau",
             "company": "Total",
@@ -40,7 +40,7 @@
     ],
     "teachers" : [
         {
-            "email": "françoisbayrou@test.com",
+            "email": "francoisbayrou@test.com",
             "password": "testpswd",
             "first_name": "François",
             "last_name": "Bayrou",

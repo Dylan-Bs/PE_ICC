@@ -13,7 +13,7 @@ def run():
         user.is_staff = True
         user.is_superuser = True
         user.save()
-    with open('/src/scripts/students.json') as studentsFile:
+    with open('/src/scripts/add-users.json') as studentsFile:
         data = json.load(studentsFile)
     students = data["students"]
     for tmp_student in students:
