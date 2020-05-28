@@ -4,9 +4,7 @@
   </h1>
 
   <div mat-dialog-content>
-        <button mat-raised-button color="accent" (click)="download_template()" style="margin: 10px;">
-            Voir un modèle
-        </button>
+        
         <div class="container" appDnd (fileDropped)="onFileDropped($event)">
             <input type="file" #fileDropRef id="fileDropRef" multiple
                 (change)="fileBrowseHandler($event.target.files)" />
@@ -61,7 +59,10 @@
 
     </div>
     <div mat-dialog-actions>
-        <button mat-button [mat-dialog-close]="needupdate" cdkFocusInitial>Fermer</button>
+        <button mat-raised-button color="accent" (click)="download_template()" class="btn_model">
+            Voir un modèle
+        </button>
+        <button mat-button [mat-dialog-close]="needupdate" cdkFocusInitial class="btn_close">Fermer</button>
 
     </div>
 </div>
